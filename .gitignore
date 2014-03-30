@@ -1,0 +1,7 @@
+﻿InstaMiam/build/
+InstaMiam/nbproject/
+InstaMiam/src/conf/
+InstaMiam/build.xml
+InstaMiam/setup/glassfish-resources.xml
+InstaMiam/web/WEB-INF/glassfish-web.xml
+InstaMiam/dist/
