@@ -1,4 +1,4 @@
-﻿InstaMiam/build/
+InstaMiam/build/
 InstaMiam/nbproject/
 InstaMiam/src/conf/
 InstaMiam/build.xml
@@ -6,3 +6,9 @@ InstaMiam/setup/glassfish-resources.xml
 InstaMiam/web/WEB-INF/glassfish-web.xml
 InstaMiam/dist/
 /InstaMiam/build/
+InstaMiam/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar
+InstaMiam/lib/javaee-endorsed-api-6.0/javaee-doc-api.jar
+InstaMiam/lib/javaee-endorsed-api-6.0/javax.annotation.jar
+InstaMiam/lib/javaee-endorsed-api-6.0/jaxb-api-osgi.jar
+InstaMiam/lib/javaee-endorsed-api-6.0/webservices-api-osgi.jar
+InstaMiam/lib/nblibraries.properties
