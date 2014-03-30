@@ -4,28 +4,51 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 <!DOCTYPE HTML>  
-<html>  
-    <head>  
-        <title>${param.title}</title>  
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<!doctype html>
 
-        <!-- Theme cupcakery -->
-        <link rel="stylesheet" href="war:///ressources/Cupcakery/css/anythingslider.css">
-        <link rel="stylesheet" href="ressources/Cupcakery/css/style.css">
-        
-        <!-- Les glyphs des images de bootstrap -->
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    </head>  
-    <body>
-        
-        <header>
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+
+<head>
+
+  <meta charset="utf-8">
+  
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+  <title>Cupcakery Theme</title>
+  
+  <meta name="title" content="">
+  <meta name="description" content="">
+  <!-- Google will often use this as its description of your page/site. Make it good. -->
+  
+  <meta name="google-site-verification" content="">
+  <!-- Speaking of Google, don't forget to set your site up: http://google.com/webmasters -->
+  
+  <meta name="author" content="Your Name Here">
+  <meta name="Copyright" content="Copyright Your Name Here 2012. All Rights Reserved.">
+
+  <link rel="shortcut icon" href="ressources/Cupcakery/css/images/favicon.ico">
+
+  <link href='http://fonts.googleapis.com/css?family=Ruge+Boogie' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="ressources/Cupcakery/css/anythingslider.css">
+  <link rel="stylesheet" href="ressources/Cupcakery/css/style.css">
+  
+  <!-- all our JS is at the bottom of the page, except for Modernizr. -->
+  <script src="ressources/Cupcakery/js/modernizr-1.7.min.js"></script>
+
+</head>
+
+<body>
+
+<header>
   <div class="container_16 clearfix">
     <!-- Replace with your logo -->
-    <h1 id="logo" class="grid_8"><a href="index.html"><img src="css/images/logo.png" alt=""/></a></h1>
+    <h1 id="logo" class="grid_8"><a href="index.html"><img src="ressources/Cupcakery/css/images/logo.png" alt=""/></a></h1>
     
     <!-- Menu -->
     <nav class="grid_8">
@@ -49,11 +72,11 @@
   <div id="slider-container" class="grid_9">
     <ul id="slider">
       <!-- 1st Slider -->
-      <li><img src="images/520x220.gif" alt=""></li>
+      <li><img src="ressources/Cupcakery/images/520x220.gif" alt=""></li>
       <!-- 2nd Slider -->
-      <li><img src="images/520x220.gif" alt=""></li>
+      <li><img src="ressources/Cupcakery/images/520x220.gif" alt=""></li>
       <!-- 3rd Slider -->
-      <li><img src="images/520x220.gif" alt=""></li>
+      <li><img src="ressources/Cupcakery/images/520x220.gif" alt=""></li>
     </ul>
   </div>
   <!--//Slider-->
@@ -78,7 +101,7 @@
     <div class="box-top"></div>
     <div class="box-container">
       <p class="m500">Halvah apple pie cake lollipop lollipop cookie. Carrot cake bonbon toffee tootsie roll. Bear claw croissant powder tootsie roll dessert. Chocolate ice cream oat cake chocolate cake jelly. Applicake ice cream applicake sweet roll cake marzipan. Candy canes cupcake cake icing donut. Cotton candy gingerbread liquorice gummies macaroon marshmallow brownie. Ice cream faworki macaroon donut. Apple pie liquorice gummies macaroon marshmallow</p>
-      <img src="css/images/monster.png" width="171" height="143" alt=""/>
+      <img src="ressources/Cupcakery/css/images/monster.png" width="171" height="143" alt=""/>
       <p class="m500 p-text">Carrot cake bonbon toffee tootsie roll. Bear claw croissant powder tootsie roll dessert.</p>
       <a class="m500" href="story.html">Read More</a>
     </div>
@@ -93,7 +116,7 @@
     <div class="box box-2">
       <div class="gallery-box-top"></div>
       <div class="gallery-box">
-        <img src="images/207x156.gif" width="207" height="156" alt="">
+        <img src="ressources/Cupcakery/images/207x156.gif" width="207" height="156" alt="">
         <h6 class="m500">Incredible Turtle Cookie</h6>
         <p class="m500">Carrot cake bonbon toffee tootsie</p>
       </div>
@@ -104,7 +127,7 @@
     <div class="box box-3">
       <div class="gallery-box-top"></div>
       <div class="gallery-box">
-        <img src="images/207x156.gif" width="207" height="156" alt="">
+        <img src="ressources/Cupcakery/images/207x156.gif" width="207" height="156" alt="">
         <h6 class="m500">Chocolate Mud Cupcakes</h6>
         <p class="m500">Carrot cake bonbon toffee tootsie</p>
       </div>
@@ -156,12 +179,35 @@
 
   </div><!--//container-->
 </footer>
-        
-        <jsp:include page="header.jsp"/>  
-        <jsp:include page="${param.content}.jsp"/>
-        <jsp:include page="footer.jsp"/>  
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    </body>  
-</html>  
+
+<!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>window.jQuery || document.write("<script src='ressources/Cupcakery/js/jquery-1.8.2.min.js'>\x3C/script>")</script>
+
+<script src="ressources/Cupcakery/js/jquery.easing.1.2.js"></script>
+<script src="ressources/Cupcakery/js/jquery.anythingslider.min.js"></script>
+<script src="ressources/Cupcakery/js/jquery.tweet.js"></script>
+<!-- this is where we put our custom functions -->
+<script src="ressources/Cupcakery/js/functions.js"></script>
+
+<!-- Asynchronous google analytics; this is the official snippet.
+   Replace UA-XXXXXX-XX with your site's ID and uncomment to enable.
+   
+<script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XXXXXX-XX']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+-->
+  
+</body>
+</html>
