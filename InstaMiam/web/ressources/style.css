@@ -1,0 +1,14 @@
+/*
+	By Pavinich Christian & Siddi Steven
+*/
+
+/*****************************
+  Template
+ *****************************/
+#foot{
+	position:fixed;
+	bottom:0;
+	left:0;
+	height:115px;
+	width:100%;
+}
