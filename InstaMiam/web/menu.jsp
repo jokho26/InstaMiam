@@ -1,11 +1,9 @@
 <!-- Menu -->
 <nav class="grid_8">
   <ul class="m500">
-    <li class="first"><a class="active" href="index.html">Home</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="story.html">Story</a></li>
-    <li><a href="news.html">News</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li class="first"><a class="active" href="${pageContext.servletContext.contextPath}">Actualités</a></li>
+    <li><a href="gallery.html">Mon mur</a></li>
+    <li><a href="story.html">Mes albums</a></li>
   </ul>
 </nav>
 
