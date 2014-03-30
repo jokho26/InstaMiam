@@ -1,0 +1,423 @@
+@charset "UTF-8";
+/*   
+Theme Name: Cupcakery
+Description: A beautiful and sweet theme for Cake Shops, Restaurants, Coffee Shops, Ice Cream Shops or any other food related business (or any other business). 
+Author: João Alberto
+Author URI: http://jalberto.blacksheepz.org
+Version: 2.0
+Changelog: New Heading Font;
+*/
+
+/*----------------------------------------------
+ Let's Start Off with the Grid (992-16-10-10)
+----------------------------------------------*/
+body {min-width: 960px;}.container_16{margin-left: auto;margin-right: auto;width: 992px;}.grid_1,.grid_2,.grid_3,.grid_4,.grid_5,.grid_6,.grid_7,.grid_8,.grid_9,.grid_10,.grid_11,.grid_12,.grid_13,.grid_14,.grid_15,.grid_16 {display: inline;float: left;margin-left: 10px;margin-right: 10px;}.push_1, .pull_1,.push_2, .pull_2,.push_3, .pull_3,.push_4, .pull_4,.push_5, .pull_5,.push_6, .pull_6,.push_7, .pull_7,.push_8, .pull_8,.push_9, .pull_9,.push_10, .pull_10,.push_11, .pull_11,.push_12, .pull_12,.push_13, .pull_13,.push_14, .pull_14,.push_15, .pull_15 {position: relative;}.alpha {margin-left: 0;}.omega {margin-right: 0;}.container_16 .grid_1 {width: 42px;}.container_16 .grid_2 {width: 104px;}.container_16 .grid_3 {width: 166px;}.container_16 .grid_4 {width: 228px;}.container_16 .grid_5 {width: 290px;}.container_16 .grid_6 {width: 352px;}.container_16 .grid_7 {width: 414px;}.container_16 .grid_8 {width: 476px;}.container_16 .grid_9 {width: 538px;}.container_16 .grid_10 {width: 600px;}.container_16 .grid_11 {width: 662px;}.container_16 .grid_12 {width: 724px;}.container_16 .grid_13 {width: 786px;}.container_16 .grid_14 {width: 848px;}.container_16 .grid_15 {width: 910px;}.container_16 .grid_16 {width: 972px;}.container_16 .prefix_1 {padding-left: 62px;}.container_16 .prefix_2 {padding-left: 124px;}.container_16 .prefix_3 {padding-left: 186px;}.container_16 .prefix_4 {padding-left: 248px;}.container_16 .prefix_5 {padding-left: 310px;}.container_16 .prefix_6 {padding-left: 372px;}.container_16 .prefix_7 {padding-left: 434px;}.container_16 .prefix_8 {padding-left: 496px;}.container_16 .prefix_9 {padding-left: 558px;}.container_16 .prefix_10 {padding-left: 620px;}.container_16 .prefix_11 {padding-left: 682px;}.container_16 .prefix_12 {padding-left: 744px;}.container_16 .prefix_13 {padding-left: 806px;}.container_16 .prefix_14 {padding-left: 868px;}.container_16 .prefix_15 {padding-left: 930px;}.container_16 .suffix_1 {padding-right: 62px;}.container_16 .suffix_2 {padding-right: 124px;}.container_16 .suffix_3 {padding-right: 186px;}.container_16 .suffix_4 {padding-right: 248px;}.container_16 .suffix_5 {padding-right: 310px;}.container_16 .suffix_6 {padding-right: 372px;}.container_16 .suffix_7 {padding-right: 434px;}.container_16 .suffix_8 {padding-right: 496px;}.container_16 .suffix_9 {padding-right: 558px;}.container_16 .suffix_10 {padding-right: 620px;}.container_16 .suffix_11 {padding-right: 682px;}.container_16 .suffix_12 {padding-right: 744px;}.container_16 .suffix_13 {padding-right: 806px;}.container_16 .suffix_14 {padding-right: 868px;}.container_16 .suffix_15 {padding-right: 930px;}.container_16 .push_1 {left: 62px;}.container_16 .push_2 {left: 124px;}.container_16 .push_3 {left: 186px;}.container_16 .push_4 {left: 248px;}.container_16 .push_5 {left: 310px;}.container_16 .push_6 {left: 372px;}.container_16 .push_7 {left: 434px;}.container_16 .push_8 {left: 496px;}.container_16 .push_9 {left: 558px;}.container_16 .push_10 {left: 620px;}.container_16 .push_11 {left: 682px;}.container_16 .push_12 {left: 744px;}.container_16 .push_13 {left: 806px;}.container_16 .push_14 {left: 868px;}.container_16 .push_15 {left: 930px;}.container_16 .pull_1 {left: -62px;}.container_16 .pull_2 {left: -124px;}.container_16 .pull_3 {left: -186px;}.container_16 .pull_4 {left: -248px;}.container_16 .pull_5 {left: -310px;}.container_16 .pull_6 {left: -372px;}.container_16 .pull_7 {left: -434px;}.container_16 .pull_8 {left: -496px;}.container_16 .pull_9 {left: -558px;}.container_16 .pull_10 {left: -620px;}.container_16 .pull_11 {left: -682px;}.container_16 .pull_12 {left: -744px;}.container_16 .pull_13 {left: -806px;}.container_16 .pull_14 {left: -868px;}.container_16 .pull_15 {left: -930px;}.clear {clear: both;display: block;overflow: hidden;visibility: hidden;width: 0;height: 0;}.clearfix:before,.clearfix:after {content: "\0020";display: block;overflow: hidden;visibility: hidden;width: 0;height: 0;}.clearfix:after {clear: both;}.clearfix {zoom: 1;}
+
+/*----------------------------------------------
+ Now let's Reset Stuff
+----------------------------------------------*/
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+	margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }									
+
+article, aside, figure, footer, header, hgroup, nav, section {display: block;}
+
+img,
+object,
+embed { max-width: 100%;}
+
+/* force a vertical scrollbar to prevent a jumpy page */
+html {overflow-y: scroll;}
+
+ul {list-style: none;}
+
+blockquote, q {quotes: none;}
+
+blockquote:before, 
+blockquote:after, 
+q:before, 
+q:after {content: ''; content: none;}
+
+a {margin: 0; padding: 0; font-size: 100%; vertical-align: baseline; background: transparent; outline: 0;}
+
+del {text-decoration: line-through;}
+
+abbr[title], dfn[title] {border-bottom: 1px dotted #000; cursor: help;}
+
+table {border-collapse: collapse; border-spacing: 0;}
+th {font-weight: bold; vertical-align: bottom;}
+td {font-weight: normal; vertical-align: top;}
+
+hr {display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;}
+
+input, select {vertical-align: middle;}
+
+pre {
+	white-space: pre; /* CSS2 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+	word-wrap: break-word; /* IE */
+}
+
+input[type="radio"] {vertical-align: text-bottom;}
+input[type="checkbox"] {vertical-align: bottom; *vertical-align: baseline; }
+.ie6 input {vertical-align: text-bottom;}
+
+select, input, textarea {font: 99% sans-serif;}
+
+table {font-size: inherit; font: 100%;}
+ 
+/* Accessible focus treatment people.opera.com/patrickl/experiments/keyboard/test */
+a:hover, a:active {outline: none;}
+
+small {font-size: 85%;}
+
+strong, th {font-weight: bold;}
+
+td, td img {vertical-align: top;} 
+
+/* Make sure sup and sub don't screw with your line-heights gist.github.com/413930 */
+sub, sup {font-size: 75%; line-height: 0; position: relative;}
+sup {top: -0.5em;}
+sub {bottom: -0.25em;}
+
+/* standardize any monospaced elements */
+pre, code, kbd, samp {font-family: monospace, sans-serif;}
+
+/* hand cursor on clickable elements */
+.clickable,
+label, 
+input[type=button], 
+input[type=submit], 
+button {cursor: pointer;}
+
+input[type="text"], input[type="password"], textarea, select { outline: none;} /*Remove Webkit default Styles*/
+
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea {margin: 0;}
+
+/* make buttons play nice in IE */
+button {width: auto; overflow: visible;}
+ 
+/* scale images in IE7 more attractively */
+.ie7 img {-ms-interpolation-mode: bicubic;}
+
+/* prevent BG image flicker upon hover */
+.ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
+
+/* let's clear some floats */
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
+.clearfix:after { clear: both; }  
+.clearfix { zoom: 1; }  
+
+
+/*---------------------------------------------------------------------------------------
+ Alright, let's start coding!
+---------------------------------------------------------------------------------------*/
+  
+  /*
+
+    1) BASIC STYLES
+    2) FONTS
+    3) SPRITES
+    4) HOMEPAGE HEADER & NAVIGATION
+    5) HOMEPAGE SLIDER & CALL-TO-ACTION
+    6) HOMEPAGE BOXES
+    7) HOMEPAGE GALLERY PREVIEW
+    8) GALLERY
+    9) STORY
+   10) NEWS
+   11) CONTACT
+   12) FOOTER
+
+  */
+
+/*--------------------------------
+ 1) BASIC STYLES
+--------------------------------*/
+body {font: 13px Arial, sans-serif; background: url('../css/images/bg_pat.jpg') repeat center top;}
+
+body, select, input, textarea {color: #333;}
+
+a {color: #03f; text-decoration: none;}
+a:hover {color: #fff;}
+a:active {outline:none;}
+a:link {-webkit-tap-highlight-color: #906d87;} 
+
+.bold { font-weight: bold;}
+
+::-moz-selection{background: #906d87; color: #fff; text-shadow: none;}
+::selection {background: #906d87; color: #fff; text-shadow: none;} 
+
+ins {background-color: #906d87; color: #000; text-decoration: none;}
+mark {background-color: #906d87; color: #000; font-style: italic; font-weight: bold;}
+
+/*--------------------------------
+ 2) FONTS
+--------------------------------*/
+.ruge { font-family: 'Ruge Boogie', cursive; font-weight: 400; }
+
+@font-face {
+  font-family: 'Museo300Regular';
+  src: url('../fonts/museo/museo300-regular-webfont.eot');
+  src: url('../fonts/museo/museo300-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/museo/museo300-regular-webfont.woff') format('woff'),
+       url('../fonts/museo/museo300-regular-webfont.ttf') format('truetype'),
+       url('../fonts/museo/museo300-regular-webfont.svg#Museo300Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Museo500Regular';
+  src: url('../fonts/museo/museo500-regular-webfont.eot');
+  src: url('../fonts/museo/museo500-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/museo/museo500-regular-webfont.woff') format('woff'),
+       url('../fonts/museo/museo500-regular-webfont.ttf') format('truetype'),
+       url('../fonts/museo/museo500-regular-webfont.svg#Museo500Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Museo700Regular';
+  src: url('../fonts/museo/museo700-regular-webfont.eot');
+  src: url('../fonts/museo/museo700-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/museo/museo700-regular-webfont.woff') format('woff'),
+       url('../fonts/museo/museo700-regular-webfont.ttf') format('truetype'),
+       url('../fonts/museo/museo700-regular-webfont.svg#Museo700Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* A font by Jos Buivenga (exljbris) -> http://www.exljbris.com */
+
+/*Classes for fonts so we don't have to keep calling them in CSS - Add the classes in your HTML*/
+.m300 { font-family: 'Museo300Regular', sans-serif; font-weight: normal;}
+.m500 { font-family: 'Museo500Regular', sans-serif; font-weight: normal;}
+.m700 { font-family: 'Museo700Regular', sans-serif; font-weight: normal;}
+
+/*--------------------------------
+ 3) SPRITE
+--------------------------------*/
+#contact-form input[type="submit"],
+.bubble,
+#cta-btn,
+.open-hours ul li,
+.gallery-preview h2,
+#facebook,
+#twitter,
+.box-1 h2,
+.anythingSlider-default.activeSlider .anythingControls a,
+.anythingSlider-default.activeSlider .anythingControls a.cur,
+.anythingSlider-default.activeSlider .anythingControls a:hover,
+#news aside h1,
+.news .likes,
+.story p.signature,
+.box-1 a,
+.open-hours h3,
+.news-pre h3,
+.news-pre article h6 a,
+.contact h1 { background: url('../css/images/sprite.png') no-repeat top left;}
+
+/*--------------------------------
+ 4) HEADER & NAVIGATION
+--------------------------------*/
+header { background: url('../css/images/awning.png') repeat-x center top;}
+
+header h1 a { width: 220px; height: 49px; font-size: 48px; display: block; margin-top: 73px; margin-left: 3px;}
+
+nav { font-size: 14px; margin-top: 62px;} 
+nav li { display: inline; float: left; margin-left: 35px; font-size: 16px;}
+nav li.first { margin-left: 95px;}
+nav a { display: block; color: #fff; text-shadow: 0px 2px 0px rgba(86,177,118,0.25); padding-top: 31px;}
+nav a:hover,
+nav a.active { background: url('../css/images/icon_hat.png') no-repeat center top; }
+
+/*--------------------------------
+ 5) SLIDER & CALL-TO-ACTION
+--------------------------------*/
+#slider-container { background: url("../css/images/slider-whole.png") no-repeat scroll left center transparent; height: 277px; margin-left: 7px; margin-top: 34px; width: 545px;}
+
+#cta h1 { margin-left: 11px; margin-top: 38px; color: #fff; text-shadow: 0 2px 0 rgba(55, 118, 77, 0.25); font-size: 49px; line-height: 78px;}
+#cta h1 span { font-size: 65px;}
+#cta p { padding: 0 0 30px 10px; font-size: 13px; color: #fff; text-shadow: 0 2px 0 rgba(55, 118, 77, 0.25); line-height: 16px;}
+
+#cta-btn { background-position: 0 -496px; width: 246px; height: 74px; display: block; margin-left: 72px; }
+#cta-btn:hover { background-position: 0 -402px;}
+#cta-btn:active { background-position: 0 -308px;}
+
+/*--------------------------------
+ 6) HOMEPAGE BOXES
+--------------------------------*/
+#boxes h2 { padding:10px 0 7px 60px; font-size: 38px; color: #fff; text-shadow: 0px 2px 0px rgba(86,177,118,0.25); margin-top: 22px;} 
+.box { float: left}
+
+.box-1 { position: relative;}
+.box-1 h2 { background-position: 0 -1007px; }
+.box-1 p { font-size: 12px; color: #73656e; line-height: 17px; padding: 10px 25px 0; }
+.box-1 p.p-text { padding-top: 1px; padding-bottom: 10px; }
+.box-1 a { background-position: 0 -905px; color: #e79d90; font-size: 14px; margin-left: 23px; padding-left: 25px; padding-bottom: 15px; padding-top: 8px; display: block;}
+
+.box-1 img { float: right; margin-top: -10px;}
+
+.box-top { background: url('../css/images/home-box-1-top.png') no-repeat center top; height: 19px; }
+.box-container { background: url('../css/images/home-box-1.png') repeat-y center top; }
+.box-bottom { background: url('../css/images/home-box-1-bottom.png') no-repeat center top; height: 19px; }
+
+/*--------------------------------
+ 7) HOMEPAGE GALLERY PREVIEW
+--------------------------------*/
+.gallery-preview h2 { background-position: 0 -612px; padding-bottom: 12px!important;}
+
+.gallery-box-top { background: url('../css/images/box-gallery-top.png') no-repeat center left; width: 230px; height: 6px;}
+.gallery-box { text-align: center; width: 230px; background: url('../css/images/box-gallery.png') repeat-y center left;}
+.gallery-box-bottom { background: url('../css/images/box-gallery-bottom.png') no-repeat center left; width: 230px; height: 7px;}
+
+.gallery-box img { padding-left: 2px; padding-top: 5px;}
+.gallery-box h6 { color: #71646d; font-size: 12px; padding-top: 7px;}
+.gallery-box p { color: #e79d90; font-size: 11px; padding: 7px 10px 9px;}
+
+.box-3, 
+#gallery .box { margin-left: 16px; width: 230px; float:left; }
+
+/*--------------------------------
+ 8) GALLERY
+--------------------------------*/
+#gallery { position: relative;}
+#gallery img.monster { left: 30px; position: absolute; top: -110px; z-index: 1000;}
+#gallery .box-first { margin-left: 0;}
+#gallery .box { margin-top: 10px; z-index: 2000; position: relative;} 
+#gallery-cta h1 { font-size: 90px; color: #fff; text-shadow: 0px 2px 0px rgba(86,177,118,0.25); text-align: center; padding-top: 32px; padding-left: 15px;}
+
+/*--------------------------------
+ 9) STORY
+--------------------------------*/
+#story { margin-top: 30px; }
+.story-top { background: url('../css/images/bg-full-top.png') no-repeat center top; height: 30px; }
+.story { background: url('../css/images/bg-full.png') repeat-y center top;}
+.story h1 { font-size: 64px; color: #e79d90; text-align: center; padding: 15px 0;}
+.story p { font-size: 13px; color: #73656e; line-height: 19px; padding: 0 42px; }
+.story p.signature { background-position: 0 -949px; font-size: 28px; line-height: 51px; margin-bottom: 20px; margin-left: 42px; margin-top: 26px;}
+.story-bottom { background: url('../css/images/bg-full-bottom.png') no-repeat center top; height: 31px;}
+
+/*--------------------------------
+ 10) NEWS
+--------------------------------*/
+#news { margin-top: 15px; }
+#news article { margin-top: 15px; }
+#news article img {float: right; margin: 5px 24px 10px 10px;}
+.news-top { background: url('../css/images/news-top.png') no-repeat center top; height: 29px;}
+.news { background: url('../css/images/news.png') repeat-y center top; }
+.news h1 { font-size: 34px; color: #e79d90; padding: 15px 0 10px 25px; float:left;}
+.news .likes { background-position: 0 -913px; font-size: 11px; color: #e79d90; padding: 0 30px 0 25px; margin-top: 20px; float: right;}
+.news p { font-size: 13px; color: #73656e; line-height: 18px; padding: 0 25px }
+.news .date { font-size: 11px; color: #e79d90; padding: 15px 25px;}
+.news-bottom { background: url('../css/images/news_bottom.png') no-repeat center top; height: 30px; }
+
+#news aside h1 { background-position: 0 -750px; font-size: 34px; color: #fff; padding: 16px 0 6px 45px; margin-left: 5px; text-shadow: 0 2px 0 rgba(55, 118, 77, 0.25);}
+#news aside .box:first-of-type { margin-top: 0px;} /*IE8 won't get this, fix is in the functions.js file*/
+#news aside .box { margin-top: 15px;}
+
+/*--------------------------------
+ 11) CONTACT
+--------------------------------*/
+#contact { margin-top: 30px; }
+.contact-top { background: url('../css/images/bg-full-top.png') no-repeat center top; height: 30px; }
+.contact { background: url('../css/images/bg-full.png') repeat-y center top;}
+.contact h1 { background-position: 0 -679px; font-size: 64px; color: #e79d90; margin-left: 40px; padding: 12px 0 9px 76px; line-height: 65px;}
+.contact p { font-size: 12px; color: #73656e; line-height: 18px; padding: 0 42px; }
+.contact-bottom { background: url('../css/images/bg-full-bottom.png') no-repeat center top; height: 31px;}
+
+#contact-form { margin-left: 40px; margin-top: 5px;}
+#contact-form label { font-size: 12px; color: #73656e; margin-bottom: 10px; float: left;}
+#contact-form input[type="text"] { padding: 0 10px; width: 350px; height: 35px; border: 1px solid #e79d90; margin-bottom: 15px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; font-size: 11px; color: #73656e;}
+
+.ie8 #contact-form input[type="text"] { padding-top: 10px!important; height: 25px !important;}
+
+#contact-form input[type="text"]:focus,
+#contact-form textarea:focus { border-color: rgba(231, 157, 144, 0.9); box-shadow: 0 0 5px rgba(231, 157, 144, 0.8); outline: 0 none;}
+
+#contact-form textarea { padding: 10px; font-size: 11px; border: 1px solid #e79d90; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; resize: none; width: 350px; height: 130px; margin-bottom: 10px; overflow: auto; /*prevent IE from showing a scrollbar when there's no need to*/}
+
+#contact-form label.captcha { margin-top: 15px;}
+#contact-form input[name="captcha"] {margin-left: 10px; margin-top: -13px; width: 22px;}
+
+#contact-form input[type="submit"] { background-position: 0 0; height: 43px; width: 108px; border: 0; text-indent: -999999px; margin-bottom: 29px; margin-left: 85px; float: right; margin-right: 41px;}
+#contact-form input[type="submit"]:hover { background-position: 0 -126px;}
+#contact-form input[type="submit"]:active { background-position: 0 -63px;}
+
+.ie7 #contact-form input[type="submit"] { text-transform: capitalize; /*Fix ie7 bug when negative text-indent does not hide text*/}
+
+/*
+ ERRORS & VALIDATION
+*/
+.notification_error{ background: #E79D90; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; color: #FFFFFF; height: auto; padding: 10px; text-align: left; width: 85%; margin-bottom: 10px; font-size: 12px; text-shadow: 0 -1px 0 rgba(106, 36, 111, 0.25); } 
+
+.notification_ok{ width: 85%; background: #8fccad; color: #FFFFFF; padding: 5px; text-align: center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 10px; font-size: 12px; text-shadow: 0 -1px 0 rgba(106, 36, 111, 0.25); }
+
+/*
+ MAP
+*/
+.map { position: relative; margin-left: -14px; margin-top: 28px;}
+
+.map-overlay-top,
+.map-overlay-left,
+.map-overlay-right,
+.map-overlay-bottom { position: absolute; z-index: 10}
+
+.map-overlay-top { background: url('../css/images/map_overlay_top.png') no-repeat center top; width: 483px; height: 10px; top: 0;}
+.map-overlay-left { background: url('../css/images/map_overlay_left.png') no-repeat center top; width: 9px; height: 322px; top: 10px; left: 0;}
+.map-overlay-right { background: url('../css/images/map_overlay_right.png') no-repeat center top; width: 8px; height: 322px; top: 10px; left: 475px;}
+.map-overlay-bottom { background: url('../css/images/map_overlay_bottom.png') no-repeat center top; width: 483px; height: 6px; top: 332px;}
+
+.map iframe { position: absolute; z-index: 1; top: 0;}
+
+#contact aside p { margin-top: 355px; padding: 0 10px; font-size: 11px; color: #73656e;}
+#contact address { padding: 0 10px; font-style: normal; font-size: 11px; color: #73656e;}
+
+/*--------------------------------
+ 12) FOOTER
+--------------------------------*/
+.footer-splash { margin-top: 49px; background: url('../css/images/footer.png') repeat-x center top; height:26px;}
+
+footer { background: #7c5f74;}
+footer h3 { font-size: 30px; color: #fff; text-shadow: 0px 2px 0px rgba(51, 49, 49, 0.25); padding-left: 45px; padding-top: 2px;}
+
+footer p,
+footer li, 
+footer a { text-shadow: 0px 2px 0px rgba(51, 49, 49, 0.25); }
+footer a:hover { opacity: 0.8;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; filter: alpha(opacity=80);}
+
+/*
+ OPEN HOURS SECTION
+*/
+.open-hours h3 { background-position: 0 -1128px;}
+.open-hours p { font-size: 12px; color: #fff; padding: 20px 10px 10px; line-height: 16px;}
+.open-hours ul li { color: #fff; font-size: 12px; line-height: 20px; margin-left: 10px; padding-left: 20px; background-position: 0 -588px; }
+
+/*
+ NEWS SECTION
+*/
+.news-pre { margin-left: 15px;}
+.news-pre h3 { background-position: 0 -1080px;}
+.sprite-icon_news{   } 
+.news-pre article { padding-left: 8px; padding-bottom: 6px;}
+.news-pre article h6 a{ display: block; font-size: 13px; color: #fff; padding: 9px 0 9px 23px; background-position: 0 -1176px;}
+.news-pre article p { font-size: 12px; color: #fff; line-height: 15px;}
+
+/*
+ SOCIAL SECTION
+*/
+.social { margin-left: 66px;}
+.social h3 { padding-left: 4px;}
+.social a { display: block; }
+.social .tweet a { display: inline; color: #fff; text-decoration: underline; }
+.social .tweet_text { line-height: 14px;}
+#facebook { color: #fff; background-position: 0 -815px; margin-left: 5px; height: 29px; padding-left: 40px; padding-top: 13px;}
+#twitter { color: #fff; background-position: 0 -1213px; margin-left: 5px; height: 29px; padding-left: 40px; padding-top: 13px;}
+
+.bubble { font-size: 11px; color: #fff; background-position: 0 -189px; height: 62px; margin-left: 5px; margin-top: -5px; padding: 27px 10px 10px 13px; width: 227px; }
+
+/*
+ COPYRIGHT TEXT
+*/
+.copy {color: #fff; font-size: 11px; margin-left: 33px; text-align: right; margin-top: 16px; margin-bottom: 10px;}
