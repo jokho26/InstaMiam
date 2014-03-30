@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  
          pageEncoding="UTF-8"%>  
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
-
+<html ng-app="InstaMiam">
     <head>
 
       <meta charset="utf-8">
@@ -19,12 +19,18 @@
       <link rel="stylesheet" href="ressources/Cupcakery/css/style.css">
       <script src="ressources/Cupcakery/js/modernizr-1.7.min.js"></script>
       
+      <!-- Lib angular et controlers -->
+      <script src="ressources/js/angular.min.js" type="text/javascript"></script>
+      <script src="ressources/js/InstaMiamCtrl.js" type="text/javascript"></script>
+      <script src="ressources/js/angular-sanitize.min.js"></script>
+
+      
         <!-- CSS perso -->
       <link rel="stylesheet" href="ressources/style.css">
 
     </head>
 
-    <body>
+    <body ng-controller="InstaMiamCtrl">
         <jsp:include page="header.jsp"/>  
 
         <div class="clear"></div> 
