@@ -7,7 +7,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *  Servlet de l'accueil de l'application InstaMiam
  */
-@WebServlet(name = "AccueilServlet", urlPatterns = {"/"})
+@WebServlet(name = "AccueilServlet", urlPatterns = {""})
 public class AccueilServlet extends HttpServlet {
 
     /**
