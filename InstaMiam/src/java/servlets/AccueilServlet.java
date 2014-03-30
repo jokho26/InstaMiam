@@ -6,7 +6,9 @@
 
 package servlets;
 
+import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AccueilServlet", urlPatterns = {""})
 public class AccueilServlet extends HttpServlet {
+    
+    @EJB
+    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
