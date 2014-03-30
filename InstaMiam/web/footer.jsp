@@ -1,4 +1,4 @@
-
+<div id="espace_footer"></div>
 <div id="foot">
 <div class="footer-splash"></div>
 

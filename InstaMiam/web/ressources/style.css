@@ -7,8 +7,20 @@
  *****************************/
 #foot{
 	position:fixed;
-	bottom:0;
-	left:0;
+	bottom:0px;
 	height:115px;
 	width:100%;
+}
+
+#logo{
+	width:350px;/*
+	margin-left:50px;*/
+	position:absolute;
+	float: left;
+	padding-left: 50px;
+	margin-top: -10px;
+}
+
+#espace_footer {
+	height:115px;
 }

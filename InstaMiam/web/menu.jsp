@@ -6,6 +6,3 @@
     <li><a href="story.html">Mes albums</a></li>
   </ul>
 </nav>
-
-
-<!-- href="${pageContext.servletContext.contextPath}/AfficherUtilisateurs"> -->
