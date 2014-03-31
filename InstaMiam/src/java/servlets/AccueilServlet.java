@@ -38,6 +38,7 @@ public class AccueilServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String forwardTo = "accueil.jsp";
+        //String forwardTo = "inscription.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);

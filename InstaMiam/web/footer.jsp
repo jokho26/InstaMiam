@@ -1,8 +1,8 @@
 
 
-<footer>
+<<div id="footer">
     <div class="footer-splash"></div>
-    <div id="classeTrash">
+    <div id="wrapper_footer">
         <div class="container" id="content">
             <div class="row">
                 <div class="col-md-2"></div>
@@ -23,4 +23,4 @@
 
 
 
-</footer>
+</div>

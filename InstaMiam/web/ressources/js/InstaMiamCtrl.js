@@ -14,6 +14,15 @@
             mur : "Mon mur",
             albums : "Mes albums",
             inscription : "Inscription"
+        },
+        
+        inscription : {
+            login: "Login",
+            nom : "Nom",
+            prenom:"Prénom",
+            email:"Email",
+            mdp:"Mot de passe",
+            valider:"Valider"
         }
 
     };
