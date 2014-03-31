@@ -69,6 +69,8 @@ body {
 header {
     background: url('img/awning.png') repeat-x center top;
     font-family: 'Museo500Regular', sans-serif; font-weight: normal;
+    margin-bottom: 50px;
+
 }
 
 .menu  {
@@ -141,3 +143,20 @@ footer #content{
 }
 
 
+/*****************************
+  Fond
+ *****************************/
+.top_div {
+    background: url('img/box-gallery-top.png') repeat-x center top;
+    height: 10px;
+}
+
+
+.content_div{
+    background-color: #fff;
+}
+
+.bottom_div {
+     background: url('img/box-gallery-bottom.png') repeat-x center top;
+     height: 10px;
+}
