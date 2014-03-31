@@ -147,16 +147,17 @@ footer #content{
   Fond
  *****************************/
 .top_div {
-    background: url('img/box-gallery-top.png') repeat-x center top;
-    height: 10px;
+    background: url('img/box-gallery-top.png') repeat-x center left;
+    height: 6px;
 }
 
 
 .content_div{
     background-color: #fff;
+    padding: 10px 10px 10px 10px;
 }
 
 .bottom_div {
-     background: url('img/box-gallery-bottom.png') repeat-x center top;
-     height: 10px;
+     background: url('img/box-gallery-bottom.png') repeat-x center left;
+     height: 6px;
 }
