@@ -174,3 +174,7 @@ footer #content{
 input{
     font-family: 'Museo500Regular', sans-serif; font-weight: normal;
 }
+
+.btn_valider{
+    float:right;
+}
