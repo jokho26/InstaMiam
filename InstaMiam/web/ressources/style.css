@@ -68,6 +68,40 @@ body {
 
 header {
     background: url('img/awning.png') repeat-x center top;
+    font-family: 'Museo500Regular', sans-serif; font-weight: normal;
+}
+
+.menu  {
+    list-style: none;
+    float : right;
+
+}
+
+.menu li {
+    display: inline;
+    float: left;
+    margin-left: 35px;
+    font-size: 16px;
+}
+
+.menu a {
+    display: block;
+    color: #fff;
+    /* text-shadow: 0px 2px 0px rgba(86,177,118,0.25); */
+    padding-top: 33px;
+    margin-top: 30px;
+    text-decoration: none;
+
+}
+
+.menu a:hover, .menu a.active {
+    background: url('img/icon_hat.png') no-repeat center top;
+}
+
+
+
+#paddingHeader {
+    padding-top: 53px;
 }
 
 /*****************************
@@ -101,5 +135,9 @@ footer #content{
 
 }
 
+.menu{
+    font-family: 'Museo500Regular', sans-serif; font-weight: normal;
+
+}
 
 
