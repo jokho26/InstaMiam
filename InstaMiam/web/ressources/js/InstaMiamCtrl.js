@@ -12,7 +12,8 @@
         nav_bar : {
             actu : "Actualités",
             mur : "Mon mur",
-            albums : "Mes albums"
+            albums : "Mes albums",
+            inscription : "Inscription"
         }
 
     };
@@ -29,7 +30,8 @@
         nav_bar : {
             actu : "News",
             mur : "My wall",
-            albums : "My albums"
+            albums : "My albums",
+            inscription : "Inscription"
         }
         
     };
