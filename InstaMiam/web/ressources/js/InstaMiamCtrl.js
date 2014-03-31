@@ -13,7 +13,8 @@
             actu : "Actualités",
             mur : "Mon mur",
             albums : "Mes albums",
-            inscription : "Inscription"
+            inscription : "Inscription",
+            connexion : "Connexion"
         },
         
         inscription : {
@@ -22,7 +23,8 @@
             prenom:"Prénom",
             email:"Email",
             mdp:"Mot de passe",
-            valider:"Valider"
+            valider:"Valider",
+            connexion:"Connexion"
         }
 
     };
