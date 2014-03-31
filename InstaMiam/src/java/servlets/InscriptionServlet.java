@@ -6,7 +6,9 @@
 
 package servlets;
 
+import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "InscriptionServlet", urlPatterns = {"/Inscription"})
 public class InscriptionServlet extends HttpServlet {
 
+    @EJB
+    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,6 +37,26 @@ public class InscriptionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        String action = request.getParameter("action");
+        
+        if (action != null) {
+            if (action.equals("creerUtilisateur")) {
+                String login = (String) request.getParameter("login");
+                String nom = (String) request.getParameter("nom");
+                String prenom = (String) request.getParameter("prenom");
+                String email = (String) request.getParameter("email");
+                String mdp = (String) request.getParameter("mdp");
+                
+                if (login != null && mdp != null && nom != null && prenom != null && email != null) {
+                    gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, login, email, email);
+                    request.setAttribute("message", "Nouvel utilisateur " + login + " crée.");
+                }
+                else{
+                    request.setAttribute("messageErreur", "Information incomplètes !");
+                }
+            }
+        }
         
         String forwardTo = "inscription.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);

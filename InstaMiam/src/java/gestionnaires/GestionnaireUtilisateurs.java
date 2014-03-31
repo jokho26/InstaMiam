@@ -23,7 +23,7 @@ public class GestionnaireUtilisateurs {
 
     // Ici injection de code : on n'initialise pas. L'entity manager sera créé  
     // à partir du contenu de persistence.xml  
-    @PersistenceContext  
+    @PersistenceContext(unitName = "InstaMiamPU")
     private EntityManager em;  
   
     public void creerUtilisateursDeTest() {  
