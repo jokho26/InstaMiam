@@ -35,6 +35,13 @@
             <jsp:include page="header.jsp"/>  
         <div class="container">
 
+        <c:if test="${!empty requestScope['message']}">         
+            <div class="alert alert-info">${requestScope['message']}</div>
+        </c:if>
+        <c:if test="${!empty requestScope['messageErreur']}">         
+            <div class="alert alert-danger">${requestScope['messageErreur']}</div>
+        </c:if>  
+            
         <jsp:include page="${param.content}.jsp"/>
 
         </div>

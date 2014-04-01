@@ -46,8 +46,14 @@ public class ConnexionServlet extends HttpServlet {
          // On récupere la session
         HttpSession session = request.getSession();
          
+        String forwardTo="connexion.jsp";
+        
         if (action != null) {
-            if (action.equals("connexion")) {
+            if (action.equals("deconnexion")) {
+                session.setAttribute("utilisateurConnecte", null);
+                request.setAttribute("message", "Déconnexion réussie"); 
+            }
+            else if (action.equals("connexion")) {
                 String login = (String) request.getParameter("login");
                 String mdp = (String) request.getParameter("mdp");
                 
@@ -59,12 +65,11 @@ public class ConnexionServlet extends HttpServlet {
                 else {
                     session.setAttribute("utilisateurConnecte", u);
                     request.setAttribute("message", "Bienvenue chez vous " + login + " !"); 
+                    forwardTo="accueil.jsp";
                 }
             }
         }
-        
-        
-        String forwardTo = "connexion.jsp";
+                
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);

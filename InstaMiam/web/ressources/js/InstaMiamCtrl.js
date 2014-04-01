@@ -14,7 +14,8 @@
             mur : "Mon mur",
             albums : "Mes albums",
             inscription : "Inscription",
-            connexion : "Connexion"
+            connexion : "Connexion",
+            deconnexion : "Déconnexion"
         },
         
         inscription : {
