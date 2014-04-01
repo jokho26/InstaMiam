@@ -6,13 +6,17 @@
 
 package servlets;
 
+import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modeles.Utilisateur;
 
 /**
  * Servlet pour la connexion au site.
@@ -20,6 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ConnexionServlet", urlPatterns = {"/Connexion"})
 public class ConnexionServlet extends HttpServlet {
 
+    @EJB
+    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,6 +41,29 @@ public class ConnexionServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+         String action = request.getParameter("action");
+        
+         // On récupere la session
+        HttpSession session = request.getSession();
+         
+        if (action != null) {
+            if (action.equals("connexion")) {
+                String login = (String) request.getParameter("login");
+                String mdp = (String) request.getParameter("mdp");
+                
+                Utilisateur u = gestionnaireUtilisateurs.getUserByConnexion(login, mdp);
+                
+                if (u== null) {
+                    request.setAttribute("messageErreur", "Login ou mot de passe incorrect. Try again.");
+                }
+                else {
+                    session.setAttribute("utilisateurConnecte", u);
+                    request.setAttribute("message", "Bienvenue chez vous " + login + " !"); 
+                }
+            }
+        }
+        
+        
         String forwardTo = "connexion.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 

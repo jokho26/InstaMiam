@@ -39,11 +39,42 @@ public class GestionnaireUtilisateurs {
         return u;  
     }  
   
+    /**
+     * TODO à virer ?
+     * @return 
+     */
     public Collection<Utilisateur> getAllUsers() {  
         // Exécution d'une requête équivalente à un select *  
         Query q = em.createQuery("select u from Utilisateur u");  
         return q.getResultList();  
-    }  
+    }
+    
+    
+    
+     /**
+     * Méthode permettant de récuperer un utilisateur à partir de se informations de connexion.
+     * @param login
+     * @param password
+     * @return 
+     */
+    public Utilisateur getUserByConnexion(String login, String password) {
+        Query q = em.createQuery("select u from Utilisateur u where u.login=:param");
+        q.setParameter("param", login);
+       
+        if (q.getResultList().isEmpty()) {
+            return null;
+        }
+        else {
+            Utilisateur u = (Utilisateur) q.getSingleResult();
+            
+            if (u.getMotDePasse().equals(password))
+                return u;
+            else
+                return null;
+        }
+    }
+    
+    
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
