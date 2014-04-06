@@ -26,6 +26,12 @@
             mdp:"Mot de passe",
             valider:"Valider",
             connexion:"Connexion"
+        },
+        
+        mes_albums : {
+            titre : "Mes albums",
+            creer_album : "Créer un album",
+            ajouter_photo : "Ajouter une photo"
         }
 
     };

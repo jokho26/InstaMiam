@@ -9,7 +9,7 @@
         </c:when>
         <c:otherwise>
             <li><a href="gallery.html">{{tab_lang.nav_bar.mur}}</a></li>
-            <li><a href="story.html">{{tab_lang.nav_bar.albums}}</a></li>
+            <li><a href="${pageContext.servletContext.contextPath}/Albums">{{tab_lang.nav_bar.albums}}</a></li>
             <li><a href="story.html">{{tab_lang.nav_bar.albums}}</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/Connexion?action=deconnexion">{{tab_lang.nav_bar.deconnexion}}</a></li>
         </c:otherwise>
