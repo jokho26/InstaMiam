@@ -20,7 +20,15 @@
             <center><h1 class="ruge">{{tab_lang.mes_albums.titre}}</h1></center>
             <button type="button" class="btn btn-primary">{{tab_lang.mes_albums.creer_album}}</button>
             <button type="button" class="btn btn-primary">{{tab_lang.mes_albums.ajouter_photo}}</button><br>
-            <br><br>
+            <br><br><br><br>
+            
+            <ul>
+                <c:forEach var="a" items="${requestScope['listeAlbums']}">  
+                    <il>{{a.nom}}</li>
+                </c:forEach>  
+            </ul>
+            
+            <br><br><br><br>
             
             
             <!-- formulaire de test pour ajouter un album-->

@@ -6,6 +6,7 @@
 
 package servlets;
 
+import gestionnaires.GestionnaireUtilisateurs;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -20,7 +23,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import modeles.Album;
+import modeles.Utilisateur;
 
 /**
  *
@@ -30,6 +36,9 @@ import javax.servlet.http.Part;
 @MultipartConfig
 public class AlbumsServlet extends HttpServlet {
 
+    @EJB
+    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,8 +55,20 @@ public class AlbumsServlet extends HttpServlet {
          
         String action = request.getParameter("action");
           
+         // On récupere la session
+        HttpSession session = request.getSession();
+        
+        Utilisateur u = (Utilisateur)(session.getAttribute("utilisateurConnecte"));
+        
+        List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId());
+        
+        request.setAttribute("listeAlbums", u.getAlbums());
+        
          if (action != null) {
-            if (action.equals("upload")) {
+             if (action.equals("AjouterAlbum")) {
+                 
+             }
+             else if (action.equals("upload")) {
                 
                  // Create path components to save the file
             final String path = "";

@@ -7,6 +7,7 @@
 package gestionnaires;
 
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -78,11 +79,27 @@ public class GestionnaireUtilisateurs {
     public Album creerAlbum(String nom, Utilisateur u) {
         Album a = new Album(nom, u);
         
-        em.persist(a);
-        
         u.ajouterAlbum(a);
         
+        em.persist(a);
+        
         return a;
+    }
+    
+    public List<Album> getListeAlbumsByIdUser(int idUser) {
+        Utilisateur u = em.find(Utilisateur.class, idUser);
+        System.out.println("====>" + u.getAlbums().size()  + " - " + u.getLogin());
+        return u.getAlbums();
+        /*
+        Query q = em.createQuery("select a from Album a where a.UTILISATEUR_ID=:param");
+        q.setParameter("param", idUser);
+       
+        if (q.getResultList().isEmpty()) {
+            return null;
+        }
+        else {
+            return q.getResultList();
+        }*/
     }
     
     // Add business logic below. (Right-click in editor and choose
