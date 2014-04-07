@@ -1,7 +1,7 @@
-Mon Apr 07 09:35:49 CEST 2014 : Apache Derby Serveur réseau - 10.8.3.0 - (1405108) démarré et prêt à accepter les connexions sur le port 1527
+Mon Apr 07 13:17:22 CEST 2014 : Apache Derby Serveur réseau - 10.8.3.0 - (1405108) démarré et prêt à accepter les connexions sur le port 1527
 ----------------------------------------------------------------
-Mon Apr 07 09:36:53 CEST 2014:
-Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108) : instance a816c00e-0145-3b1d-53bf-ffffdbc965cd 
+Mon Apr 07 13:17:52 CEST 2014:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108) : instance a816c00e-0145-3be8-28e0-ffffdbc965cd 
 dans le répertoire de base de données D:\Cours\S8\Web\Projet\BaseDeDonnees\InstaMiamDB  avec le chargeur de classe sun.misc.Launcher$AppClassLoader@baf1915
 
 java.vendor=Oracle Corporation
