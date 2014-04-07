@@ -7,10 +7,13 @@
 package modeles;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * Classe Utilisateur
@@ -28,6 +31,10 @@ public class Utilisateur implements Serializable {
     
     private String nom, prenom, login, email, motDePasse;
 
+    @OneToMany(mappedBy = "utilisateur")
+    private List<Album> albums;
+
+   
     public Utilisateur() {       
     }
     
@@ -37,6 +44,18 @@ public class Utilisateur implements Serializable {
         this.login=login;
         this.email=email;
         this.motDePasse=motDePasse;
+    }
+    
+     public List<Album> getAlbums() {
+        return albums;
+    }
+    
+    public void ajouterAlbum(Album album) {
+        albums.add(album);
+    }
+    
+    public Album getAlbum(int index) {
+        return albums.get(index);
     }
     
     

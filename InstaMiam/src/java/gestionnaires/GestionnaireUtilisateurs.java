@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import modeles.Album;
 import modeles.Utilisateur;
 
 /**
@@ -30,7 +31,7 @@ public class GestionnaireUtilisateurs {
         creeUtilisateur("John", "Lennon", "jlennon", "@gmail.com", "");  
         creeUtilisateur("Paul", "Mac Cartney", "pmc","@gmail.com","");  
         creeUtilisateur("Ringo", "Starr", "rstarr","@gmail.com","");  
-        creeUtilisateur("Georges", "Harisson", "georgesH","@gmail.com","");  
+        creeUtilisateur("Georges", "Harisson", "georgesH","@gmail.com","");
     }  
   
     public Utilisateur creeUtilisateur(String nom, String prenom, String login, String email, String motDePasse) {  
@@ -74,7 +75,15 @@ public class GestionnaireUtilisateurs {
         }
     }
     
-    
+    public Album creerAlbum(String nom, Utilisateur u) {
+        Album a = new Album(nom, u);
+        
+        em.persist(a);
+        
+        u.ajouterAlbum(a);
+        
+        return a;
+    }
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

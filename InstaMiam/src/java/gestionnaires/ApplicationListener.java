@@ -9,6 +9,7 @@ package gestionnaires;
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import modeles.Utilisateur;
 
 /**
  * le listener de l'application web InstaMiam.
@@ -23,7 +24,10 @@ public class ApplicationListener implements ServletContextListener {
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        gestionnaireUtilisateurs.creeUtilisateur("Jean", "Bon", "test", "test", "test");        
+        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur("Jean", "Bon", "test", "test", "test");
+        gestionnaireUtilisateurs.creerAlbum("Album 1", u);
+        gestionnaireUtilisateurs.creerAlbum("Album 2", u);
+        gestionnaireUtilisateurs.creerAlbum("Album 3", u);
     }
 
     @Override

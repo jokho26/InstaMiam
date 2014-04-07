@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,13 +26,17 @@ public class Album implements Serializable {
     private int id;
 
     private String nomAlbum;
+    
+    @ManyToOne
+    private Utilisateur utilisateur;
 
     public Album() {
         
     }
     
-    public Album(String nomAlbum) {
+    public Album(String nomAlbum, Utilisateur utilisateur) {
         this.nomAlbum=nomAlbum;
+        this.utilisateur=utilisateur;
     }
     
     public String getNomAlbum() {
