@@ -22,6 +22,16 @@
             <button type="button" class="btn btn-primary">{{tab_lang.mes_albums.ajouter_photo}}</button><br>
             <br><br>
             
+            <!-- formulaire de test -->
+            <form method="POST" action="${pageContext.servletContext.contextPath}/Albums" enctype="multipart/form-data" >
+            Fichier 1 : 
+            <input type="file" name="file" id="file" /> <br/>
+            Fichier 2 : 
+            <input type="file" name="file" id="file2" /> <br/>
+            </br>
+            <input type="hidden" name="action" value="upload"/> 
+            <input type="submit" value="Upload" name="upload" id="upload" />
+        </form>
         </div>
         
         <div class="bottom_div">
