@@ -30,11 +30,19 @@ public class Album implements Serializable {
     @ManyToOne
     private Utilisateur utilisateur;
 
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
     public Album() {
         
     }
     
-    public Album(String nomAlbum, Utilisateur utilisateur) {
+    public Album(String nomAlbum) {
         this.nomAlbum=nomAlbum;
         this.utilisateur=utilisateur;
     }

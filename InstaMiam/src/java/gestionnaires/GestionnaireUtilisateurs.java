@@ -77,11 +77,11 @@ public class GestionnaireUtilisateurs {
     }
     
     public Album creerAlbum(String nom, Utilisateur u) {
-        Album a = new Album(nom, u);
-        
-        u.ajouterAlbum(a);
-        
+        Album a = new Album(nom);
         em.persist(a);
+        
+        a.setUtilisateur(u);
+        u.ajouterAlbum(a);
         
         return a;
     }

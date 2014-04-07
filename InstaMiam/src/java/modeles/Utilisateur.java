@@ -49,6 +49,10 @@ public class Utilisateur implements Serializable {
      public List<Album> getAlbums() {
         return albums;
     }
+     
+     public void setAlbums(List<Album> albums) {
+        this.albums= albums;
+    }
     
     public void ajouterAlbum(Album album) {
         albums.add(album);
