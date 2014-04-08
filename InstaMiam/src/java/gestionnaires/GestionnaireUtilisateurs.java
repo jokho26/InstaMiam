@@ -37,7 +37,8 @@ public class GestionnaireUtilisateurs {
   
     public Utilisateur creeUtilisateur(String nom, String prenom, String login, String email, String motDePasse) {  
         Utilisateur u = new Utilisateur(nom, prenom, login,email,motDePasse);  
-        em.persist(u);  
+        em.persist(u);
+        em.flush();
         return u;  
     }  
   
@@ -76,23 +77,26 @@ public class GestionnaireUtilisateurs {
         }
     }
     
-    public Album creerAlbum(String nom, Utilisateur u) {
+    public Album creerAlbum(String nom, int idUser) {
+        Utilisateur u = em.find(Utilisateur.class, idUser);
+        
         Album a = new Album(nom);
         em.persist(a);
+        em.flush();
         
         a.setUtilisateur(u);
         u.ajouterAlbum(a);
-        
         return a;
     }
     
     public List<Album> getListeAlbumsByIdUser(int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
-        System.out.println("====>" + u.getAlbums().size()  + " - " + u.getLogin());
         return u.getAlbums();
         /*
-        Query q = em.createQuery("select a from Album a where a.UTILISATEUR_ID=:param");
-        q.setParameter("param", idUser);
+        Utilisateur u = em.find(Utilisateur.class, idUser);
+        
+        Query q = em.createQuery("select a from Album a where a.utilisateur=:param");
+        q.setParameter("param", u);
        
         if (q.getResultList().isEmpty()) {
             return null;

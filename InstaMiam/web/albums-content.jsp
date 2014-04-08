@@ -24,7 +24,7 @@
             
             <ul>
                 <c:forEach var="a" items="${requestScope['listeAlbums']}">  
-                    <il>{{a.nom}}</li>
+                    <li>${a.nomAlbum}</li>
                 </c:forEach>  
             </ul>
             

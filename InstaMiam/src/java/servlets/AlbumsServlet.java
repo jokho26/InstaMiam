@@ -61,7 +61,7 @@ public class AlbumsServlet extends HttpServlet {
         Utilisateur u = (Utilisateur)(session.getAttribute("utilisateurConnecte"));
         
         List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId());
-        
+        System.out.println("====>" + liste.size());
         request.setAttribute("listeAlbums", u.getAlbums());
         
          if (action != null) {

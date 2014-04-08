@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -28,6 +29,7 @@ public class Album implements Serializable {
     private String nomAlbum;
     
     @ManyToOne
+    @JoinColumn(name = "utilisateur", referencedColumnName = "id")
     private Utilisateur utilisateur;
 
     public Utilisateur getUtilisateur() {
@@ -44,7 +46,6 @@ public class Album implements Serializable {
     
     public Album(String nomAlbum) {
         this.nomAlbum=nomAlbum;
-        this.utilisateur=utilisateur;
     }
     
     public String getNomAlbum() {

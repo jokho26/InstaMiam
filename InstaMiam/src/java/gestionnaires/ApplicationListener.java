@@ -25,9 +25,9 @@ public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur("Jean", "Bon", "test", "test", "test");
-        gestionnaireUtilisateurs.creerAlbum("Album 1", u);
-        gestionnaireUtilisateurs.creerAlbum("Album 2", u);
-        gestionnaireUtilisateurs.creerAlbum("Album 3", u);
+        gestionnaireUtilisateurs.creerAlbum("Album 1", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 2", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 3", u.getId());
     }
 
     @Override
