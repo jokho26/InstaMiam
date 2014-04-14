@@ -29,11 +29,10 @@ import modeles.Utilisateur;
 
 /**
  *
- * @author Jokho
  */
-@WebServlet(name = "AlbumsServlet", urlPatterns = {"/Albums"})
+@WebServlet(name = "ListeAlbumsServlet", urlPatterns = {"/ListeAlbums"})
 @MultipartConfig
-public class AlbumsServlet extends HttpServlet {
+public class ListeAlbumsServlet extends HttpServlet {
 
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
@@ -50,7 +49,7 @@ public class AlbumsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String forwardTo="albums.jsp";
+         String forwardTo="listeAlbums.jsp";
          
         String action = request.getParameter("action");
           

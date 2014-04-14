@@ -32,7 +32,7 @@
             
             
             <!-- formulaire de test pour ajouter un album-->
-            <form method="POST" action="${pageContext.servletContext.contextPath}/Albums">
+            <form method="POST" action="${pageContext.servletContext.contextPath}/ListeAlbums">
             <input type="text" name="nomAlbum" id="nomAlbum" /> <br/>
             <input type="hidden" name="action" value="ajouterAlbum"/> 
             <input type="submit" value="Ajouter album" name="upload" id="upload" />
@@ -40,7 +40,7 @@
             <br><br><br><br><br>
             
             <!-- formulaire de test d'upload -->
-            <form method="POST" action="${pageContext.servletContext.contextPath}/Albums" enctype="multipart/form-data" >
+            <form method="POST" action="${pageContext.servletContext.contextPath}/ListeAlbums" enctype="multipart/form-data" >
             Fichier 1 : 
             <input type="file" name="file" id="file" /> <br/>
             Fichier 2 : 
