@@ -53,7 +53,7 @@ public class ListeAlbumsServlet extends HttpServlet {
          
         String action = request.getParameter("action");
           
-         // On récupere la session
+        // On récupere la session
         HttpSession session = request.getSession();
         
         Utilisateur u = (Utilisateur)(session.getAttribute("utilisateurConnecte"));

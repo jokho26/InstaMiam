@@ -24,7 +24,7 @@
             
             <ul>
                 <c:forEach var="a" items="${requestScope['listeAlbums']}">  
-                    <li>${a.nomAlbum}</li>
+                    <li><a href="${pageContext.servletContext.contextPath}/Album?idAlbum=${a.id}">${a.nomAlbum}</a></li>
                 </c:forEach>  
             </ul>
             
