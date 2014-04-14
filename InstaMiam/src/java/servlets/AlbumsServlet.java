@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,58 +58,57 @@ public class AlbumsServlet extends HttpServlet {
         HttpSession session = request.getSession();
         
         Utilisateur u = (Utilisateur)(session.getAttribute("utilisateurConnecte"));
-        
-        List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId());
-        System.out.println("====>" + liste.size());
-        request.setAttribute("listeAlbums", u.getAlbums());
+        request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId()));
         
          if (action != null) {
-             if (action.equals("AjouterAlbum")) {
-                 
+             if (action.equals("ajouterAlbum")) {
+                 String nomAlbum = request.getParameter("nomAlbum");
+                 gestionnaireUtilisateurs.creerAlbum(nomAlbum, u.getId());
+                 request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId()));
              }
              else if (action.equals("upload")) {
                 
                  // Create path components to save the file
-            final String path = "";
-            final Part filePart = request.getPart("file");
-            final String fileName = getFileName(filePart);
+                final String path = "";
+                final Part filePart = request.getPart("file");
+                final String fileName = getFileName(filePart);
 
-                OutputStream out = null;
-                InputStream filecontent = null;
-            final PrintWriter writer = response.getWriter();
+                    OutputStream out = null;
+                    InputStream filecontent = null;
+                final PrintWriter writer = response.getWriter();
 
-            try {
-                System.out.println("+++++> Début try catch");
-                out = new FileOutputStream(new File(path + File.separator
-                        + fileName));
-                filecontent = filePart.getInputStream();
+                try {
+                    System.out.println("+++++> Début try catch");
+                    out = new FileOutputStream(new File(path + File.separator
+                            + fileName));
+                    filecontent = filePart.getInputStream();
 
-                int read = 0;
-                final byte[] bytes = new byte[1024];
-                
-                System.out.println("+++++> Début read");
-                while ((read = filecontent.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
+                    int read = 0;
+                    final byte[] bytes = new byte[1024];
+
+                    System.out.println("+++++> Début read");
+                    while ((read = filecontent.read(bytes)) != -1) {
+                        out.write(bytes, 0, read);
+                    }
+                    System.out.println("New file " + fileName + " created at " + path);
+                    System.out.println(new File(path + File.separator
+                            + fileName).getAbsolutePath());
+
+                } catch (FileNotFoundException fne) {
+                    System.out.println("You either did not specify a file to upload or are "
+                            + "trying to upload a file to a protected or nonexistent "
+                            + "location.");
+                } finally {
+                    if (out != null) {
+                        out.close();
+                    }
+                    if (filecontent != null) {
+                        filecontent.close();
+                    }
+                    if (writer != null) {
+                        writer.close();
+                    }
                 }
-                System.out.println("New file " + fileName + " created at " + path);
-                System.out.println(new File(path + File.separator
-                        + fileName).getAbsolutePath());
-                
-            } catch (FileNotFoundException fne) {
-                System.out.println("You either did not specify a file to upload or are "
-                        + "trying to upload a file to a protected or nonexistent "
-                        + "location.");
-            } finally {
-                if (out != null) {
-                    out.close();
-                }
-                if (filecontent != null) {
-                    filecontent.close();
-                }
-                if (writer != null) {
-                    writer.close();
-                }
-            }
             }
         }
         
