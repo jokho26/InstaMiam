@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modeles.Utilisateur;
 
 /**
  * Servlet pour l'inscription de l'utilisateur au site.
@@ -48,9 +49,20 @@ public class InscriptionServlet extends HttpServlet {
                 String email = (String) request.getParameter("email");
                 String mdp = (String) request.getParameter("mdp");
                 
+                // Cas de tous les champs contenant une information
                 if (login != null && mdp != null && nom != null && prenom != null && email != null) {
-                    gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, login, email, email);
-                    request.setAttribute("message", "Nouvel utilisateur " + login + " crée.");
+                    // Cas d'un champ non rempli
+                    if (login.trim().equals("") || mdp.trim().equals("") || nom.trim().equals("") ||
+                            prenom.trim().equals("") || email.trim().equals("")) {
+                        request.setAttribute("messageErreur", "Information incomplètes !");
+                    }
+                    else { // Sinon, tous les champss sont remplis
+                        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, login, email, email);
+                        if (u == null) 
+                            request.setAttribute("messageErreur", "Login déjà utilisé. Veuillez en choisir un autre.");
+                        else
+                             request.setAttribute("message", "Nouvel utilisateur " + login + " crée.");
+                    }
                 }
                 else{
                     request.setAttribute("messageErreur", "Information incomplètes !");

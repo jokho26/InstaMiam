@@ -36,11 +36,27 @@ public class GestionnaireUtilisateurs {
     }  
   
     public Utilisateur creeUtilisateur(String nom, String prenom, String login, String email, String motDePasse) {  
-        Utilisateur u = new Utilisateur(nom, prenom, login,email,motDePasse);  
-        em.persist(u);
-        em.flush();
-        return u;  
-    }  
+        // Si le login est déjà utilisé dans la base de données on ne créer pas le comptes
+        if (isLoginUsef(login)) {
+            return null;
+        }
+        else {
+            Utilisateur u = new Utilisateur(nom, prenom, login,email,motDePasse);  
+            em.persist(u);
+            em.flush();
+            return u;
+        }
+    }
+    
+    public boolean isLoginUsef(String login) {
+        Query q = em.createQuery("select u from Utilisateur u where u.login=:param");
+        q.setParameter("param", login);
+       
+        if (q.getResultList().isEmpty())
+            return false;
+        else
+            return true;
+    }
   
     /**
      * TODO à virer ?
