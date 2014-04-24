@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import modeles.Album;
+import modeles.Photo;
 import modeles.Utilisateur;
 
 /**
@@ -105,6 +106,19 @@ public class GestionnaireUtilisateurs {
         return a;
     }
     
+    public Photo creerPhoto(String nom, String nomFichier, int idAlbum) {
+        Album a = em.find(Album.class, idAlbum);
+        Photo p = new Photo(nom, nomFichier);
+        
+        em.persist(p);
+        em.flush();
+        
+        p.setAlbum(a);
+        a.ajouterPhoto(p);
+        
+        return p;
+    }
+    
     public List<Album> getListeAlbumsByIdUser(int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
         return u.getAlbums();
@@ -120,8 +134,7 @@ public class GestionnaireUtilisateurs {
         else {
             return q.getResultList();
         }*/
-    }
-    
+    }     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }

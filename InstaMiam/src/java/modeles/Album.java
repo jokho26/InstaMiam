@@ -7,13 +7,14 @@
 package modeles;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -28,6 +29,9 @@ public class Album implements Serializable {
 
     private String nomAlbum;
     
+    @OneToMany(mappedBy = "album")
+    private List<Photo> photos;
+
     @ManyToOne
     @JoinColumn(name = "utilisateur", referencedColumnName = "id")
     private Utilisateur utilisateur;
@@ -87,6 +91,18 @@ public class Album implements Serializable {
     @Override
     public String toString() {
         return "modeles.Album[ id=" + id + " ]";
+    }
+    
+    
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+    public void ajouterPhoto(Photo photo) {
+        photos.add(photo);
     }
     
 }

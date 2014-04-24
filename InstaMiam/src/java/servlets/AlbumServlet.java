@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Album;
+import modeles.Photo;
 import modeles.Utilisateur;
 
 /**
@@ -58,7 +59,11 @@ public class AlbumServlet extends HttpServlet {
             if (a.getId() == idAlbum) 
                 albumAAfficher=a;
         
-        request.setAttribute("album", albumAAfficher); 
+        request.setAttribute("album", albumAAfficher);
+        
+        System.out.println("+++++" + albumAAfficher+" +++++++");
+        for(Photo p : albumAAfficher.getPhotos())
+            System.out.println(p.getNom() + " - " + p.getNomFichier());
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 

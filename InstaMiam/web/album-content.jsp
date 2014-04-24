@@ -18,7 +18,15 @@
         
         <div class="content_div">
             <center><h1 class="ruge">${album.nomAlbum}</h1></center>
+            <br><br>
+            <ul>
+            <c:forEach var="p" items="${album.photos}">  
+                <li>${p.nom}</li>
+            </c:forEach>  
+        </ul>
         </div>
+        
+        
         
         <div class="bottom_div">
 
