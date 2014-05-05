@@ -70,6 +70,8 @@ public class ListeAlbumsServlet extends HttpServlet {
             }
         }
         
+         
+         
          RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
@@ -77,7 +79,7 @@ public class ListeAlbumsServlet extends HttpServlet {
     
     private void enregistrerFichier(HttpServletRequest request) throws ServletException, IOException {
         // Create path components to save the file
-        final String path = "";
+        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "albums";
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
 
@@ -85,7 +87,6 @@ public class ListeAlbumsServlet extends HttpServlet {
         InputStream filecontent = null;
 
         try {
-            System.out.println("+++++> Début try catch");
             out = new FileOutputStream(new File(path + File.separator
                     + fileName));
             filecontent = filePart.getInputStream();
@@ -93,15 +94,14 @@ public class ListeAlbumsServlet extends HttpServlet {
             int read = 0;
             final byte[] bytes = new byte[1024];
 
-            System.out.println("+++++> Début read");
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            System.out.println("New file " + fileName + " created at " + path);
             System.out.println(new File(path + File.separator
                     + fileName).getAbsolutePath());
 
         } catch (FileNotFoundException fne) {
+            // TODO
             System.out.println("You either did not specify a file to upload or are "
                     + "trying to upload a file to a protected or nonexistent "
                     + "location.");

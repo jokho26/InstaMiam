@@ -36,7 +36,7 @@
             <input type="text" name="nomAlbum" id="nomAlbum" /> <br/>
             <input type="hidden" name="action" value="ajouterAlbum"/> 
             <input type="submit" value="Ajouter album" name="upload" id="upload" />
-            
+            </form>
             <br><br><br><br><br>
             
             <!-- formulaire de test d'upload -->
