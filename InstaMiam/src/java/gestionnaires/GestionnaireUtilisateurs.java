@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import modeles.Album;
+import modeles.Commentaire;
 import modeles.Photo;
 import modeles.Utilisateur;
 
@@ -118,6 +119,30 @@ public class GestionnaireUtilisateurs {
         
         return p;
     }
+    
+    public void ajouterCommentairePhoto(Photo photo, Utilisateur auteur, String text) {
+        Commentaire c = new Commentaire(text);
+        em.persist(c);
+        em.flush();
+        
+        Photo p = em.find(Photo.class, photo.getId());
+        p.ajouterCommentaire(c);
+        c.setAuteur(em.find(Utilisateur.class, auteur.getId()));
+        c.setPhoto(p);
+    }
+    
+    public void ajouterCommentaireAlbum(Album album, Utilisateur auteur, String text) {
+        Commentaire c = new Commentaire(text);
+        
+        em.persist(c);
+        em.flush();
+        
+        Album a = em.find(Album.class, album.getId());
+        a.ajouterCommentaire(c);
+        c.setAlbum(a);
+        c.setAuteur(em.find(Utilisateur.class, auteur.getId()));
+    }
+    
     
     public List<Album> getListeAlbumsByIdUser(int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);

@@ -24,7 +24,14 @@
             
             <ul>
                 <c:forEach var="a" items="${requestScope['listeAlbums']}">  
-                    <li><a href="${pageContext.servletContext.contextPath}/Album?idAlbum=${a.id}">${a.nomAlbum}</a></li>
+                    <li><a href="${pageContext.servletContext.contextPath}/Album?idAlbum=${a.id}">${a.nomAlbum}</a>
+                        <ul>
+                            <c:forEach var="c" items="${a.commentaires}">
+                            <li>${c.text} - ${c.auteur.nom} ${c.auteur.prenom}</li>
+                            </c:forEach>
+                        </ul>
+                        
+                    </li>
                 </c:forEach>  
             </ul>
             

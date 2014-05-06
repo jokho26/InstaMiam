@@ -13,7 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Album;
+import modeles.Commentaire;
 import modeles.Utilisateur;
 
 /**
@@ -58,6 +60,22 @@ public class ListeAlbumsServlet extends HttpServlet {
         
         Utilisateur u = (Utilisateur)(session.getAttribute("utilisateurConnecte"));
         request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId()));
+        
+        List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId());
+        
+        for (Album a : liste) {
+            System.out.println(a.getNomAlbum() + ": ");
+            if (a.getCommentaires() != null) {
+                List<Commentaire> listeC = a.getCommentaires();
+                for (Commentaire c : listeC)
+                    System.out.println("  "  + c.getText());
+            }
+            else {
+                System.out.println("  Vide");
+            }
+            System.out.println();
+        }
+        
         
          if (action != null) {
              if (action.equals("ajouterAlbum")) {

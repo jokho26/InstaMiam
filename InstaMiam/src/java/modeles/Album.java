@@ -32,6 +32,9 @@ public class Album implements Serializable {
     @OneToMany(mappedBy = "album")
     private List<Photo> photos;
 
+    @OneToMany(mappedBy = "album")
+    private List<Commentaire> commentaires;
+    
     @ManyToOne
     @JoinColumn(name = "utilisateur", referencedColumnName = "id")
     private Utilisateur utilisateur;
@@ -103,6 +106,18 @@ public class Album implements Serializable {
     }
     public void ajouterPhoto(Photo photo) {
         photos.add(photo);
+    }
+
+    public List<Commentaire> getCommentaires() {
+        return commentaires;
+    }
+
+    public void setCommentaires(List<Commentaire> commentaires) {
+        this.commentaires = commentaires;
+    }
+    
+    public void ajouterCommentaire(Commentaire c) {
+        this.commentaires.add(c);
     }
     
 }

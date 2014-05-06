@@ -7,12 +7,14 @@
 package modeles;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * 
@@ -27,6 +29,9 @@ public class Photo implements Serializable {
     private String nom;
 
     private String nomFichier;
+    
+    @OneToMany(mappedBy = "photo")
+    private List<Commentaire> commentaires;
     
     public Photo() {
         nom = "";
@@ -98,6 +103,18 @@ public class Photo implements Serializable {
     @Override
     public String toString() {
         return "modeles.Photo[ id=" + id + " ]";
+    }
+
+    public List<Commentaire> getCommentaires() {
+        return commentaires;
+    }
+
+    public void setCommentaires(List<Commentaire> commentaires) {
+        this.commentaires = commentaires;
+    }
+    
+        public void ajouterCommentaire(Commentaire c) {
+        this.commentaires.add(c);
     }
     
 }
