@@ -30,6 +30,14 @@ public class ApplicationListener implements ServletContextListener {
         Album a = gestionnaireUtilisateurs.creerAlbum("Album 1", u.getId());
         gestionnaireUtilisateurs.creerAlbum("Album 2", u.getId());
         gestionnaireUtilisateurs.creerAlbum("Album 3", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 4", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 5", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 6", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 7", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 8", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 9", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 10", u.getId());
+        gestionnaireUtilisateurs.creerAlbum("Album 11", u.getId());
         
         gestionnaireUtilisateurs.creerPhoto("Photo 1", "Photo1.png", a.getId());
         gestionnaireUtilisateurs.creerPhoto("Photo 2", "Photo2.png", a.getId());
