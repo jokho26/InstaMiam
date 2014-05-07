@@ -41,6 +41,8 @@ public class InscriptionServlet extends HttpServlet {
         
         String action = request.getParameter("action");
         
+        String forwardTo = "inscription.jsp";
+        
         if (action != null) {
             if (action.equals("creerUtilisateur")) {
                 String login = (String) request.getParameter("login");
@@ -60,8 +62,10 @@ public class InscriptionServlet extends HttpServlet {
                         Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, login, email, email);
                         if (u == null) 
                             request.setAttribute("messageErreur", "Login déjà utilisé. Veuillez en choisir un autre.");
-                        else
+                        else  {
                              request.setAttribute("message", "Nouvel utilisateur " + login + " crée.");
+                             forwardTo = "connexion.jsp";
+                        }
                     }
                 }
                 else{
@@ -70,7 +74,7 @@ public class InscriptionServlet extends HttpServlet {
             }
         }
         
-        String forwardTo = "inscription.jsp";
+        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
