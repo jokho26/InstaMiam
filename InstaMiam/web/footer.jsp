@@ -1,6 +1,6 @@
 
 
-<<div id="footer">
+<div id="footer">
     <div class="footer-splash"></div>
     <div id="wrapper_footer">
         <div class="container" id="content">
