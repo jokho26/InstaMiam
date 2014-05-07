@@ -31,7 +31,8 @@
         mes_albums : {
             titre : "Mes albums",
             creer_album : "Créer un album",
-            ajouter_photo : "Ajouter une photo"
+            ajouter_photo : "Ajouter une photo",
+            commentaires : "commentaire(s)"
         }
 
     };
