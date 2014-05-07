@@ -24,25 +24,29 @@
         <!-- CSS perso -->
         <link rel="stylesheet" href="ressources/style.css">
 
+        <link rel="stylesheet" href="ressources/dropzone.css">
+
+
         <!-- Lib angular et controlers -->
         <script src="ressources/js/angular.min.js" type="text/javascript"></script>
         <script src="ressources/js/InstaMiamCtrl.js" type="text/javascript"></script>
         <script src="ressources/js/angular-sanitize.min.js"></script>
+        <script src="ressources/js/dropzone.js"></script>
     </head>
 
     <body ng-controller="InstaMiamCtrl">
 
-            <jsp:include page="header.jsp"/>  
+        <jsp:include page="header.jsp"/>  
         <div class="container">
 
-        <c:if test="${!empty requestScope['message']}">         
-            <div class="alert alert-info">${requestScope['message']}</div>
-        </c:if>
-        <c:if test="${!empty requestScope['messageErreur']}">         
-            <div class="alert alert-danger">${requestScope['messageErreur']}</div>
-        </c:if>  
-            
-        <jsp:include page="${param.content}.jsp"/>
+            <c:if test="${!empty requestScope['message']}">         
+                <div class="alert alert-info">${requestScope['message']}</div>
+            </c:if>
+            <c:if test="${!empty requestScope['messageErreur']}">         
+                <div class="alert alert-danger">${requestScope['messageErreur']}</div>
+            </c:if>  
+
+            <jsp:include page="${param.content}.jsp"/>
 
         </div>
 
