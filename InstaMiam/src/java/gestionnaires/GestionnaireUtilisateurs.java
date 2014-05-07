@@ -120,27 +120,27 @@ public class GestionnaireUtilisateurs {
         return p;
     }
     
-    public void ajouterCommentairePhoto(Photo photo, Utilisateur auteur, String text) {
+    public void ajouterCommentairePhoto(int idPhoto, int idAuteur, String text) {
         Commentaire c = new Commentaire(text);
         em.persist(c);
         em.flush();
         
-        Photo p = em.find(Photo.class, photo.getId());
+        Photo p = em.find(Photo.class, idPhoto);
         p.ajouterCommentaire(c);
-        c.setAuteur(em.find(Utilisateur.class, auteur.getId()));
+        c.setAuteur(em.find(Utilisateur.class, idAuteur));
         c.setPhoto(p);
     }
     
-    public void ajouterCommentaireAlbum(Album album, Utilisateur auteur, String text) {
+    public void ajouterCommentaireAlbum(int idAlbum, int idAuteur, String text) {
         Commentaire c = new Commentaire(text);
         
         em.persist(c);
         em.flush();
         
-        Album a = em.find(Album.class, album.getId());
+        Album a = em.find(Album.class, idAlbum);
         a.ajouterCommentaire(c);
         c.setAlbum(a);
-        c.setAuteur(em.find(Utilisateur.class, auteur.getId()));
+        c.setAuteur(em.find(Utilisateur.class, idAuteur));
     }
     
     

@@ -35,7 +35,7 @@ public class ApplicationListener implements ServletContextListener {
         gestionnaireUtilisateurs.creerPhoto("Photo 2", "Photo2.png", a.getId());
         gestionnaireUtilisateurs.creerPhoto("Photo 3", "Photo3.png", a.getId());
         
-        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a, u, "Commentaire 1 !");
+        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u.getId(), "Commentaire 1 !");
         
     }
 

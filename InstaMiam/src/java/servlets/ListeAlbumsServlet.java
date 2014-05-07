@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Album;
 import modeles.Commentaire;
-import modeles.Utilisateur;
 
 /**
  *
@@ -58,10 +57,10 @@ public class ListeAlbumsServlet extends HttpServlet {
         // On récupere la session
         HttpSession session = request.getSession();
         
-        Utilisateur u = (Utilisateur)(session.getAttribute("utilisateurConnecte"));
-        request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId()));
+        int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
+        request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
         
-        List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId());
+        List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur);
         
         for (Album a : liste) {
             System.out.println(a.getNomAlbum() + ": ");
@@ -80,8 +79,8 @@ public class ListeAlbumsServlet extends HttpServlet {
          if (action != null) {
              if (action.equals("ajouterAlbum")) {
                  String nomAlbum = request.getParameter("nomAlbum");
-                 gestionnaireUtilisateurs.creerAlbum(nomAlbum, u.getId());
-                 request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId()));
+                 gestionnaireUtilisateurs.creerAlbum(nomAlbum, idUtilisateur);
+                 request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
              }
              else if (action.equals("upload")) {
                 enregistrerFichier(request);

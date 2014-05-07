@@ -63,7 +63,7 @@ public class ConnexionServlet extends HttpServlet {
                     request.setAttribute("messageErreur", "Login ou mot de passe incorrect. Try again.");
                 }
                 else {
-                    session.setAttribute("utilisateurConnecte", u);
+                    session.setAttribute("utilisateurConnecte", u.getId());
                     request.setAttribute("message", "Bienvenue chez vous " + login + " !"); 
                     forwardTo="accueil.jsp";
                 }

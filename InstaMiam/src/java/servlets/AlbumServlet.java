@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Album;
 import modeles.Photo;
-import modeles.Utilisateur;
 
 /**
  *
@@ -51,11 +50,12 @@ public class AlbumServlet extends HttpServlet {
         
         // On récupere la session
         HttpSession session = request.getSession();
-        Utilisateur u = (Utilisateur)(session.getAttribute("utilisateurConnecte"));
+        int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
+        
         
         Album albumAAfficher = null;
         
-        for(Album a : gestionnaireUtilisateurs.getListeAlbumsByIdUser(u.getId()))
+        for(Album a : gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur))
             if (a.getId() == idAlbum) 
                 albumAAfficher=a;
         
