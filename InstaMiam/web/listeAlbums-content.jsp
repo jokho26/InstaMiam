@@ -44,18 +44,7 @@
             <input type="hidden" name="action" value="ajouterAlbum"/> 
             <input type="submit" value="Ajouter album" name="upload" id="upload" />
             </form>
-            <br><br><br><br><br>
-            
-            <!-- formulaire de test d'upload -->
-            <form method="POST" action="${pageContext.servletContext.contextPath}/ListeAlbums" enctype="multipart/form-data" >
-            Fichier 1 : 
-            <input type="file" name="file" id="file" /> <br/>
-            Fichier 2 : 
-            <input type="file" name="file" id="file2" /> <br/>
-            </br>
-            <input type="hidden" name="action" value="upload"/> 
-            <input type="submit" value="Upload" name="upload" id="upload" />
-        </form>
+            <br>
         </div>
         
         <div class="bottom_div">

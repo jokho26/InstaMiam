@@ -7,7 +7,12 @@
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import modeles.Album;
 import modeles.Photo;
 
@@ -52,24 +58,84 @@ public class AlbumServlet extends HttpServlet {
         HttpSession session = request.getSession();
         int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
         
-        
+        // TODO à virer ! faire un truc plus propre
         Album albumAAfficher = null;
-        
         for(Album a : gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur))
             if (a.getId() == idAlbum) 
                 albumAAfficher=a;
         
         request.setAttribute("album", albumAAfficher);
         
-        System.out.println("+++++" + albumAAfficher+" +++++++");
-        for(Photo p : albumAAfficher.getPhotos())
-            System.out.println(p.getNom() + " - " + p.getNomFichier());
+         String action = request.getParameter("action");
+        
+        if (action != null) {
+            if (action.equals("upload")) {
+                enregistrerFichier(request);
+            }
+        }
+        
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
         
     }
+    
+    
+    
+    
+    private void enregistrerFichier(HttpServletRequest request) throws ServletException, IOException {
+        // Create path components to save the file
+        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "albums";
+        final Part filePart = request.getPart("file");
+        final String fileName = getFileName(filePart);
+
+        OutputStream out = null;
+        InputStream filecontent = null;
+
+        try {
+            out = new FileOutputStream(new File(path + File.separator
+                    + fileName));
+            filecontent = filePart.getInputStream();
+
+            int read = 0;
+            final byte[] bytes = new byte[1024];
+
+            while ((read = filecontent.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            System.out.println(new File(path + File.separator
+                    + fileName).getAbsolutePath());
+
+        } catch (FileNotFoundException fne) {
+            // TODO
+            System.out.println("You either did not specify a file to upload or are "
+                    + "trying to upload a file to a protected or nonexistent "
+                    + "location.");
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+            if (filecontent != null) {
+                filecontent.close();
+            }
+        }
+    }
+    
+    private String getFileName(final Part part) {
+            final String partHeader = part.getHeader("content-disposition");
+         
+            for (String content : part.getHeader("content-disposition").split(";")) {
+                if (content.trim().startsWith("filename")) {
+                    return content.substring(
+                            content.indexOf('=') + 1).trim().replace("\"", "");
+                }
+            }
+            return null;
+        }
+
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

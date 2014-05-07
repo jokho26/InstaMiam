@@ -7,13 +7,7 @@
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -24,7 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 import modeles.Album;
 import modeles.Commentaire;
 
@@ -82,9 +75,6 @@ public class ListeAlbumsServlet extends HttpServlet {
                  gestionnaireUtilisateurs.creerAlbum(nomAlbum, idUtilisateur);
                  request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
              }
-             else if (action.equals("upload")) {
-                enregistrerFichier(request);
-            }
         }
         
          
@@ -94,56 +84,6 @@ public class ListeAlbumsServlet extends HttpServlet {
         dp.forward(request, response);
     }
     
-    private void enregistrerFichier(HttpServletRequest request) throws ServletException, IOException {
-        // Create path components to save the file
-        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "albums";
-        final Part filePart = request.getPart("file");
-        final String fileName = getFileName(filePart);
-
-        OutputStream out = null;
-        InputStream filecontent = null;
-
-        try {
-            out = new FileOutputStream(new File(path + File.separator
-                    + fileName));
-            filecontent = filePart.getInputStream();
-
-            int read = 0;
-            final byte[] bytes = new byte[1024];
-
-            while ((read = filecontent.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-            System.out.println(new File(path + File.separator
-                    + fileName).getAbsolutePath());
-
-        } catch (FileNotFoundException fne) {
-            // TODO
-            System.out.println("You either did not specify a file to upload or are "
-                    + "trying to upload a file to a protected or nonexistent "
-                    + "location.");
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-            if (filecontent != null) {
-                filecontent.close();
-            }
-        }
-    }
-    
-    private String getFileName(final Part part) {
-            final String partHeader = part.getHeader("content-disposition");
-         
-            for (String content : part.getHeader("content-disposition").split(";")) {
-                if (content.trim().startsWith("filename")) {
-                    return content.substring(
-                            content.indexOf('=') + 1).trim().replace("\"", "");
-                }
-            }
-            return null;
-        }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
