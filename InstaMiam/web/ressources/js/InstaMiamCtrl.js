@@ -30,9 +30,14 @@
         
         mes_albums : {
             titre : "Mes albums",
-            creer_album : "Créer un album",
+            nouvel_album : "Nouvel album",
+            ajouter_nouvel_album : "Ajouter un nouvel album",
+            creer_album : "Créer l'album",
             ajouter_photo : "Ajouter une photo",
-            commentaires : "commentaire(s)"
+            commentaires : "commentaire(s)",
+            nomAlbum : "Nom de l'album",
+            albumPrive : "Album privé",
+            albumPublique : "Album publique"
         }
 
     };

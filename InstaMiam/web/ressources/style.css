@@ -175,6 +175,10 @@ input{
     font-family: 'Museo500Regular', sans-serif; font-weight: normal;
 }
 
+button{
+    font-family: 'Museo500Regular', sans-serif; font-weight: normal;
+}
+
 .btn_valider{
     float:right;
 }
@@ -206,4 +210,38 @@ input{
 
 #commentaire{
     margin-top: -15px;
+}
+
+
+/*****************************
+  Liste des albums
+ *****************************/
+.modal-footer {
+    position: relative;
+}
+
+.modal-footer #ajouterAlbum{
+    padding-left: 30px;
+}
+
+.modal-footer .glyphicon {
+  position: absolute;
+    padding: 26px 12px;
+    pointer-events: none;
+}
+
+#btn_nouvel_album {
+    position: relative;
+        float: right;
+}
+
+#btn_nouvel_album button{
+    padding-left: 30px;   
+}
+
+#btn_nouvel_album .glyphicon {
+    position: absolute;
+    padding: 8px 12px;
+    pointer-events: none;
+    color:white;
 }
