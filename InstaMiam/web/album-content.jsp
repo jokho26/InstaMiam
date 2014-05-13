@@ -19,7 +19,7 @@
             <br><br>
             <ul>
                 <c:forEach var="p" items="${album.photos}">  
-                    <li>${p.nom}</li>
+                    <li><a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">${p.nom}</a></li>
                     </c:forEach>
             </ul>
             <br>
@@ -43,7 +43,7 @@
             <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
                 <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
                 <input type="hidden" name="action" value="ajouterCommentaire"/>
-                <input type="hidden" value="${idAlbum}" name="idAlbum" id="upload" />
+                <input type="hidden" value="${idAlbum}" name="idAlbum"/>
                 <input type="submit" name="submit" value="Poster" />
             </form>
             
