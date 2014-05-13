@@ -52,7 +52,12 @@ public class AlbumServlet extends HttpServlet {
        
         String forwardTo="album.jsp";
         
-        int idAlbum = Integer.parseInt(request.getParameter("idAlbum"));
+        Object idAlbumObject = request.getParameter("idAlbum");
+        
+        int idAlbum = -1;
+        
+        if (idAlbumObject != null)
+            idAlbum = Integer.parseInt(request.getParameter("idAlbum"));
         
         // On récupere la session
         HttpSession session = request.getSession();
@@ -66,14 +71,15 @@ public class AlbumServlet extends HttpServlet {
         
         request.setAttribute("album", albumAAfficher);
         
-         String action = request.getParameter("action");
+        String action = request.getParameter("action");
         
+        System.out.println("======> Action : " + action);
         if (action != null) {
             if (action.equals("upload")) {
+                System.out.println("UPLOAD");
                 enregistrerFichier(request);
             }
-        }
-        
+        }        
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 

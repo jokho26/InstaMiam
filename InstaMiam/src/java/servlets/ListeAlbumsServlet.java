@@ -53,8 +53,9 @@ public class ListeAlbumsServlet extends HttpServlet {
         int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
         request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
         
-        List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur);
+        /* List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur);
         
+         TODO à virer, sert pour des verif
         for (Album a : liste) {
             System.out.println(a.getNomAlbum() + ": ");
             if (a.getCommentaires() != null) {
@@ -66,7 +67,7 @@ public class ListeAlbumsServlet extends HttpServlet {
                 System.out.println("  Vide");
             }
             System.out.println();
-        }
+        }*/
         
         
          if (action != null) {
