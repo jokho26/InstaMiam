@@ -38,6 +38,10 @@
             nomAlbum : "Nom de l'album",
             albumPrive : "Album privé",
             albumPublique : "Album publique"
+        },
+        
+        album : {
+            posterCommentaire : "Votre commentaire ..."
         }
 
     };

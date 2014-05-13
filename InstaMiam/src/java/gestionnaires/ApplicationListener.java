@@ -9,6 +9,7 @@ package gestionnaires;
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.http.HttpSession;
 import modeles.Album;
 import modeles.Photo;
 import modeles.Utilisateur;
@@ -44,7 +45,8 @@ public class ApplicationListener implements ServletContextListener {
         gestionnaireUtilisateurs.creerPhoto("Photo 3", "Photo3.png", a.getId());
         
         gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u.getId(), "Commentaire 1 !");
-        
+        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u.getId(), "Commentaire 2 !");
+        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u.getId(), "Commentaire 3 !");
     }
 
     @Override

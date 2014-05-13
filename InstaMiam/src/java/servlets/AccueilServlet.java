@@ -15,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modeles.Utilisateur;
 
 /**
  *  Servlet de l'accueil de l'application InstaMiam
@@ -38,7 +40,13 @@ public class AccueilServlet extends HttpServlet {
             throws ServletException, IOException {
         
         //String forwardTo = "accueil.jsp";
-        String forwardTo = "inscription.jsp";
+                
+        // On se connecte directement comme l'utilisateur test
+        Utilisateur u = gestionnaireUtilisateurs.getUserByConnexion("test", "test");
+        HttpSession session = request.getSession();
+        session.setAttribute("utilisateurConnecte", u.getId());
+        
+        String forwardTo = "/ListeAlbums";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);

@@ -31,9 +31,23 @@
                  <input type="hidden" value="${idAlbum}" name="idAlbum" id="upload" />
                  <input type="hidden" name="action" value="upload"/>
             </form>
-            <br>    
+            <br>
+            
+            <!-- Partie des commentaires -->
+            <ul>
+                <c:forEach var="c" items="${album.commentaires}">  
+                    <li>${c.auteur.prenom} ${c.auteur.nom} : ${c.text}</li>
+                </c:forEach>
+            </ul>
+            
+            <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+                <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
+                <input type="hidden" name="action" value="ajouterCommentaire"/>
+                <input type="hidden" value="${idAlbum}" name="idAlbum" id="upload" />
+                <input type="submit" name="submit" value="Poster" />
+            </form>
+            
         </div>
-
         <div class="bottom_div"></div>
     </div>
 

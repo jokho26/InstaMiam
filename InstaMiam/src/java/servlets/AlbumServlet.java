@@ -56,22 +56,16 @@ public class AlbumServlet extends HttpServlet {
         
         int idAlbum = -1;
         
-        if (idAlbumObject != null)
+        if (idAlbumObject != null) {
             idAlbum = Integer.parseInt(request.getParameter("idAlbum"));
+            request.setAttribute("idAlbum", idAlbum);
+        }
         
         // On récupere la session
         HttpSession session = request.getSession();
         int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
         
-        // TODO à virer ! faire un truc plus propre
-        Album albumAAfficher = null;
-        for(Album a : gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur))
-            if (a.getId() == idAlbum) 
-                albumAAfficher=a;
-        
-        request.setAttribute("album", albumAAfficher);
-        
-        String action = request.getParameter("action");
+               String action = request.getParameter("action");
         
         System.out.println("======> Action : " + action);
         if (action != null) {
@@ -79,7 +73,26 @@ public class AlbumServlet extends HttpServlet {
                 System.out.println("UPLOAD");
                 enregistrerFichier(request);
             }
-        }        
+            else if (action.equals("ajouterCommentaire")) {
+                // Recupération des paramètres du formulaire
+                String text = request.getParameter("commentaire");
+                System.out.println("Ajout de commentaire : " + idAlbum + " - " + text);
+                if (idAlbum > 0 && text != null) {
+                    gestionnaireUtilisateurs.ajouterCommentaireAlbum(idAlbum, idUtilisateur, text);
+             }
+                
+            }
+        }
+        
+         // TODO à virer ! faire un truc plus propre
+        Album albumAAfficher = null;
+        for(Album a : gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur))
+            if (a.getId() == idAlbum) 
+                albumAAfficher=a;
+        
+        request.setAttribute("album", albumAAfficher);
+        
+
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
