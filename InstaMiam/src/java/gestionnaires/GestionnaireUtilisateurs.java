@@ -94,7 +94,7 @@ public class GestionnaireUtilisateurs {
                 return null;
         }
     }
-    
+
     public Album creerAlbum(String nom, int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
         
@@ -166,4 +166,13 @@ public class GestionnaireUtilisateurs {
     public Photo getPhotoById(int idPhoto) {
         return em.find(Photo.class, idPhoto);
     }
+    
+    
+    public List<Utilisateur> getAllOtherUser(int idUtilisateur) {
+        Query q = em.createQuery("select u from Utilisateur u where u.id!=:param");
+        q.setParameter("param", idUtilisateur);
+        
+        return q.getResultList();
+    }
+    
 }

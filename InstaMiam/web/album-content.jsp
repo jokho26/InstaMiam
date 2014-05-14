@@ -1,5 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
-
+<script src="ressources/js/Albumjs.js"></script>
 
 
 <div class="row">
@@ -17,6 +17,11 @@
         <div class="content_div">
             <center><h1 class="ruge">${album.nomAlbum}</h1></center>
             <br><br>
+            <div class="ui-widget">
+                <label for="tags">Tags: </label>
+                <input id="tags">
+            </div>
+            
             <ul>
                 <c:forEach var="p" items="${album.photos}">  
                     <li><a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">${p.nom}</a></li>
