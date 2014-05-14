@@ -1,5 +1,18 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <script src="ressources/js/Albumjs.js"></script>
+<script>
+$(function() {
+    var availableTags = [
+        <c:forEach var="u" items="${listeUtilisateur}">  
+            "${u.prenom} ${u.nom}",
+        </c:forEach>
+    ""
+    ];
+    $( "#tags" ).autocomplete({
+        source: availableTags
+    });
+});
+</script>
 
 
 <div class="row">
@@ -17,10 +30,12 @@
         <div class="content_div">
             <center><h1 class="ruge">${album.nomAlbum}</h1></center>
             <br><br>
-            <div class="ui-widget">
-                <label for="tags">Tags: </label>
+            
+            <!-- Formulaire de test pour l'autocomplétion -->
+            <form class="ui-widget" action="">
                 <input id="tags">
-            </div>
+                <input type="button" name="submit" value="Ajouter" onClick="ajouterUtilisateurAlbum();"/>
+            </form>
             
             <ul>
                 <c:forEach var="p" items="${album.photos}">  

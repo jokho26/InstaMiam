@@ -91,8 +91,9 @@ public class AlbumServlet extends HttpServlet {
         
         request.setAttribute("album", albumAAfficher);
         
+        // On ajoute la liste des utilisateurs
+        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
 
-        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
