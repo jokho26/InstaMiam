@@ -19,7 +19,6 @@ Dropzone.options.myAwesomeDropzone = {
     else { 
         done();
         listeFichierUpload.push(file.name);
-        console.log(listeFichierUpload);
     }
   },
   addRemoveLinks : true
