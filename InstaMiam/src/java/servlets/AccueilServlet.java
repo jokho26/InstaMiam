@@ -46,7 +46,7 @@ public class AccueilServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("utilisateurConnecte", u.getId());
         
-        String forwardTo = "/ListeAlbums";
+        String forwardTo = "/Album?idAlbum=2";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);

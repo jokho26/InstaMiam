@@ -12,6 +12,13 @@ $(function() {
         source: availableTags
     });
 });
+
+function removeFile(file) {
+    $.ajax({
+        url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=0&id="+file.name
+    });
+};
+
 </script>
 
 
@@ -45,11 +52,16 @@ $(function() {
             <br>
 
             <!-- formulaire de test d'upload -->
-            <form method="POST" action="${pageContext.servletContext.contextPath}/Album" enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
-                  
-                 <input type="submit" value="Upload" name="btnUpload" id="upload" />
+            <form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=UploadFile&idTransaction=0" 
+                  enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
+            </form>
+            
+            <!-- Formulaire de validation -->
+            <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+                <input type="submit" value="Upload" name="btnUpload" id="upload" />
                  <input type="hidden" value="${idAlbum}" name="idAlbum" id="upload" />
                  <input type="hidden" name="action" value="upload"/>
+                 <input type="hidden" name="idTransaction" value="0"/>
             </form>
             <br>
             
