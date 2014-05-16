@@ -12,12 +12,12 @@ $(function() {
         source: availableTags
     });
 });
-
+/*
 function removeFile(file) {
     $.ajax({
         url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=0&id="+file.name
     });
-};
+};*/
 
 </script>
 
