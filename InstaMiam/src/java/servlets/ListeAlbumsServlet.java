@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
@@ -30,7 +29,7 @@ public class ListeAlbumsServlet extends HttpServlet {
 
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,48 +42,44 @@ public class ListeAlbumsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String forwardTo="listeAlbums.jsp";
-         
+        String forwardTo = "listeAlbums.jsp";
+
         String action = request.getParameter("action");
-          
+
         // On récupere la session
         HttpSession session = request.getSession();
-        
-        int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
+
+        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
         request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
-        
+
         /* List<Album> liste = gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur);
         
          TODO à virer, sert pour des verif
-        for (Album a : liste) {
-            System.out.println(a.getNomAlbum() + ": ");
-            if (a.getCommentaires() != null) {
-                List<Commentaire> listeC = a.getCommentaires();
-                for (Commentaire c : listeC)
-                    System.out.println("  "  + c.getText());
+         for (Album a : liste) {
+         System.out.println(a.getNomAlbum() + ": ");
+         if (a.getCommentaires() != null) {
+         List<Commentaire> listeC = a.getCommentaires();
+         for (Commentaire c : listeC)
+         System.out.println("  "  + c.getText());
+         }
+         else {
+         System.out.println("  Vide");
+         }
+         System.out.println();
+         }*/
+        if (action != null) {
+            if (action.equals("ajouterAlbum")) {
+                String nomAlbum = request.getParameter("nomAlbum");
+                gestionnaireUtilisateurs.creerAlbum(nomAlbum, idUtilisateur);
+                request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
             }
-            else {
-                System.out.println("  Vide");
-            }
-            System.out.println();
-        }*/
-        
-        
-         if (action != null) {
-             if (action.equals("ajouterAlbum")) {
-                 String nomAlbum = request.getParameter("nomAlbum");
-                 gestionnaireUtilisateurs.creerAlbum(nomAlbum, idUtilisateur);
-                 request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
-             }
         }
-        
-         
-         
-         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+
+        RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
