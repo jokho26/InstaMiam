@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -66,20 +67,20 @@ public class AlbumServlet extends HttpServlet {
         HttpSession session = request.getSession();
         int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
         
-               String action = request.getParameter("action");
+        String action = request.getParameter("action");
         
         System.out.println("======> Action : " + action);
         if (action != null) {
             if (action.equals("uploadFile")) {
-                System.out.println("uploadFile");
                 enregistrerFichier(request);
             }
             else if (action.equals("removeFile")) {
                 // TODO ajouter des verifications
                 Object nomFichierObject = request.getParameter("nameFile");
+                Object idTransaction = request.getParameter("idTransaction");
  
-                if (nomFichierObject != null) {
-                    removeFile((String)nomFichierObject);
+                if (nomFichierObject != null && idTransaction != null) {
+                    removeFile((String)nomFichierObject, (String)idTransaction);
                 }
             }
             else if (action.equals("validUpload")) {
@@ -90,8 +91,7 @@ public class AlbumServlet extends HttpServlet {
                 String text = request.getParameter("commentaire");
                 if (idAlbum > 0 && text != null) {
                     gestionnaireUtilisateurs.ajouterCommentaireAlbum(idAlbum, idUtilisateur, text);
-             }
-                
+             }   
             }
         }
         
@@ -103,9 +103,10 @@ public class AlbumServlet extends HttpServlet {
         
         request.setAttribute("album", albumAAfficher);
         
-        // On ajoute la liste des utilisateurs
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
-
+        // Ajout d'un identifiant unique pour la transaction d'ajout de photos
+        UUID idTransaction = UUID.randomUUID();
+         request.setAttribute("idTransaction", idTransaction.toString());
+        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
@@ -116,8 +117,18 @@ public class AlbumServlet extends HttpServlet {
     
     
     private void enregistrerFichier(HttpServletRequest request) throws ServletException, IOException {
+         Object idTransactionObject = request.getParameter("idTransaction");
+        if (idTransactionObject == null)
+            return;
+        String idTransaction = (String)idTransactionObject;
+        
         // Create path components to save the file
-        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "tmp";
+        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "tmp"+ File.separator+idTransaction;
+        
+        // Création du repertoire de destination
+        File dir = new File(path);
+        dir.mkdir();
+        
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
 
@@ -165,8 +176,8 @@ public class AlbumServlet extends HttpServlet {
             return null;
         }
 
-    private void removeFile(String nom) {
-        String cheminFichier = getServletConfig().getServletContext().getRealPath("/") + "tmp"+File.separator+nom;
+    private void removeFile(String nom, String idTransaction) {
+        String cheminFichier = getServletConfig().getServletContext().getRealPath("/")+ "tmp"+File.separator+idTransaction+File.separator+nom;
         File file = new File(cheminFichier);
         file.delete();
     }
