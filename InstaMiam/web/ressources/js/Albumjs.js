@@ -1,6 +1,12 @@
+var listeFichierUpload = [];
+
 function ajouterUtilisateurAlbum(){
     console.log($("#tags").val() + " !");
 }
+
+function removeFile(file) {
+    listeFichierUpload.splice(listeFichierUpload.indexOf(file.name),1);
+};
 
 Dropzone.options.myAwesomeDropzone = {
   paramName: "file", // Le nom de l'input contenant le fichier
@@ -10,7 +16,10 @@ Dropzone.options.myAwesomeDropzone = {
     if (file.name == "justinbieber.jpg") {
       done("Naha, you don't.");
     }
-    else { done(); }
+    else { 
+        done();
+        listeFichierUpload.push(file.name);
+    }
   },
   addRemoveLinks : true
 };
@@ -26,5 +35,4 @@ $(function() {
     myDropzone.on("removedfile", function(file) {
       removeFile(file);
     });
-
 });
