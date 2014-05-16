@@ -74,6 +74,9 @@ public class AlbumServlet extends HttpServlet {
                 System.out.println("uploadFile");
                 enregistrerFichier(request);
             }
+            else if (action.equals("removeFile")) {
+                System.out.println("removeFile");
+            }
             else if (action.equals("validUpload")) {
                 System.out.println("validUpload");
             }

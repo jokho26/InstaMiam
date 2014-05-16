@@ -6,13 +6,10 @@
 
 package gestionnaires;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.http.HttpSession;
 import modeles.Album;
-import modeles.Photo;
 import modeles.Utilisateur;
 
 /**

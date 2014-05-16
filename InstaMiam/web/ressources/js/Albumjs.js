@@ -2,10 +2,6 @@ function ajouterUtilisateurAlbum(){
     console.log($("#tags").val() + " !");
 }
 
-function removeFile(file) {
-    listeFichierUpload.splice(listeFichierUpload.indexOf(file.name),1);
-};
-
 Dropzone.options.myAwesomeDropzone = {
   paramName: "file", // Le nom de l'input contenant le fichier
   maxFilesize: 3, // Mo
