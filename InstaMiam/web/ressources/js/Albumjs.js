@@ -1,5 +1,3 @@
-var listeFichierUpload = [];
-
 function ajouterUtilisateurAlbum(){
     console.log($("#tags").val() + " !");
 }
@@ -18,7 +16,6 @@ Dropzone.options.myAwesomeDropzone = {
     }
     else { 
         done();
-        listeFichierUpload.push(file.name);
     }
   },
   addRemoveLinks : true

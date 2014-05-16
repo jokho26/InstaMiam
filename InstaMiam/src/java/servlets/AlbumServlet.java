@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import modeles.Album;
  *
  * @author Siddi Steven
  */
+@MultipartConfig
 @WebServlet(name = "AlbumServlet", urlPatterns = {"/Album"})
 public class AlbumServlet extends HttpServlet {
 
@@ -68,9 +70,12 @@ public class AlbumServlet extends HttpServlet {
         
         System.out.println("======> Action : " + action);
         if (action != null) {
-            if (action.equals("upload")) {
-                System.out.println("UPLOAD");
+            if (action.equals("uploadFile")) {
+                System.out.println("uploadFile");
                 enregistrerFichier(request);
+            }
+            else if (action.equals("validUpload")) {
+                System.out.println("validUpload");
             }
             else if (action.equals("ajouterCommentaire")) {
                 // Recupération des paramètres du formulaire
@@ -105,7 +110,7 @@ public class AlbumServlet extends HttpServlet {
     
     private void enregistrerFichier(HttpServletRequest request) throws ServletException, IOException {
         // Create path components to save the file
-        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "albums";
+        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "tmp";
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
 
