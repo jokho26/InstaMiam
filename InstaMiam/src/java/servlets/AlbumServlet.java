@@ -75,7 +75,12 @@ public class AlbumServlet extends HttpServlet {
                 enregistrerFichier(request);
             }
             else if (action.equals("removeFile")) {
-                System.out.println("removeFile");
+                // TODO ajouter des verifications
+                Object nomFichierObject = request.getParameter("nameFile");
+ 
+                if (nomFichierObject != null) {
+                    removeFile((String)nomFichierObject);
+                }
             }
             else if (action.equals("validUpload")) {
                 System.out.println("validUpload");
@@ -83,7 +88,6 @@ public class AlbumServlet extends HttpServlet {
             else if (action.equals("ajouterCommentaire")) {
                 // Recupération des paramètres du formulaire
                 String text = request.getParameter("commentaire");
-                System.out.println("Ajout de commentaire : " + idAlbum + " - " + text);
                 if (idAlbum > 0 && text != null) {
                     gestionnaireUtilisateurs.ajouterCommentaireAlbum(idAlbum, idUtilisateur, text);
              }
@@ -161,7 +165,11 @@ public class AlbumServlet extends HttpServlet {
             return null;
         }
 
-    
+    private void removeFile(String nom) {
+        String cheminFichier = getServletConfig().getServletContext().getRealPath("/") + "tmp"+File.separator+nom;
+        File file = new File(cheminFichier);
+        file.delete();
+    }
     
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
