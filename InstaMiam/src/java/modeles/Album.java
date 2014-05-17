@@ -8,6 +8,7 @@ package modeles;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +39,8 @@ public class Album implements Serializable {
     @ManyToOne
     @JoinColumn(name = "utilisateur", referencedColumnName = "id")
     private Utilisateur utilisateur;
+    
+    private String idUnique;
 
     public Utilisateur getUtilisateur() {
         return utilisateur;
@@ -53,6 +56,7 @@ public class Album implements Serializable {
     
     public Album(String nomAlbum) {
         this.nomAlbum=nomAlbum;
+        idUnique = UUID.randomUUID().toString();
     }
     
     public String getNomAlbum() {
@@ -119,5 +123,15 @@ public class Album implements Serializable {
     public void ajouterCommentaire(Commentaire c) {
         this.commentaires.add(c);
     }
+    
+    
+    public String getIdUnique() {
+        return idUnique;
+    }
+
+    public void setIdUnique(String idUnique) {
+        this.idUnique = idUnique;
+    }
+
     
 }

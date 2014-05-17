@@ -6,8 +6,10 @@
 
 package modeles;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,14 +35,17 @@ public class Photo implements Serializable {
     @OneToMany(mappedBy = "photo")
     private List<Commentaire> commentaires;
     
+     private String idUnique;
+    
     public Photo() {
         nom = "";
         nomFichier = "";
     }
     
-    public Photo(String nom, String nomFichier) {
+    public Photo(String nom) {
         this.nom = nom;
-        this.nomFichier = nomFichier;
+        idUnique = UUID.randomUUID().toString();
+        nomFichier = idUnique+nom.substring(nom.indexOf("."));
     }
     
     private static final long serialVersionUID = 1L;
@@ -115,6 +120,14 @@ public class Photo implements Serializable {
     
         public void ajouterCommentaire(Commentaire c) {
         this.commentaires.add(c);
+    }
+
+    public String getIdUnique() {
+        return idUnique;
+    }
+
+    public void setIdUnique(String idUnique) {
+        this.idUnique = idUnique;
     }
     
 }
