@@ -16,7 +16,11 @@
 
         <div class="content_div">
             <center><h1 class="ruge">????</h1></center>
-            <br><br>
+            <br>
+            
+            <img src="${pageContext.servletContext.contextPath}/albums/${photo.album.idUnique}/${photo.nomFichier}">
+            
+            <br>
             <!-- Partie des commentaires -->
             <ul>
                 <c:forEach var="c" items="${photo.commentaires}">  

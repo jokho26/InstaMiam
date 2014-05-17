@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Album;
+import modeles.Photo;
 
 /**
  *
@@ -85,6 +86,8 @@ public class AlbumServlet extends HttpServlet {
             }
             else if (action.equals("validUpload")) {
                 System.out.println("validUpload");
+                String idTransaction = request.getParameter("idTransaction").toString();
+                confirmerUploadPhotos(idAlbum, idTransaction);
             }
             else if (action.equals("ajouterCommentaire")) {
                 // Recupération des paramètres du formulaire
@@ -182,6 +185,30 @@ public class AlbumServlet extends HttpServlet {
         file.delete();
     }
     
+    private void confirmerUploadPhotos(int idAlbum, String idTransaction) {
+        // On va parcourir les photos présentes dans le fichier tmp de la transaction
+        String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "tmp"+ File.separator+idTransaction;
+        File transacRep = new File(path);
+        
+        File[] listeImage = transacRep.listFiles();
+        
+        for (File image : listeImage) {
+            // On va déplacer les images dans le dossier
+            Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+            Photo photo = gestionnaireUtilisateurs.creerPhoto(image.getName(), idAlbum);
+            String nouveauRepertoire = getServletConfig().getServletContext().getRealPath("/") + 
+                    File.separator+"albums"+File.separator+a.getIdUnique()+File.separator;
+            
+            
+            File nouveauFichier = new File(nouveauRepertoire+photo.getIdUnique()+photo.getNom().substring(photo.getNom().indexOf(".")));
+            
+            // On créer le repertoire si il n'est pas déjà crée
+            new File(nouveauRepertoire).mkdirs();
+            
+            // On déplace l'image
+            image.renameTo(nouveauFichier);
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

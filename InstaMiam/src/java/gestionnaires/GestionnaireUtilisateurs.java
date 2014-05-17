@@ -107,9 +107,9 @@ public class GestionnaireUtilisateurs {
         return a;
     }
     
-    public Photo creerPhoto(String nom, String nomFichier, int idAlbum) {
+    public Photo creerPhoto(String nom, int idAlbum) {
         Album a = em.find(Album.class, idAlbum);
-        Photo p = new Photo(nom, nomFichier);
+        Photo p = new Photo(nom);
         
         em.persist(p);
         em.flush();
@@ -173,6 +173,10 @@ public class GestionnaireUtilisateurs {
         q.setParameter("param", idUtilisateur);
         
         return q.getResultList();
+    }
+
+    public Album getAlbumById(int idAlbum) {
+        return em.find(Album.class, idAlbum);
     }
     
 }
