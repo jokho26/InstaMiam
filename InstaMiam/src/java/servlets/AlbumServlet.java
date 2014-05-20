@@ -64,7 +64,7 @@ public class AlbumServlet extends HttpServlet {
             request.setAttribute("idAlbum", idAlbum);
         }
         
-        // On récupere la session
+        // On récupere l'id de l'utilisateur connecté
         HttpSession session = request.getSession();
         int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
         
