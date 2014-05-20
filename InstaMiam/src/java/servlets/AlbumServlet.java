@@ -99,21 +99,26 @@ public class AlbumServlet extends HttpServlet {
         }
         
          // TODO à virer ! faire un truc plus propre
-        Album albumAAfficher = null;
-        for(Album a : gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur))
-            if (a.getId() == idAlbum) 
-                albumAAfficher=a;
+        Album albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+        
+        // On verifie que l'utilisateur a bien le droit d'afficher cette album
+        if (albumAAfficher != null)
+            if(albumAAfficher.getUtilisateur().getId() != idUtilisateur)
+                albumAAfficher = null;
         
         request.setAttribute("album", albumAAfficher);
         
         // Ajout d'un identifiant unique pour la transaction d'ajout de photos
         UUID idTransaction = UUID.randomUUID();
          request.setAttribute("idTransaction", idTransaction.toString());
+         
+        // On ajoute la liste des utilisateurs
+        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
-        
     }
     
     
