@@ -42,6 +42,11 @@
         
         album : {
             posterCommentaire : "Votre commentaire ..."
+        },
+        
+        photo : {
+            modifierPhoto : "Modifier la photo",
+            valider_modification : "Valider les modifications"
         }
 
     };

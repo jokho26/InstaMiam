@@ -32,6 +32,8 @@ public class Photo implements Serializable {
 
     private String nomFichier;
     
+    private String description;
+    
     @OneToMany(mappedBy = "photo")
     private List<Commentaire> commentaires;
     
@@ -128,6 +130,14 @@ public class Photo implements Serializable {
 
     public void setIdUnique(String idUnique) {
         this.idUnique = idUnique;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

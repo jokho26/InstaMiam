@@ -5,12 +5,49 @@
 <div class="top_div"></div>
 
 <div class="content_div">
-    <center><h1 class="ruge">????</h1></center>
-    <br>
+    
+    
+    <!-- Bouton pour faire apparaitre le form modal de modification de photo -->
+    <div id="modifierPhoto">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+            {{tab_lang.photo.modifierPhoto}}
+        </button>
+    </div>
+    
+    <!-- Modal de modification d'information de la photo -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">{{tab_lang.photo.modifierPhoto}}</h4>
+                </div>
+                <div class="modal-body">
 
+                    <!-- formulaire de test pour ajouter un album-->
+                    <form method="POST" action="${pageContext.servletContext.contextPath}/Photo" id="formAjoutAlbum">
+                        <input type="text" name="nomPhoto" id="nomPhoto" class="form-control" value="${photo.nom}" required/>
+                        <br>
+                        <textarea class="form-control">${photo.description}</textarea>
+                        <input type="hidden" name="idPhoto" value="${photo.id}"/>
+                        <input type="hidden" name="action" value="modifierPhoto"/>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.photo.valider_modification}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <center><h1 class="ruge">${photo.nom}</h1></center>
+    <br>${photo.description}<br><br>
+    
     <img src="${pageContext.servletContext.contextPath}/albums/${photo.album.idUnique}/${photo.nomFichier}">
 
-    <br>
+    <br><br><br>
+    
     <!-- Partie des commentaires -->
     <ul>
         <c:forEach var="c" items="${photo.commentaires}">  

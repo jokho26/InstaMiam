@@ -246,6 +246,12 @@ button{
     color:white;
 }
 
+/* Permet de faire passer l'autocomplétion d'un input dans une fenetre modale*/
+.ui-autocomplete.ui-front
+{
+    z-index: 1051;
+}
+
 /*****************************
  Commentaires
  *****************************/
@@ -256,8 +262,10 @@ button{
 .widget .mic-info { color: #666666;font-size: 11px; }
 .widget .comment-text { font-size: 12px; }
 
-/* Permet de faire passer l'autocomplétion d'un input dans une fenetre modale*/
-.ui-autocomplete.ui-front
-{
-    z-index: 1051;
+/*****************************
+ Photo
+ *****************************/
+#modifierPhoto {
+    position: relative;
+    float: right;
 }
