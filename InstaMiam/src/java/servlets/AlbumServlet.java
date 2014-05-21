@@ -55,11 +55,9 @@ public class AlbumServlet extends HttpServlet {
        
         String forwardTo="album.jsp";
         
-        Object idAlbumObject = request.getParameter("idAlbum");
-        
+        // TODO ajouter une redirection 404 si ID pas bon
         int idAlbum = -1;
-        
-        if (idAlbumObject != null) {
+        if (request.getParameter("idAlbum") != null) {
             idAlbum = Integer.parseInt(request.getParameter("idAlbum"));
             request.setAttribute("idAlbum", idAlbum);
         }
@@ -69,28 +67,33 @@ public class AlbumServlet extends HttpServlet {
         int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
         
         String action = request.getParameter("action");
-        
-        System.out.println("======> Action : " + action);
+
         if (action != null) {
+            // Action l'ors de l'ajout d'un fichier dans la dropzone
             if (action.equals("uploadFile")) {
-                enregistrerFichier(request);
+                Object idTransaction = request.getParameter("idTransaction");
+                if (idTransaction == null)
+                    enregistrerFichier(request, idTransaction.toString());
             }
+            // Action lors de la suppression d'un fichier de la dropzone
             else if (action.equals("removeFile")) {
-                // TODO ajouter des verifications
                 Object nomFichierObject = request.getParameter("nameFile");
                 Object idTransaction = request.getParameter("idTransaction");
  
                 if (nomFichierObject != null && idTransaction != null) {
-                    removeFile((String)nomFichierObject, (String)idTransaction);
+                    removeFileTransaction(nomFichierObject.toString(), idTransaction.toString());
                 }
             }
+            // Action lors d'une validation d'ajout de toutes les photos
             else if (action.equals("validUpload")) {
-                System.out.println("validUpload");
-                String idTransaction = request.getParameter("idTransaction").toString();
-                confirmerUploadPhotos(idAlbum, idTransaction);
+                Object idTransaction = request.getParameter("idTransaction");
+                
+                 if (idTransaction != null && idAlbum > 0) {
+                     confirmerUploadPhotos(idAlbum, idTransaction.toString());
+                 }                
             }
+            // Action lors d'un ajout de commentaire
             else if (action.equals("ajouterCommentaire")) {
-                // Recupération des paramètres du formulaire
                 String text = request.getParameter("commentaire");
                 if (idAlbum > 0 && text != null) {
                     gestionnaireUtilisateurs.ajouterCommentaireAlbum(idAlbum, idUtilisateur, text);
@@ -98,7 +101,7 @@ public class AlbumServlet extends HttpServlet {
             }
         }
         
-         // TODO à virer ! faire un truc plus propre
+         // On recupère l'album à afficher
         Album albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
         
         // On verifie que l'utilisateur a bien le droit d'afficher cette album
@@ -110,30 +113,28 @@ public class AlbumServlet extends HttpServlet {
         
         // Ajout d'un identifiant unique pour la transaction d'ajout de photos
         UUID idTransaction = UUID.randomUUID();
-         request.setAttribute("idTransaction", idTransaction.toString());
+        request.setAttribute("idTransaction", idTransaction.toString());
          
         // On ajoute la liste des utilisateurs
         request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
 
-        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
-
         dp.forward(request, response);
     }
     
     
     
-    
-    private void enregistrerFichier(HttpServletRequest request) throws ServletException, IOException {
-         Object idTransactionObject = request.getParameter("idTransaction");
-        if (idTransactionObject == null)
-            return;
-        String idTransaction = (String)idTransactionObject;
-        
-        // Create path components to save the file
+    /**
+     * Méthode permettant d'enregistrer un fichier uploadé lors d'une transaction avec la dropzone.
+     * 
+     * @param request
+     * @param idTransaction
+     * @throws ServletException
+     * @throws IOException 
+     */
+    private void enregistrerFichier(HttpServletRequest request, String idTransaction) throws ServletException, IOException {        
+        // On créer le repertoire temporaire de stockage
         final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "tmp"+ File.separator+idTransaction;
-        
-        // Création du repertoire de destination
         File dir = new File(path);
         dir.mkdir();
         
@@ -143,6 +144,7 @@ public class AlbumServlet extends HttpServlet {
         OutputStream out = null;
         InputStream filecontent = null;
 
+        // On récupere le contenu du fichier et on le sauvegarde sur le serveur
         try {
             out = new FileOutputStream(new File(path + File.separator
                     + fileName));
@@ -154,15 +156,14 @@ public class AlbumServlet extends HttpServlet {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            System.out.println(new File(path + File.separator
-                    + fileName).getAbsolutePath());
+            System.out.println(new File(path + File.separator+ fileName).getAbsolutePath());
 
         } catch (FileNotFoundException fne) {
             // TODO
-            System.out.println("You either did not specify a file to upload or are "
-                    + "trying to upload a file to a protected or nonexistent "
-                    + "location.");
-        } finally {
+            System.out.println("Exception dans l'upload du fichier.\n" + fne.getMessage());
+        } 
+        // On ferme les streams
+        finally {
             if (out != null) {
                 out.close();
             }
@@ -172,42 +173,54 @@ public class AlbumServlet extends HttpServlet {
         }
     }
     
+    /**
+     * Méthode permettant de récuperer le nom du fichier qu'on upload
+     * @param part
+     * @return 
+     */
     private String getFileName(final Part part) {
-            final String partHeader = part.getHeader("content-disposition");
-         
-            for (String content : part.getHeader("content-disposition").split(";")) {
-                if (content.trim().startsWith("filename")) {
-                    return content.substring(
-                            content.indexOf('=') + 1).trim().replace("\"", "");
-                }
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
             }
-            return null;
         }
+        return null;
+    }
 
-    private void removeFile(String nom, String idTransaction) {
+    /**
+     * Méthode permettant de supprimer un fichier d'une transaction
+     * @param nom
+     * @param idTransaction 
+     */
+    private void removeFileTransaction(String nom, String idTransaction) {
         String cheminFichier = getServletConfig().getServletContext().getRealPath("/")+ "tmp"+File.separator+idTransaction+File.separator+nom;
         File file = new File(cheminFichier);
         file.delete();
     }
     
+    /**
+     * Méthode utilisé pour la confirmation d'upload de toutes les photos de la transaction.
+     * @param idAlbum
+     * @param idTransaction 
+     */
     private void confirmerUploadPhotos(int idAlbum, String idTransaction) {
         // On va parcourir les photos présentes dans le fichier tmp de la transaction
         String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "tmp"+ File.separator+idTransaction;
         File transacRep = new File(path);
         
         File[] listeImage = transacRep.listFiles();
-        
         for (File image : listeImage) {
-            // On va déplacer les images dans le dossier
+            // On crée la photo en base de données et on l'ajoute à l'album
             Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
             Photo photo = gestionnaireUtilisateurs.creerPhoto(image.getName(), idAlbum);
+            
+            // On va déplacer les images dans le dossier de l'album
             String nouveauRepertoire = getServletConfig().getServletContext().getRealPath("/") + 
                     File.separator+"albums"+File.separator+a.getIdUnique()+File.separator;
             
-            
             File nouveauFichier = new File(nouveauRepertoire+photo.getIdUnique()+photo.getNom().substring(photo.getNom().indexOf(".")));
             
-            // On créer le repertoire si il n'est pas déjà crée
+            // On créer le repertoire de l'album si il n'est pas déjà crée
             new File(nouveauRepertoire).mkdirs();
             
             // On déplace l'image
