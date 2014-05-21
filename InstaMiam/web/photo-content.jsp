@@ -28,7 +28,7 @@
                     <form method="POST" action="${pageContext.servletContext.contextPath}/Photo" id="formAjoutAlbum">
                         <input type="text" name="nomPhoto" id="nomPhoto" class="form-control" value="${photo.nom}" required/>
                         <br>
-                        <textarea class="form-control">${photo.description}</textarea>
+                        <textarea class="form-control" name="description">${photo.description}</textarea>
                         <input type="hidden" name="idPhoto" value="${photo.id}"/>
                         <input type="hidden" name="action" value="modifierPhoto"/>
                 </div>

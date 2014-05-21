@@ -64,14 +64,19 @@ public class PhotoServlet extends HttpServlet {
                 if (idPhoto > 0 && text != null) {
                     gestionnaireUtilisateurs.ajouterCommentairePhoto(idPhoto, idUtilisateur, text);
              }
+            }
+            else if (action.equals("modifierPhoto")) {
                 
+                Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
+                if (p != null && request.getParameter("nomPhoto") != null && request.getParameter("description") != null){
+                    gestionnaireUtilisateurs.modifierPhoto(idPhoto, request.getParameter("nomPhoto"), request.getParameter("description"));
+                }
             }
         }
         
         
         
         Photo photo = gestionnaireUtilisateurs.getPhotoById(idPhoto);
-        
         request.setAttribute("photo", photo);
         
         String forwardTo = "photo.jsp";

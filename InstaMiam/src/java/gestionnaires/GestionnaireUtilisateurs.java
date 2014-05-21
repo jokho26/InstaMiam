@@ -179,4 +179,11 @@ public class GestionnaireUtilisateurs {
         return em.find(Album.class, idAlbum);
     }
     
+    public void modifierPhoto(int idPhoto, String nom, String description) {
+        Photo p = getPhotoById(idPhoto);
+        p.setNom(nom);
+        p.setDescription(description);
+        em.flush();
+    }
+    
 }
