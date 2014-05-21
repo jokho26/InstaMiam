@@ -72,7 +72,7 @@ public class AlbumServlet extends HttpServlet {
             // Action l'ors de l'ajout d'un fichier dans la dropzone
             if (action.equals("uploadFile")) {
                 Object idTransaction = request.getParameter("idTransaction");
-                if (idTransaction == null)
+                if (idTransaction != null)
                     enregistrerFichier(request, idTransaction.toString());
             }
             // Action lors de la suppression d'un fichier de la dropzone
@@ -146,7 +146,7 @@ public class AlbumServlet extends HttpServlet {
 
         // On récupere le contenu du fichier et on le sauvegarde sur le serveur
         try {
-            out = new FileOutputStream(new File(path + File.separator
+            out = new FileOutputStream(new File(path +  File.separator+System.currentTimeMillis()
                     + fileName));
             filecontent = filePart.getInputStream();
 
@@ -212,7 +212,7 @@ public class AlbumServlet extends HttpServlet {
         for (File image : listeImage) {
             // On crée la photo en base de données et on l'ajoute à l'album
             Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
-            Photo photo = gestionnaireUtilisateurs.creerPhoto(image.getName(), idAlbum);
+            Photo photo = gestionnaireUtilisateurs.creerPhoto(image.getName().substring(13), idAlbum);
             
             // On va déplacer les images dans le dossier de l'album
             String nouveauRepertoire = getServletConfig().getServletContext().getRealPath("/") + 
