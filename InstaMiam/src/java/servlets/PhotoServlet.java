@@ -7,6 +7,7 @@
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
+import java.io.File;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -72,9 +73,21 @@ public class PhotoServlet extends HttpServlet {
                     gestionnaireUtilisateurs.modifierPhoto(idPhoto, request.getParameter("nomPhoto"), request.getParameter("description"));
                 }
             }
+            else if (action.equals("supprimerPhoto")) {
+                Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
+                if (p != null) {
+                    String forwardTo = "/Album?idAlbum="+p.getAlbum().getId();
+                    
+                    deleteFilePhoto(p.getAlbum().getIdUnique(), p.getNomFichier());
+                    gestionnaireUtilisateurs.supprimerPhoto(idPhoto);
+
+                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+
+                    dp.forward(request, response);
+                    return;
+                }
+            }
         }
-        
-        
         
         Photo photo = gestionnaireUtilisateurs.getPhotoById(idPhoto);
         request.setAttribute("photo", photo);
@@ -84,6 +97,7 @@ public class PhotoServlet extends HttpServlet {
 
         dp.forward(request, response);
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -123,5 +137,13 @@ public class PhotoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void deleteFilePhoto(String idUniqueAlbum, String nomFichier) {
+        String cheminFichier = getServletConfig().getServletContext().getRealPath("/")+ "albums"+File.separator+idUniqueAlbum+File.separator+nomFichier;
+        System.out.println(cheminFichier);
+        File file = new File(cheminFichier);
+        file.delete();
+    }
+    
 
 }

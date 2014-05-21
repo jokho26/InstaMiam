@@ -12,7 +12,14 @@
         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
             {{tab_lang.photo.modifierPhoto}}
         </button>
+        <form id="modifierPhoto" action="${pageContext.servletContext.contextPath}/Photo">
+            <button type="submit" name="ajouterAlbum" class="btn btn-danger">{{tab_lang.photo.supprimer}}</button>
+            <input type="hidden" name="idPhoto" value="${photo.id}"/>
+            <input type="hidden" name="action" value="supprimerPhoto"/>
+        </form>
     </div>
+    
+    
     
     <!-- Modal de modification d'information de la photo -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -25,7 +32,7 @@
                 <div class="modal-body">
 
                     <!-- formulaire de test pour ajouter un album-->
-                    <form method="POST" action="${pageContext.servletContext.contextPath}/Photo" id="formAjoutAlbum">
+                    <form method="POST" action="${pageContext.servletContext.contextPath}/Photo">
                         <input type="text" name="nomPhoto" id="nomPhoto" class="form-control" value="${photo.nom}" required/>
                         <br>
                         <textarea class="form-control" name="description">${photo.description}</textarea>

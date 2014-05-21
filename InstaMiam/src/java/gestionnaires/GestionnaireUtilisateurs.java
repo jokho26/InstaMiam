@@ -185,5 +185,20 @@ public class GestionnaireUtilisateurs {
         p.setDescription(description);
         em.flush();
     }
+
+    public void supprimerPhoto(int idPhoto) {
+        Photo p = getPhotoById(idPhoto);
+        
+        // On retire la photo de l'album
+        p.getAlbum().getPhotos().remove(p);
+        
+        // On supprime les commentaires liés
+        for (Commentaire c : p.getCommentaires())
+            em.remove(c);
+        
+        // Finalement, on supprime la photo
+        em.remove(p);
+        em.flush();
+    }
     
 }

@@ -46,7 +46,8 @@
         
         photo : {
             modifierPhoto : "Modifier la photo",
-            valider_modification : "Valider les modifications"
+            valider_modification : "Valider les modifications",
+            supprimer : "Supprimer la photo"
         }
 
     };
