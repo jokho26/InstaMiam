@@ -253,6 +253,14 @@ button{
 }
 
 /*****************************
+ Album
+ *****************************/
+#modifierAlbum {
+    position: relative;
+    float: right;
+}
+
+/*****************************
  Commentaires
  *****************************/
 .widget .panel-body { padding:0px; }

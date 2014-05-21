@@ -97,6 +97,16 @@ public class AlbumServlet extends HttpServlet {
                 String text = request.getParameter("commentaire");
                 if (idAlbum > 0 && text != null) {
                     gestionnaireUtilisateurs.ajouterCommentaireAlbum(idAlbum, idUtilisateur, text);
+                }   
+            }
+            // Action lors d'un ajout de commentaire
+            else if (action.equals("supprimerAlbum")) {
+                if (idAlbum > 0) {
+                    gestionnaireUtilisateurs.supprimerAlbum(idAlbum);
+                    
+                    forwardTo="/ListeAlbums";
+                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                    dp.forward(request, response);
              }   
             }
         }

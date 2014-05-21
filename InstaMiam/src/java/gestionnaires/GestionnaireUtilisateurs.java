@@ -6,6 +6,7 @@
 
 package gestionnaires;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -199,6 +200,28 @@ public class GestionnaireUtilisateurs {
         // Finalement, on supprime la photo
         em.remove(p);
         em.flush();
+    }
+
+    public void supprimerAlbum(int idAlbum) {
+        Album a = getAlbumById(idAlbum);
+        
+        // On supprime les photos liées à l'album
+        ArrayList<Integer> listeIdPhoto = new ArrayList();
+        for (Photo p : a.getPhotos())
+            listeIdPhoto.add(p.getId());
+        for (int id : listeIdPhoto)
+            supprimerPhoto(id);
+        
+        // On supprime les commentaires de l'album
+        for (Commentaire c : a.getCommentaires())
+            em.remove(c);
+        
+        // On supprime l'album de la liste des albums des utilisateurs
+        a.getUtilisateur().getAlbums().remove(a);
+        
+        // Finalement, on supprime l'album
+        em.remove(a);
+        em.flush();        
     }
     
 }

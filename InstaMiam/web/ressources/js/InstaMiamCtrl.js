@@ -41,13 +41,15 @@
         },
         
         album : {
-            posterCommentaire : "Votre commentaire ..."
+            posterCommentaire : "Votre commentaire ...",
+            modifierAlbum : "Modifier",
+            supprimer : "Supprimer"
         },
         
         photo : {
-            modifierPhoto : "Modifier la photo",
+            modifierPhoto : "Modifier",
             valider_modification : "Valider les modifications",
-            supprimer : "Supprimer la photo"
+            supprimer : "Supprimer"
         }
 
     };

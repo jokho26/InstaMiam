@@ -26,6 +26,19 @@
 
 <div class="content_div">
     <center><h1 class="ruge">${album.nomAlbum}</h1></center>
+    
+    <!-- Bouton pour faire apparaitre le form modal de modification de photo -->
+    <div id="modifierPhoto">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModalModification" >
+            {{tab_lang.album.modifierAlbum}}
+        </button>
+        <form id="modifierAlbum" action="${pageContext.servletContext.contextPath}/Album">
+            <button type="submit" name="ajouterAlbum" class="btn btn-danger">{{tab_lang.album.supprimer}}</button>
+            <input type="hidden" name="idAlbum" value="${album.id}"/>
+            <input type="hidden" name="action" value="supprimerAlbum"/>
+        </form>
+    </div>
+    
     <br><br>
 
     <!-- Formulaire de test pour l'autocomplétion -->
