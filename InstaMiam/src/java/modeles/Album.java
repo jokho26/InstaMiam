@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modeles;
 
 import java.io.Serializable;
@@ -14,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -23,23 +23,28 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Album implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String nomAlbum;
-    
+
     @OneToMany(mappedBy = "album")
     private List<Photo> photos;
 
+    @ManyToMany
+    @JoinColumn(name = "utilisateur", referencedColumnName = "albumsPartages")
+    private List<Utilisateur> utilisateursPartages;
+
     @OneToMany(mappedBy = "album")
     private List<Commentaire> commentaires;
-    
+
     @ManyToOne
     @JoinColumn(name = "utilisateur", referencedColumnName = "id")
     private Utilisateur utilisateur;
-    
+
     private String idUnique;
 
     public Utilisateur getUtilisateur() {
@@ -51,14 +56,14 @@ public class Album implements Serializable {
     }
 
     public Album() {
-        
+
     }
-    
+
     public Album(String nomAlbum) {
-        this.nomAlbum=nomAlbum;
+        this.nomAlbum = nomAlbum;
         idUnique = UUID.randomUUID().toString();
     }
-    
+
     public String getNomAlbum() {
         return nomAlbum;
     }
@@ -66,7 +71,7 @@ public class Album implements Serializable {
     public void setNomAlbum(String nomAlbum) {
         this.nomAlbum = nomAlbum;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -99,8 +104,7 @@ public class Album implements Serializable {
     public String toString() {
         return "modeles.Album[ id=" + id + " ]";
     }
-    
-    
+
     public List<Photo> getPhotos() {
         return photos;
     }
@@ -108,6 +112,7 @@ public class Album implements Serializable {
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
+
     public void ajouterPhoto(Photo photo) {
         photos.add(photo);
     }
@@ -119,12 +124,11 @@ public class Album implements Serializable {
     public void setCommentaires(List<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
-    
+
     public void ajouterCommentaire(Commentaire c) {
         this.commentaires.add(c);
     }
-    
-    
+
     public String getIdUnique() {
         return idUnique;
     }
@@ -133,5 +137,18 @@ public class Album implements Serializable {
         this.idUnique = idUnique;
     }
 
-    
+    /**
+     * @return the utilisateursPartages
+     */
+    public List<Utilisateur> getUtilisateursPartages() {
+        return utilisateursPartages;
+    }
+
+    /**
+     * @param utilisateursPartages the utilisateursPartages to set
+     */
+    public void setUtilisateursPartages(List<Utilisateur> utilisateursPartages) {
+        this.utilisateursPartages = utilisateursPartages;
+    }
+
 }

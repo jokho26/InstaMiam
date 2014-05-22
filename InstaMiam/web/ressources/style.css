@@ -271,5 +271,8 @@ button{
 .widget .comment-text { font-size: 12px; }
 
 /*****************************
- Photo
+ Form autocompletion
  *****************************/
+#autoCompletion {
+    padding-left: 20px;
+}

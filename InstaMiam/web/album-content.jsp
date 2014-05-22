@@ -4,22 +4,51 @@
     $(function() {
         var availableTags = [
     <c:forEach var="u" items="${listeUtilisateur}">
-            "${u.prenom} ${u.nom}",
+            {label: "${u.prenom} ${u.nom}", id: "${u.id}"},
     </c:forEach>
                         ""
                     ];
                     $("#tags").autocomplete({
-                        source: availableTags
+                        source: availableTags,
+                        select: function(event, ui) {
+
+                            $.ajax({
+                                type: 'POST',
+                                url: "${pageContext.servletContext.contextPath}/Album?action=partagerAlbum&idAlbum=${album.id}&idUtilisateur=" + ui.item.id,
+                                data: {action: "partagerAlbum", idAlbum: "${album.id}", idUtilisateur: ui.item.id},
+                                dataType: "html",
+                                success: function(data, textStatus, jqXHR) {
+
+                                    alert("lol");
+                                    console.log("data " + data);
+                                    console.log("text " + textStatus);
+                                    console.log("jqXHR" + jqXHR);
+                                    
+                                    $("#badgesUtilisateurs").html(data);
+
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log("Something really bad happened " + textStatus);
+                                    console.log("Something really bad happened again" + jqXHR.responseText);
+                                },
+                                beforeSend: function(jqXHR, settings) {
+                                    //disable the button until we get the response
+                                    $('#tags').attr("disabled", true);
+                                },
+                                complete: function(jqXHR, textStatus) {
+                                    $('#tags').attr("disabled", false);
+                                }
+
+                            });
+                        }
                     });
+
+                    function removeFile(file) {
+                        $.ajax({
+                            url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&nameFile=" + file.name
+                        });
+                    }
                 });
-
-                function removeFile(file) {
-                    $.ajax({
-                        url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&nameFile=" + file.name
-                    });
-                }
-                ;
-
 </script>
 
 <div class="top_div"></div>
@@ -76,13 +105,17 @@
     <br><br>
 
     <!-- Formulaire de test pour l'autocomplétion -->
-    <div class="row">
+    <div class="row" id="autoCompletion">
         <div class="col-md-3">
             <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
             <form class="ui-widget" action="">
                 <input id="tags">
-                <input type="button" name="submit" value="Ajouter" onClick="ajouterUtilisateurAlbum();"/>
             </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" id="badgesUtilisateurs">
+            
         </div>
     </div>
     <c:set var="count" value="0"/>

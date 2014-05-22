@@ -1,0 +1,1 @@
+<span class="badge pull-left">42</span>

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modeles;
 
 import java.io.Serializable;
@@ -12,56 +11,61 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
  * Classe Utilisateur
  * </br></br>
  * Represente un compte utilisateur de l'application.
- * 
+ *
  */
 @Entity
 public class Utilisateur implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
+
     private String nom, prenom, login, email, motDePasse;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<Album> albums;
 
-   
-    public Utilisateur() {       
+    @ManyToMany
+    @JoinColumn(name = "album", referencedColumnName = "utilisateursPartages")
+    private List<Album> albumsPartages;
+
+    public Utilisateur() {
     }
-    
+
     public Utilisateur(String nom, String prenom, String login, String email, String motDePasse) {
-        this.nom=nom;
-        this.prenom=prenom;
-        this.login=login;
-        this.email=email;
-        this.motDePasse=motDePasse;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.login = login;
+        this.email = email;
+        this.motDePasse = motDePasse;
     }
-    
-     public List<Album> getAlbums() {
+
+    public List<Album> getAlbums() {
         return albums;
     }
-     
-     public void setAlbums(List<Album> albums) {
-        this.albums= albums;
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
-    
+
     public void ajouterAlbum(Album album) {
         albums.add(album);
     }
-    
+
     public Album getAlbum(int index) {
         return albums.get(index);
     }
-    
-    
+
     public String getNom() {
         return nom;
     }
@@ -134,5 +138,16 @@ public class Utilisateur implements Serializable {
     public String toString() {
         return "modeles.Utilisateur[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the albumsPartages
+     */
+    public List<Album> getAlbumsPartages() {
+        return albumsPartages;
+    }
+
+    public void setAlbumsPartages(List<Album> albumsPartages) {
+        this.albumsPartages = albumsPartages;
+    }
+
 }
