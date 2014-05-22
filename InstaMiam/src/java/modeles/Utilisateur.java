@@ -38,6 +38,8 @@ public class Utilisateur implements Serializable {
     @ManyToMany
     @JoinColumn(name = "album", referencedColumnName = "utilisateursPartages")
     private List<Album> albumsPartages;
+    
+    private String imageProfil;
 
     public Utilisateur() {
     }
@@ -48,6 +50,7 @@ public class Utilisateur implements Serializable {
         this.login = login;
         this.email = email;
         this.motDePasse = motDePasse;
+        this.imageProfil="default.jpg";
     }
 
     public List<Album> getAlbums() {
@@ -148,6 +151,14 @@ public class Utilisateur implements Serializable {
 
     public void setAlbumsPartages(List<Album> albumsPartages) {
         this.albumsPartages = albumsPartages;
+    }
+
+    public String getImageProfil() {
+        return imageProfil;
+    }
+
+    public void setImageProfil(String imageProfil) {
+        this.imageProfil = imageProfil;
     }
 
 }

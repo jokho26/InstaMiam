@@ -63,7 +63,8 @@
             email : "Email",
             modifier : "Modifier",
             messageModification : "Votre profil a bien été modifié.",
-            messageErreur : "Erreur lors de la modification de votre profil."
+            messageErreur : "Erreur lors de la modification de votre profil.",
+            changerImage : "Changer d'image"
         }
 
     };
