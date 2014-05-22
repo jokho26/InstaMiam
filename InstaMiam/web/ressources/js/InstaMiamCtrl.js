@@ -43,7 +43,8 @@
         album : {
             posterCommentaire : "Votre commentaire ...",
             modifierAlbum : "Modifier",
-            supprimer : "Supprimer"
+            supprimer : "Supprimer",
+            valider_modification: "Valider les modifications"
         },
         
         photo : {

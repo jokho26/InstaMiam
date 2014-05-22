@@ -223,5 +223,12 @@ public class GestionnaireUtilisateurs {
         em.remove(a);
         em.flush();        
     }
+
+    public void modifierAlbum(int idAlbum, String nomAlbum) {
+        Album a = getAlbumById(idAlbum);
+        
+        a.setNomAlbum(nomAlbum);
+        em.flush();
+    }
     
 }

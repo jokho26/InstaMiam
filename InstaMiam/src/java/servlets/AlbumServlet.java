@@ -107,7 +107,15 @@ public class AlbumServlet extends HttpServlet {
                     forwardTo="/ListeAlbums";
                     RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
                     dp.forward(request, response);
-             }   
+                }   
+            }
+            // Action lors d'un ajout de commentaire
+            else if (action.equals("modifierAlbum")) {
+                if (idAlbum > 0) {
+                    String nomAlbum = request.getParameter("nomAlbum");
+                    if (nomAlbum != null)
+                        gestionnaireUtilisateurs.modifierAlbum(idAlbum, nomAlbum);
+                }   
             }
         }
         

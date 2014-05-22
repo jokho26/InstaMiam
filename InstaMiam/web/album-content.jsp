@@ -38,6 +38,33 @@
             <input type="hidden" name="action" value="supprimerAlbum"/>
         </form>
     </div>
+            
+    <!-- Modal de modification d'information de l'album -->
+    <div class="modal fade" id="myModalModification" tabindex="-1" role="dialog" aria-labelledby="myModalModification" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">{{tab_lang.album.modifierAlbum}}</h4>
+                </div>
+                <div class="modal-body">
+
+                    <!-- formulaire de test pour ajouter un album-->
+                    <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+                        <input type="text" name="nomAlbum" id="nomAlbum" class="form-control" value="${album.nomAlbum}" required/>
+                        <br>
+                        <input type="hidden" name="idAlbum" value="${album.id}"/>
+                        <input type="hidden" name="action" value="modifierAlbum"/>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.album.valider_modification}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <br><br>
 
