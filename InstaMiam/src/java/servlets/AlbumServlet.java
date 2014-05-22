@@ -12,7 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+
+import java.util.List;
 import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Album;
 import modeles.Photo;
+import modeles.Utilisateur;
 
 /**
  *
@@ -113,17 +115,30 @@ public class AlbumServlet extends HttpServlet {
                 }
             } //Partage de l'album
             else if (action.equals("partagerAlbum")) {
-                int idUtilisateurPartage = Integer.parseInt(request.getParameter("idUtilisateur"));
-
+                int idUtilisateurPartage;
+                try {
+                    idUtilisateurPartage = Integer.parseInt(request.getParameter("idUtilisateur"));
+                } catch (NumberFormatException e) {
+                    response.setStatus(500);
+                    return;
+                }
                 if (gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage)) {
 
                     Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
 
-                    request.setAttribute("listeUtilisateursPartages", a.getUtilisateursPartages());
-
-                    forwardTo = "/listeUtilisateursPartages.jsp";
-                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
-                    dp.forward(request, response);
+                    List<Utilisateur> lu = a.getUtilisateursPartages();
+                    String json = "{";
+                    
+                    for(Utilisateur u : lu){
+                        json.concat("id: "+u.getId()+"{nom: "+u.getNom()+", prenom: "+u.getPrenom()+"}," );
+                    }
+                    //json = json.substring(0, json.length()-2);
+                    json.concat("}");
+                    
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+                    return;
                 } else {
                     response.setStatus(500);
                     return;

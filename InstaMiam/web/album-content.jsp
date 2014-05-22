@@ -11,42 +11,22 @@
                     $("#tags").autocomplete({
                         source: availableTags,
                         select: function(event, ui) {
-
-                            $.ajax({
-                                type: 'POST',
-                                url: "${pageContext.servletContext.contextPath}/Album?action=partagerAlbum&idAlbum=${album.id}&idUtilisateur=" + ui.item.id,
-                                data: {action: "partagerAlbum", idAlbum: "${album.id}", idUtilisateur: ui.item.id},
-                                dataType: "html",
-                                success: function(data, textStatus, jqXHR) {
-                                    console.log("data " + data);
-                                    console.log("text " + textStatus);
-                                    console.log("jqXHR" + jqXHR);
-                                    
-                                    $("#badgesUtilisateurs").html(data);
-
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-                                    console.log("Something really bad happened " + textStatus);
-                                    console.log("Something really bad happened again" + jqXHR.responseText);
-                                },
-                                beforeSend: function(jqXHR, settings) {
-                                    //disable the button until we get the response
-                                    $('#tags').attr("disabled", true);
-                                },
-                                complete: function(jqXHR, textStatus) {
-                                    $('#tags').attr("disabled", false);
-                                }
-
+                            $.get('${pageContext.servletContext.contextPath}/Album?action=partagerAlbum&idAlbum=${album.id}&idUtilisateur=' + ui.item.id, function(responseJson) {
+                                /*var $ul = $('<ul>').appendTo($('#somediv'));
+                                 $.each(responseJson, function(index, item) {
+                                 $('<li>').text(item).appendTo($ul);
+                                 });
+                                 });*/
+                                console.log(responseJson + "lol");
                             });
-                        }
-                    });
-
+                        }});
                     function removeFile(file) {
                         $.ajax({
                             url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&nameFile=" + file.name
                         });
                     }
-                });
+                }
+                );
 </script>
 
 <div class="top_div"></div>
@@ -111,10 +91,8 @@
             </form>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6" id="badgesUtilisateurs">
-            
-        </div>
+    <div class="row" id="autoCompletion">
+        <div class="col-md-6" id="badgesUtilisateurs"></div>
     </div>
     <c:set var="count" value="0"/>
     <div id="zoneGallerie">
