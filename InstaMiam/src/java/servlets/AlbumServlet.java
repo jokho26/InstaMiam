@@ -154,7 +154,7 @@ public class AlbumServlet extends HttpServlet {
         // On créer le repertoire temporaire de stockage
         final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator+ "tmp"+ File.separator+idTransaction;
         File dir = new File(path);
-        dir.mkdir();
+        dir.mkdirs();
         
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
