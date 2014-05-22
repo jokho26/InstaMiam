@@ -108,6 +108,10 @@ public class GestionnaireUtilisateurs {
         return a;
     }
     
+    public Utilisateur getUtilisateurById(int id) {
+        return em.find(Utilisateur.class, id);
+    }
+    
     public Photo creerPhoto(String nom, int idAlbum) {
         Album a = em.find(Album.class, idAlbum);
         Photo p = new Photo(nom);
@@ -228,6 +232,17 @@ public class GestionnaireUtilisateurs {
         Album a = getAlbumById(idAlbum);
         
         a.setNomAlbum(nomAlbum);
+        em.flush();
+    }
+
+    public void modifierUtilisateur(int idUtilisateur, String nom, String prenom, String email, String mdp) {
+        Utilisateur u = getUtilisateurById(idUtilisateur);
+        
+        u.setNom(nom);
+        u.setPrenom(prenom);
+        u.setEmail(email);
+        u.setMotDePasse(mdp);
+        
         em.flush();
     }
     

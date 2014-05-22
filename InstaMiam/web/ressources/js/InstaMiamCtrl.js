@@ -15,7 +15,8 @@
             albums : "Mes albums",
             inscription : "Inscription",
             connexion : "Connexion",
-            deconnexion : "Déconnexion"
+            deconnexion : "Déconnexion",
+            profil : "Mon profil"
         },
         
         inscription : {
@@ -52,6 +53,17 @@
             modifierPhoto : "Modifier",
             valider_modification : "Valider les modifications",
             supprimer : "Supprimer"
+        },
+        
+        profil : {
+            nom : "Nom",
+            prenom : "Prénom",
+            login : "Login",
+            mdp : "Mot de passe",
+            email : "Email",
+            modifier : "Modifier",
+            messageModification : "Votre profil a bien été modifié.",
+            messageErreur : "Erreur lors de la modification de votre profil."
         }
 
     };
