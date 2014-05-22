@@ -18,8 +18,6 @@
                                 data: {action: "partagerAlbum", idAlbum: "${album.id}", idUtilisateur: ui.item.id},
                                 dataType: "html",
                                 success: function(data, textStatus, jqXHR) {
-
-                                    alert("lol");
                                     console.log("data " + data);
                                     console.log("text " + textStatus);
                                     console.log("jqXHR" + jqXHR);
