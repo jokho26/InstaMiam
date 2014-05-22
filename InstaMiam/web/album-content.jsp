@@ -26,7 +26,7 @@
 
 <div class="content_div">
     <center><h1 class="ruge">${album.nomAlbum}</h1></center>
-    
+
     <!-- Bouton pour faire apparaitre le form modal de modification de photo -->
     <div id="modifierPhoto">
         <button class="btn btn-primary" data-toggle="modal" data-target="#myModalModification" >
@@ -38,7 +38,7 @@
             <input type="hidden" name="action" value="supprimerAlbum"/>
         </form>
     </div>
-            
+
     <!-- Modal de modification d'information de l'album -->
     <div class="modal fade" id="myModalModification" tabindex="-1" role="dialog" aria-labelledby="myModalModification" aria-hidden="true">
         <div class="modal-dialog">
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    
+
     <br><br>
 
     <!-- Formulaire de test pour l'autocomplétion -->
@@ -74,11 +74,31 @@
         <input type="button" name="submit" value="Ajouter" onClick="ajouterUtilisateurAlbum();"/>
     </form>
 
-    <ul>
-        <c:forEach var="p" items="${album.photos}">  
-            <li><a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">${p.nom}</a></li>
-            </c:forEach>
-    </ul>
+    <c:set var="count" value="0"/>
+    <div id="zoneGallerie">
+        <c:forEach var="p" items="${album.photos}">
+
+            <c:choose>
+                <c:when test="${count%4 == 0}">
+                    <c:if test="${count != 0}">
+                    </div>
+                </c:if>
+                <div class="row">
+                </c:when>
+            </c:choose>
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <center><h2 class="ruge">${p.nom}</h2></center>
+                <a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">
+                    <img class="img-responsive" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}" />
+                </a>
+                <h3 class="ruge" id="commentaire">${p.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>
+            </div>
+
+            <c:set var="count" value="${count+1}"/>  
+        </c:forEach> 
+    </div>
+    
     <br>
 
     <!-- formulaire de test d'upload -->
