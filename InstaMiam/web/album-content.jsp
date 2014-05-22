@@ -25,19 +25,10 @@
 <div class="top_div"></div>
 
 <div class="content_div">
-    <center><h1 class="ruge">${album.nomAlbum}</h1></center>
-
-    <!-- Bouton pour faire apparaitre le form modal de modification de photo -->
-    <div id="modifierPhoto">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#myModalModification" >
-            {{tab_lang.album.modifierAlbum}}
-        </button>
-        <form id="modifierAlbum" action="${pageContext.servletContext.contextPath}/Album">
-            <button type="submit" name="ajouterAlbum" class="btn btn-danger">{{tab_lang.album.supprimer}}</button>
-            <input type="hidden" name="idAlbum" value="${album.id}"/>
-            <input type="hidden" name="action" value="supprimerAlbum"/>
-        </form>
+    <div class="row">
+        <center><h1 class="ruge">${album.nomAlbum}</h1></center>
     </div>
+
 
     <!-- Modal de modification d'information de l'album -->
     <div class="modal fade" id="myModalModification" tabindex="-1" role="dialog" aria-labelledby="myModalModification" aria-hidden="true">
@@ -65,15 +56,35 @@
             </div>
         </div>
     </div>
+    <br><br>
+    <!-- Bouton pour faire apparaitre le form modal de modification de photo -->
+    <div class="row">
+        <div id="modifierPhoto">
+            <div class="col-md-3 col-md-offset-9">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myModalModification" >
+                    {{tab_lang.album.modifierAlbum}}
+                </button>
 
+                <form id="modifierAlbum" action="${pageContext.servletContext.contextPath}/Album">
+                    <button type="submit" name="ajouterAlbum" class="btn btn-danger">{{tab_lang.album.supprimer}}</button>
+                    <input type="hidden" name="idAlbum" value="${album.id}"/>
+                    <input type="hidden" name="action" value="supprimerAlbum"/>
+                </form>
+            </div>
+        </div>
+    </div>
     <br><br>
 
     <!-- Formulaire de test pour l'autocomplétion -->
-    <form class="ui-widget" action="">
-        <input id="tags">
-        <input type="button" name="submit" value="Ajouter" onClick="ajouterUtilisateurAlbum();"/>
-    </form>
-
+    <div class="row">
+        <div class="col-md-3">
+            <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
+            <form class="ui-widget" action="">
+                <input id="tags">
+                <input type="button" name="submit" value="Ajouter" onClick="ajouterUtilisateurAlbum();"/>
+            </form>
+        </div>
+    </div>
     <c:set var="count" value="0"/>
     <div id="zoneGallerie">
         <c:forEach var="p" items="${album.photos}">
@@ -98,7 +109,7 @@
             <c:set var="count" value="${count+1}"/>  
         </c:forEach> 
     </div>
-    
+
     <br>
 
     <!-- formulaire de test d'upload -->

@@ -44,7 +44,8 @@
             posterCommentaire : "Votre commentaire ...",
             modifierAlbum : "Modifier",
             supprimer : "Supprimer",
-            valider_modification: "Valider les modifications"
+            valider_modification: "Valider les modifications",
+            partager_album : "Partager l'album"
         },
         
         photo : {
