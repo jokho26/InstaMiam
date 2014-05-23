@@ -11,22 +11,48 @@
                     $("#tags").autocomplete({
                         source: availableTags,
                         select: function(event, ui) {
-                            $.get('${pageContext.servletContext.contextPath}/Album?action=partagerAlbum&idAlbum=${album.id}&idUtilisateur=' + ui.item.id, function(responseJson) {
-                                /*var $ul = $('<ul>').appendTo($('#somediv'));
-                                 $.each(responseJson, function(index, item) {
-                                 $('<li>').text(item).appendTo($ul);
-                                 });
-                                 });*/
-                                console.log(responseJson + "lol");
+
+                            $.ajax({
+                                type: 'POST',
+                                url: "${pageContext.servletContext.contextPath}/Album?action=partagerAlbum",
+                                data: {action: "partagerAlbum", idAlbum: "${album.id}", idUtilisateur: ui.item.id},
+                                dataType: "html",
+                                success: function(data, textStatus, jqXHR) {
+
+                                    console.log("data " + data);
+                                    console.log("text " + textStatus);
+                                    console.log("jqXHR" + jqXHR);
+                                    $("#badgesUtilisateurs").html(data);
+                                    $("#tags").val("");
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log("Something really bad happened " + textStatus);
+                                    console.log("Something really bad happened again" + jqXHR.responseText);
+                                },
+                                beforeSend: function(jqXHR, settings) {
+                                    //disable the button until we get the response
+                                    $('#tags').attr("disabled", true);
+                                },
+                                complete: function(jqXHR, textStatus) {
+                                    $('#tags').attr("disabled", false);
+                                }
+
                             });
-                        }});
+                        }
+                    });
                     function removeFile(file) {
                         $.ajax({
                             url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&nameFile=" + file.name
                         });
                     }
-                }
-                );
+
+    <c:if test="${!empty album.utilisateursPartages}">
+        <c:forEach var="p" items="${album.utilisateursPartages}">
+                    $("#badgesUtilisateurs").append('<span class="badge pull-left badgeUtilisateur" id="${p.id}">${p.prenom}&nbsp;${p.nom}&nbsp;<span class="glyphicon glyphicon-remove supprimerPartage"></span></span>');
+        </c:forEach>
+    </c:if>
+
+                });
 </script>
 
 <div class="top_div"></div>
@@ -92,8 +118,10 @@
         </div>
     </div>
     <div class="row" id="autoCompletion">
+        <h2 class="ruge" id="titreBadge">{{tab_lang.album.badges_partage}}</h2>
         <div class="col-md-6" id="badgesUtilisateurs"></div>
     </div>
+    <br><br>
     <c:set var="count" value="0"/>
     <div id="zoneGallerie">
         <c:forEach var="p" items="${album.photos}">

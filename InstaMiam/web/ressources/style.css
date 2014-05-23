@@ -4,8 +4,7 @@
 /*--------------------------------
  2) FONTS
 --------------------------------*/
-.ruge { font-family: 'Ruge Boogie', cursive; font-weight: 400; }
-
+.ruge { font-family: 'Ruge Boogie', cursive; font-weight: 400;}
 @font-face {
     font-family: 'Museo300Regular';
     src: url('fonts/museo/museo300-regular-webfont.eot');
@@ -271,8 +270,21 @@ button{
 .widget .comment-text { font-size: 12px; }
 
 /*****************************
- Form autocompletion
+ Form autocompletion et partage
  *****************************/
 #autoCompletion {
     padding-left: 20px;
+}
+
+#titreBadge {
+    padding-left: 20px;
+
+}
+
+.badgeUtilisateur {
+    margin-right: 5px;
+}
+
+.supprimerPartage:hover{
+    color: #D64F4B;
 }

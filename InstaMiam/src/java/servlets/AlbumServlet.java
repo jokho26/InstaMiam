@@ -115,6 +115,7 @@ public class AlbumServlet extends HttpServlet {
                 }
             } //Partage de l'album
             else if (action.equals("partagerAlbum")) {
+
                 int idUtilisateurPartage;
                 try {
                     idUtilisateurPartage = Integer.parseInt(request.getParameter("idUtilisateur"));
@@ -123,21 +124,13 @@ public class AlbumServlet extends HttpServlet {
                     return;
                 }
                 if (gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage)) {
-
                     Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
 
-                    List<Utilisateur> lu = a.getUtilisateursPartages();
-                    String json = "{";
-                    
-                    for(Utilisateur u : lu){
-                        json.concat("id: "+u.getId()+"{nom: "+u.getNom()+", prenom: "+u.getPrenom()+"}," );
-                    }
-                    //json = json.substring(0, json.length()-2);
-                    json.concat("}");
-                    
-                    response.setContentType("text/plain");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write(json);
+                    request.setAttribute("listeUtilisateursPartages", a.getUtilisateursPartages());
+
+                    forwardTo = "/listeUtilisateursPartages.jsp";
+                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                    dp.forward(request, response);
                     return;
                 } else {
                     response.setStatus(500);
