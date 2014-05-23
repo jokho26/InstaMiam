@@ -14,20 +14,16 @@
 
                             $.ajax({
                                 type: 'POST',
-                                url: "${pageContext.servletContext.contextPath}/Album?action=partagerAlbum",
+                                url: "${pageContext.servletContext.contextPath}/Album",
                                 data: {action: "partagerAlbum", idAlbum: "${album.id}", idUtilisateur: ui.item.id},
                                 dataType: "html",
                                 success: function(data, textStatus, jqXHR) {
-
-                                    console.log("data " + data);
-                                    console.log("text " + textStatus);
-                                    console.log("jqXHR" + jqXHR);
                                     $("#badgesUtilisateurs").html(data);
                                     $("#tags").val("");
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) {
                                     console.log("Something really bad happened " + textStatus);
-                                    console.log("Something really bad happened again" + jqXHR.responseText);
+                                    console.log("Something really bad happened again " + jqXHR.responseText);
                                 },
                                 beforeSend: function(jqXHR, settings) {
                                     //disable the button until we get the response
@@ -46,9 +42,33 @@
                         });
                     }
 
+                    function supprimerPartage(id) {
+                        $.ajax({
+                            type: 'POST',
+                            url: "${pageContext.servletContext.contextPath}/Album",
+                            data: {action: "supprimerPartage", idAlbum: "${album.id}", idUtilisateur: id},
+                            dataType: "html",
+                            success: function(data, textStatus, jqXHR) {
+                                $("#badgesUtilisateurs").html(data);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.log("Something really bad happened " + textStatus);
+                                console.log("Something really bad happened again " + jqXHR.responseText);
+                            },
+                            beforeSend: function(jqXHR, settings) {
+                                //disable the button until we get the response
+                                $('#tags').attr("disabled", true);
+                            },
+                            complete: function(jqXHR, textStatus) {
+                                $('#tags').attr("disabled", false);
+                            }
+
+                        });
+                    }
+
     <c:if test="${!empty album.utilisateursPartages}">
         <c:forEach var="p" items="${album.utilisateursPartages}">
-                    $("#badgesUtilisateurs").append('<span class="badge pull-left badgeUtilisateur" id="${p.id}">${p.prenom}&nbsp;${p.nom}&nbsp;<span class="glyphicon glyphicon-remove supprimerPartage"></span></span>');
+                    $("#badgesUtilisateurs").append('<span class="badge pull-left badgeUtilisateur" id="${p.id}">${p.prenom}&nbsp;${p.nom}&nbsp;<span class="glyphicon glyphicon-remove supprimerPartage" onclick="supprimerPartage(this.id)"></span></span>');
         </c:forEach>
     </c:if>
 
@@ -122,10 +142,10 @@
         <div class="col-md-6" id="badgesUtilisateurs"></div>
     </div>
     <br><br>
+    <hr>
     <c:set var="count" value="0"/>
     <div id="zoneGallerie">
         <c:forEach var="p" items="${album.photos}">
-
             <c:choose>
                 <c:when test="${count%4 == 0}">
                     <c:if test="${count != 0}">
@@ -146,64 +166,68 @@
             <c:set var="count" value="${count+1}"/>  
         </c:forEach> 
     </div>
+</div>
 
-    <br>
+<br><br><br><br><br>
 
-    <!-- formulaire de test d'upload -->
-    <form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}" 
-          enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
-    </form>
+<!-- formulaire de test d'upload -->
+<form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}" 
+      enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
+</form>
 
-    <!-- Formulaire de validation -->
-    <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
-        <input type="submit" value="Upload" name="btnUpload" id="upload" />
-        <input type="hidden" value="${idAlbum}" name="idAlbum" id="upload" />
-        <input type="hidden" name="action" value="validUpload"/>
-        <input type="hidden" name="idTransaction" value="${idTransaction}"/>
-    </form>
-    <br>
+<!-- Formulaire de validation -->
+<form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+    <input type="submit" value="Upload" name="btnUpload" id="upload" />
+    <input type="hidden" value="${idAlbum}" name="idAlbum" id="upload" />
+    <input type="hidden" name="action" value="validUpload"/>
+    <input type="hidden" name="idTransaction" value="${idTransaction}"/>
+</form>
+<br>
 
-    <!-- Partie des commentaires -->
-    <ul>
-        <c:forEach var="c" items="${album.commentaires}">  
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default widget">
-                        <div class="panel-body">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+<!-- Partie des commentaires -->
+<ul>
+    <c:forEach var="c" items="${album.commentaires}">  
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default widget">
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="comment-text">
+                                            ${c.text}
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="comment-text">
-                                                ${c.text}
-                                            </div>
-                                            <div>
-                                                <div class="mic-info">
-                                                    By: <a href="#">${c.auteur.prenom} ${c.auteur.nom}</a>
-                                                </div>
+                                        <div>
+                                            <div class="mic-info">
+                                                By: <a href="#">${c.auteur.prenom} ${c.auteur.nom}</a>
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
 
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </c:forEach>
-    </ul>
+        </div>
+    </c:forEach>
+</ul>
 
-    <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
-        <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
-        <input type="hidden" name="action" value="ajouterCommentaire"/>
-        <input type="hidden" value="${idAlbum}" name="idAlbum"/>
-        <input type="submit" name="submit" value="Poster" />
-    </form>
+<form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+    <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
+    <input type="hidden" name="action" value="ajouterCommentaire"/>
+    <input type="hidden" value="${idAlbum}" name="idAlbum"/>
+    <input type="submit" name="submit" value="Poster" />
+</form>
 
 
 </div>
+
+
 <div class="bottom_div"></div>
+<br>
