@@ -170,7 +170,7 @@
 
 <br><br><br><br><br>
 
-<!-- formulaire de test d'upload -->
+<!-- formulaire d'upload -->
 <form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}" 
       enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
 </form>

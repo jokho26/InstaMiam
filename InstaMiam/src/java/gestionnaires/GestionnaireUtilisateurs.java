@@ -264,4 +264,10 @@ public class GestionnaireUtilisateurs {
         return true;
     }
 
+    public void setPhotoProfil(int id, String fileName) {
+        Utilisateur u = getUtilisateurById(id);
+        u.setImageProfil(fileName);
+        em.flush();
+    }
+
 }
