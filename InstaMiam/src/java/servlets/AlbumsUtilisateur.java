@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
@@ -11,25 +12,24 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Album;
-import modeles.Commentaire;
+import modeles.Utilisateur;
 
 /**
  *
  */
-@WebServlet(name = "ListeAlbumsServlet", urlPatterns = {"/ListeAlbums"})
-@MultipartConfig
-public class ListeAlbumsServlet extends HttpServlet {
+@WebServlet(name = "AlbumsUtilisateur", urlPatterns = {"/AlbumsUtilisateur"})
+public class AlbumsUtilisateur extends HttpServlet {
 
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,37 +41,26 @@ public class ListeAlbumsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String forwardTo = "listeAlbums.jsp";
+          response.setContentType("text/html;charset=UTF-8");
 
-        String action = request.getParameter("action");
-
-        // On récupere la session
-        HttpSession session = request.getSession();
-
-        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
-        request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
-
-        if (action != null) {
-            if (action.equals("ajouterAlbum")) {
-                String nomAlbum = request.getParameter("nomAlbum");
-                String typePartage = request.getParameter("typePartage");
-                int type;
-                if (typePartage.equals("public"))
-                    type = Album.ALBUM_PUBLIC;
-                else
-                    type = Album.ALBUM_PRIVE;
-                
-                gestionnaireUtilisateurs.creerAlbum(nomAlbum, idUtilisateur, type);
-                request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
-            }
+        String forwardTo = "albumsUtilisateur.jsp";
+        
+        if (request.getParameter("idUtilisateur") != null) {
+            int idUtilisateurCible = Integer.parseInt(request.getParameter("idUtilisateur"));
+            
+            // On récupere l'id de l'utilisateur connecté
+            HttpSession session = request.getSession();
+            int idUtilisateurSource = (int) (session.getAttribute("utilisateurConnecte"));
+            
+            List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getAlbumsVisibles(idUtilisateurSource, idUtilisateurCible);
+            
+            request.setAttribute("listeAlbumsVisibles", listeAlbumsVisibles);
+        }
+        else {
+            // TODO
         }
         
-        // On ajoute la liste des utilisateurs
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
-
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
-
         dp.forward(request, response);
     }
 

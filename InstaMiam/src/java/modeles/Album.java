@@ -46,6 +46,11 @@ public class Album implements Serializable {
     private Utilisateur utilisateur;
 
     private String idUnique;
+    
+    private int typePartage;
+    
+    public final static int ALBUM_PUBLIC = 1;
+    public final static int ALBUM_PRIVE = 2;
 
     public Utilisateur getUtilisateur() {
         return utilisateur;
@@ -56,12 +61,12 @@ public class Album implements Serializable {
     }
 
     public Album() {
-
     }
 
-    public Album(String nomAlbum) {
+    public Album(String nomAlbum, int typePartage) {
         this.nomAlbum = nomAlbum;
         idUnique = UUID.randomUUID().toString();
+        this.typePartage=typePartage;
     }
 
     public String getNomAlbum() {
@@ -151,4 +156,14 @@ public class Album implements Serializable {
         this.utilisateursPartages = utilisateursPartages;
     }
 
+    public int getTypePartage() {
+        return typePartage;
+    }
+
+    public void setTypePartage(int typePartage) {
+        this.typePartage = typePartage;
+    }
+
+    
+    
 }

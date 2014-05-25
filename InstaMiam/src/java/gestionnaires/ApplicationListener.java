@@ -26,17 +26,19 @@ public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur("Jean", "Bon", "test", "email@email.com", "test");
-        Album a = gestionnaireUtilisateurs.creerAlbum("Album 1", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 2", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 3", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 4", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 5", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 6", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 7", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 8", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 9", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 10", u.getId());
-        gestionnaireUtilisateurs.creerAlbum("Album 11", u.getId());
+        Album a = gestionnaireUtilisateurs.creerAlbum("Album 1", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album 2", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album 3", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album 4", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album 5", u.getId(), Album.ALBUM_PRIVE);
+        gestionnaireUtilisateurs.creerAlbum("Album 6", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album 7", u.getId(), Album.ALBUM_PRIVE);
+        gestionnaireUtilisateurs.creerAlbum("Album 8", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album 9", u.getId(), Album.ALBUM_PRIVE);
+        gestionnaireUtilisateurs.creerAlbum("Album 10", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album 11", u.getId(), Album.ALBUM_PRIVE);
+        
+      
         
         gestionnaireUtilisateurs.creerPhoto("Photo1.png", a.getId());
         gestionnaireUtilisateurs.creerPhoto( "Photo2.png", a.getId());
@@ -48,7 +50,13 @@ public class ApplicationListener implements ServletContextListener {
         
         gestionnaireUtilisateurs.creeUtilisateur("Anne", "Orak", "Anne", "Anne@gmail.com", "Anne");
         gestionnaireUtilisateurs.creeUtilisateur("John", "Doeuf", "John", "John@gmail.com", "John");
-        gestionnaireUtilisateurs.creeUtilisateur("Serge", "LeLama", "LeLama", "LeLama@gmail.com", "LeLama");
+        Utilisateur u2 = gestionnaireUtilisateurs.creeUtilisateur("Serge", "LeLama", "LeLama", "LeLama@gmail.com", "LeLama");
+        Album prive = gestionnaireUtilisateurs.creerAlbum("Album Prive test", u2.getId(), Album.ALBUM_PRIVE);
+        gestionnaireUtilisateurs.creerAlbum("Album Public 1", u2.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Album Public 2", u2.getId(), Album.ALBUM_PUBLIC);
+        
+        // Test de partage d'album
+        gestionnaireUtilisateurs.partagerAlbum(prive.getId(), u.getId());
     }
 
     @Override
