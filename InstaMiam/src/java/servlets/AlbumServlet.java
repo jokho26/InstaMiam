@@ -118,6 +118,7 @@ public class AlbumServlet extends HttpServlet {
 
                 int idUtilisateurPartage;
                 Album a;
+
                 try {
                     idUtilisateurPartage = Integer.parseInt(request.getParameter("idUtilisateur"));
                 } catch (NumberFormatException e) {
@@ -130,7 +131,6 @@ public class AlbumServlet extends HttpServlet {
                         return;
                     }
                 } else if (action.equals("supprimerPartage")) {
-                    System.out.println("MDR OMG LOL");
 
                     if (!gestionnaireUtilisateurs.supprimerPartage(idAlbum, idUtilisateurPartage)) {
                         response.setStatus(500);

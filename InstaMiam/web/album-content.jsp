@@ -3,11 +3,10 @@
 
 <script>
     function supprimerPartage(elm) {
-        alert(elm.id);
         $.ajax({
             type: 'POST',
             url: "${pageContext.servletContext.contextPath}/Album",
-            data: {action: "supprimerPartage", idAlbum: "${album.id}", idUtilisateur: elm.id},
+            data: {action: "supprimerPartage", idAlbum: "${album.id}", idUtilisateur: elm.parentNode.id},
             dataType: "html",
             success: function(data, textStatus, jqXHR) {
                 $("#badgesUtilisateurs").html(data);

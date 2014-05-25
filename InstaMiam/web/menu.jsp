@@ -8,7 +8,6 @@
             <li><a href="${pageContext.servletContext.contextPath}/Connexion">{{tab_lang.nav_bar.connexion}}</a></li>
         </c:when>
         <c:otherwise>
-            <li><a href="gallery.html">{{tab_lang.nav_bar.mur}}</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/ListeAlbums">{{tab_lang.nav_bar.albums}}</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/Profil">{{tab_lang.nav_bar.profil}}</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/Connexion?action=deconnexion">{{tab_lang.nav_bar.deconnexion}}</a></li>
