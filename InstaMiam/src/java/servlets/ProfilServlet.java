@@ -7,17 +7,26 @@
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import modeles.Utilisateur;
 
+@MultipartConfig
 @WebServlet(name = "ProfilServlet", urlPatterns = {"/Profil"})
 public class ProfilServlet extends HttpServlet {
 
@@ -57,11 +66,13 @@ public class ProfilServlet extends HttpServlet {
                     request.setAttribute("messageErreur", "{{tab_lang.profil.messageErreur}}");
                 }
             }
+            else if (action.equals("changerImage")) {
+                System.out.println("=================> CHANGEMENT");
+                enregistrerPhotoProfil(request, gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString())));
+            }
         }
         
-        
-        
-        
+        System.out.println(action);
         
         // On récupere l'utilisateur loggé
         Utilisateur u = gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()));
@@ -72,6 +83,86 @@ public class ProfilServlet extends HttpServlet {
 
         dp.forward(request, response);
         
+    }
+    
+    
+    /**
+     * Méthode permettant d'enregistrer un fichier uploadé lors d'une
+     * transaction avec la dropzone.
+     *
+     * @param request
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void enregistrerPhotoProfil(HttpServletRequest request, Utilisateur u) throws ServletException, IOException {
+        // On créer le repertoire temporaire de stockage
+        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator + "profil" ;
+        File dir = new File(path);
+        dir.mkdirs();
+
+        final Part filePart = request.getPart("file");
+        
+        // On récupere l'id de l'image
+        String id;
+        // Si l'utilisateur n'a pas encore d'ID attitré, on va en créer un
+        if (u.getImageProfil().contains("default")) {
+            UUID uuid = UUID.randomUUID();
+            id = uuid.toString();
+        }
+        else {
+            // Sinon on récupere l'id déjà utilisé
+            id = u.getImageProfil().substring(0, u.getImageProfil().lastIndexOf("."));
+        }
+        
+        // On créée le nom du fichier final
+        final String fileName = id + getExtentionFile(filePart);
+        gestionnaireUtilisateurs.setPhotoProfil(u.getId(), fileName);
+        
+        OutputStream out = null;
+        InputStream filecontent = null;
+
+        // On récupere le contenu du fichier et on le sauvegarde sur le serveur
+        try {
+            out = new FileOutputStream(new File(path + File.separator + fileName));
+            filecontent = filePart.getInputStream();
+
+            int read = 0;
+            final byte[] bytes = new byte[1024];
+
+            while ((read = filecontent.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            System.out.println(new File(path + File.separator + fileName).getAbsolutePath());
+
+        } catch (FileNotFoundException fne) {
+            // TODO
+            System.out.println("Exception dans l'upload du fichier.\n" + fne.getMessage());
+        } // On ferme les streams
+        finally {
+            if (out != null) {
+                out.close();
+            }
+            if (filecontent != null) {
+                filecontent.close();
+            }
+        }
+    }
+    
+    
+    /**
+     * Méthode permettant de récuperer le nom du fichier qu'on upload
+     *
+     * @param part
+     * @return
+     */
+    private String getExtentionFile(final Part part) {
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                String fileName = content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+                return fileName.substring(fileName.lastIndexOf("."), fileName.length());
+            }
+        }
+        return null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
