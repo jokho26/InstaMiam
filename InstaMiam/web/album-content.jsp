@@ -196,7 +196,7 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+                                        <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive " alt="" />
                                     </div>
                                     <div class="col-md-4">
                                         <div class="comment-text">

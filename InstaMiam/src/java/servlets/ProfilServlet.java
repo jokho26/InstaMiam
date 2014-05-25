@@ -67,12 +67,9 @@ public class ProfilServlet extends HttpServlet {
                 }
             }
             else if (action.equals("changerImage")) {
-                System.out.println("=================> CHANGEMENT");
                 enregistrerPhotoProfil(request, gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString())));
             }
         }
-        
-        System.out.println(action);
         
         // On récupere l'utilisateur loggé
         Utilisateur u = gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()));

@@ -8,7 +8,7 @@
             <center><h1 class="ruge">Mon profil</h1></center>
             <br>
             <center>
-                <img src="${pageContext.servletContext.contextPath}/profil/${profil.imageProfil}">
+                <img src="${pageContext.servletContext.contextPath}/profil/${profil.imageProfil}" class="img-rounded img-responsive imageProfil">
                 <br><br>
                 <form class="form-inline" method="POST" action="${pageContext.servletContext.contextPath}/Profil?action=changerImage" enctype="multipart/form-data">
                     <input type="file" name="file" required/>
