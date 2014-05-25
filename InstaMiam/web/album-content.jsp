@@ -44,6 +44,7 @@
                                     //console.log("Something really bad happened " + textStatus);
                                     //console.log("Something really bad happened again " + jqXHR.responseText);
                                     $("#tags").val("");
+                                    //$('.popOverMiam').popover('show')
 
                                 },
                                 beforeSend: function(jqXHR, settings) {
@@ -134,7 +135,7 @@
         <div class="col-md-3">
             <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
             <form class="ui-widget" action="">
-                <input id="tags">
+                <input id="tags" class="popOverMiam">
             </form>
         </div>
     </div>
