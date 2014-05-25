@@ -86,7 +86,7 @@
                     <div class="col-md-3 col-sm-4 col-xs-6">
                         <center><h2 class="ruge">${a.nomAlbum}</h2></center>
                         <a href="${pageContext.servletContext.contextPath}/Album?idAlbum=${a.id}">
-                            <img class="img-responsive" src="http://2.bp.blogspot.com/-H6MAoWN-UIE/TuRwLbHRSWI/AAAAAAAABBk/89iiEulVsyg/s400/Free%2BNature%2BPhoto.jpg" />
+                            <img class="img-responsive" src="${pageContext.servletContext.contextPath}/albums/${a.idUnique}/${a.photoDeCouverture.nomFichier}" />
                         </a>
                         <h3 class="ruge" id="commentaire">${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>
                     </div>

@@ -167,13 +167,14 @@
 
             <c:set var="count" value="${count+1}"/>  
         </c:forEach> 
+        <c:if test="${count != 0}"></div></c:if>
+
     </div>
-</div>
 
-<br><br><br><br><br>
+    <br><br><br><br><br>
 
-<!-- formulaire d'upload -->
-<form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}" 
+    <!-- formulaire d'upload -->
+    <form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}" 
       enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
 </form>
 
@@ -219,15 +220,16 @@
         </div>
     </c:forEach>
 </ul>
-
-<form method="POST" action="${pageContext.servletContext.contextPath}/Album">
-    <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
-    <input type="hidden" name="action" value="ajouterCommentaire"/>
-    <input type="hidden" value="${idAlbum}" name="idAlbum"/>
-    <input type="submit" name="submit" value="Poster" />
-</form>
-
-
+<div class="row decale">
+    <div class="col-md-6">
+        <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+            <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
+            <input type="hidden" name="action" value="ajouterCommentaire"/>
+            <input type="hidden" value="${idAlbum}" name="idAlbum"/>
+            <input type="submit" name="submit" value="Poster" id="posterCommentaire"/>
+        </form>
+    </div>
+</div>
 </div>
 
 

@@ -50,7 +50,8 @@
                     modifierPhoto: "Modifier",
                     valider_modification: "Valider les modifications",
                     supprimer: "Supprimer",
-                    definirPhotoCouverture: "Définir comme photo de couverture"
+                    definirPhotoCouverture: "Définir comme photo de couverture",
+                    couverture: "(photo de couverture)"
                 },
                 profil: {
                     nom: "Nom",

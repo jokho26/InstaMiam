@@ -6,11 +6,6 @@
 
 <div class="content_div">
 
-
-
-
-
-
     <!-- Modal de modification d'information de la photo -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -40,7 +35,7 @@
     </div>
 
     <div class="row decale">
-        <center><h1 class="ruge">${photo.nom}</h1>
+        <center><h1 class="ruge">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1>
             <br><h3>${photo.description}</h3></center><br>
     </div>
 
