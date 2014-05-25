@@ -11,10 +11,6 @@
             success: function(data, textStatus, jqXHR) {
                 $("#badgesUtilisateurs").html(data);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("Something really bad happened " + textStatus);
-                console.log("Something really bad happened again " + jqXHR.responseText);
-            },
             beforeSend: function(jqXHR, settings) {
                 $('#tags').attr("disabled", true);
             },
@@ -45,8 +41,10 @@
                                     $("#tags").val("");
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) {
-                                    console.log("Something really bad happened " + textStatus);
-                                    console.log("Something really bad happened again " + jqXHR.responseText);
+                                    //console.log("Something really bad happened " + textStatus);
+                                    //console.log("Something really bad happened again " + jqXHR.responseText);
+                                    $("#tags").val("");
+
                                 },
                                 beforeSend: function(jqXHR, settings) {
                                     //disable the button until we get the response
