@@ -26,3 +26,4 @@ $(function() {
     });
 });
 
+//$(".popOverMiam").popover({animation: "true", placement: "auto top", content: "Vous avez déjà partagé cet album à cette personne."});  
