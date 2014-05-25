@@ -17,59 +17,64 @@
         <div class="content_div">
             <center><h1 class="ruge">{{tab_lang.mes_albums.titre}}</h1></center> 
             
-            <!-- Bouton pour faire apparaitre le form modal de création d'album -->
-            <div id="btn_nouvel_album">
-                <span class="glyphicon glyphicon-plus"></span>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
-                    {{tab_lang.mes_albums.nouvel_album}}
-                </button>
-            </div>
             
-            <!-- test pour l'autocomplétion -->
+            
+            <c:choose>
+                <c:when test="${idUtilisateurAAfficher == null || sessionScope.utilisateurConnecte == idUtilisateurAAfficher}">
+                <!-- Bouton pour faire apparaitre le form modal de création d'album -->
+                <div id="btn_nouvel_album">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+                        {{tab_lang.mes_albums.nouvel_album}}
+                    </button>
+                </div>
 
-            
-            
-            <br><br><br>
-            
-            <!-- Modal de création d'album -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">{{tab_lang.mes_albums.ajouter_nouvel_album}}</h4>
-                        </div>
-                        <div class="modal-body">
-                            
-                             <!-- formulaire de test pour ajouter un album-->
-                            <form method="POST" action="${pageContext.servletContext.contextPath}/ListeAlbums" id="formAjoutAlbum">
-                                <input type="text" name="nomAlbum" id="nomAlbum" class="form-control" placeholder="{{tab_lang.mes_albums.nomAlbum}}" required/>
-                                <br>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="typePartage" id="optionsRadios1" value="private" checked>
-                                        {{tab_lang.mes_albums.albumPrive}}
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="typePartage" id="optionsRadios2" value="public">
-                                        {{tab_lang.mes_albums.albumPublique}}
-                                    </label>
-                                </div>
-                                <input type="hidden" name="action" value="ajouterAlbum"/>
-                        </div>
-                                            
-                        <div class="modal-footer">
-                                <button class="btn btn-default" data-dismiss="modal">Close</button>
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <button type="submit" name="ajouterAlbum" id="ajouterAlbum" class="btn btn-default">{{tab_lang.mes_albums.creer_album}}</button>
-                            </form>
+                <br><br><br>
+
+                <!-- Modal de création d'album -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">{{tab_lang.mes_albums.ajouter_nouvel_album}}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                 <!-- formulaire de test pour ajouter un album-->
+                                <form method="POST" action="${pageContext.servletContext.contextPath}/ListeAlbums" id="formAjoutAlbum">
+                                    <input type="text" name="nomAlbum" id="nomAlbum" class="form-control" placeholder="{{tab_lang.mes_albums.nomAlbum}}" required/>
+                                    <br>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="typePartage" id="optionsRadios1" value="private" checked>
+                                            {{tab_lang.mes_albums.albumPrive}}
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="typePartage" id="optionsRadios2" value="public">
+                                            {{tab_lang.mes_albums.albumPublique}}
+                                        </label>
+                                    </div>
+                                    <input type="hidden" name="action" value="ajouterAlbum"/>
+                            </div>
+
+                            <div class="modal-footer">
+                                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <button type="submit" name="ajouterAlbum" id="ajouterAlbum" class="btn btn-default">{{tab_lang.mes_albums.creer_album}}</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+                </c:when>
+           </c:choose>
+                                
+                                
+            <!-- Mosaique des albums -->
             <c:set var="count" value="0"/>
             <div id="zoneGallerie">
                 <c:forEach var="a" items="${requestScope['listeAlbums']}">

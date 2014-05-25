@@ -50,7 +50,7 @@ public class ListeAlbumsServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
-        request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
+        
 
         if (action != null) {
             if (action.equals("ajouterAlbum")) {
@@ -65,6 +65,20 @@ public class ListeAlbumsServlet extends HttpServlet {
                 gestionnaireUtilisateurs.creerAlbum(nomAlbum, idUtilisateur, type);
                 request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
             }
+        }
+        
+        // Si un id précis est défini, on affiche la liste des albums de cette utilisateurs
+        if (request.getParameter("idUtilisateurAAfficher") != null) {
+            int idUtilisateurCible = Integer.parseInt(request.getParameter("idUtilisateurAAfficher"));
+            
+            List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getAlbumsVisibles(idUtilisateur, idUtilisateurCible);
+            
+            request.setAttribute("listeAlbums", listeAlbumsVisibles);
+            request.setAttribute("idUtilisateurAAfficher", idUtilisateurCible);
+        }
+        // Sinon on affiche les albums de l'utilisateur connecté
+        else {
+            request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
         }
         
         // On ajoute la liste des utilisateurs

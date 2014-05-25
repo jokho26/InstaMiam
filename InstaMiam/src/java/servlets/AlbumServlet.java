@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.util.List;
 import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -27,7 +26,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Album;
 import modeles.Photo;
-import modeles.Utilisateur;
 
 /**
  *
@@ -153,10 +151,12 @@ public class AlbumServlet extends HttpServlet {
         // On recupère l'album à afficher
         Album albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
 
-        // On verifie que l'utilisateur a bien le droit d'afficher cette album
+        // On verifie que l'utilisateur a bien le droit d'afficher cet album
         if (albumAAfficher != null) {
-            if (albumAAfficher.getUtilisateur().getId() != idUtilisateur) {
+            if (albumAAfficher.getUtilisateur().getId() != idUtilisateur 
+                    && !albumAAfficher.getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
                 albumAAfficher = null;
+                request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cet album !"); 
             }
         }
 
