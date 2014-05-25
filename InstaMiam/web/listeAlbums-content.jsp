@@ -62,13 +62,13 @@
                                 <br>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="private" checked>
+                                        <input type="radio" name="typePartage" id="optionsRadios1" value="private" checked>
                                         {{tab_lang.mes_albums.albumPrive}}
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="public">
+                                        <input type="radio" name="typePartage" id="optionsRadios2" value="public">
                                         {{tab_lang.mes_albums.albumPublique}}
                                     </label>
                                 </div>

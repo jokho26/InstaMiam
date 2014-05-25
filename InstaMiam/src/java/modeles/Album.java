@@ -35,10 +35,6 @@ public class Album implements Serializable {
     @OneToMany(mappedBy = "album")
     private List<Photo> photos;
 
-    @OneToOne
-    @JoinColumn(name = "albumCouvert", referencedColumnName = "id")
-    private Photo photoDeCouverture;
-
     @ManyToMany
     @JoinColumn(name = "utilisateur", referencedColumnName = "albumsPartages")
     private List<Utilisateur> utilisateursPartages;
@@ -50,7 +46,16 @@ public class Album implements Serializable {
     @JoinColumn(name = "utilisateur", referencedColumnName = "id")
     private Utilisateur utilisateur;
 
+    @OneToOne
+    @JoinColumn(name = "albumCouvert", referencedColumnName = "id")
+    private Photo photoDeCouverture;
+
     private String idUnique;
+
+    private int typePartage;
+
+    public final static int ALBUM_PUBLIC = 1;
+    public final static int ALBUM_PRIVE = 2;
 
     public Utilisateur getUtilisateur() {
         return utilisateur;
@@ -61,12 +66,12 @@ public class Album implements Serializable {
     }
 
     public Album() {
-
     }
 
-    public Album(String nomAlbum) {
+    public Album(String nomAlbum, int typePartage) {
         this.nomAlbum = nomAlbum;
         idUnique = UUID.randomUUID().toString();
+        this.typePartage = typePartage;
     }
 
     public String getNomAlbum() {
@@ -154,6 +159,14 @@ public class Album implements Serializable {
      */
     public void setUtilisateursPartages(List<Utilisateur> utilisateursPartages) {
         this.utilisateursPartages = utilisateursPartages;
+    }
+
+    public int getTypePartage() {
+        return typePartage;
+    }
+
+    public void setTypePartage(int typePartage) {
+        this.typePartage = typePartage;
     }
 
     /**

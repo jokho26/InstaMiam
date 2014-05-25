@@ -96,10 +96,10 @@ public class GestionnaireUtilisateurs {
         }
     }
 
-    public Album creerAlbum(String nom, int idUser) {
+    public Album creerAlbum(String nom, int idUser, int typePartage) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
 
-        Album a = new Album(nom);
+        Album a = new Album(nom, typePartage);
         em.persist(a);
         em.flush();
 
@@ -284,6 +284,22 @@ public class GestionnaireUtilisateurs {
         em.flush();
 
         return true;
+    }
+
+    public List<Album> getAlbumsVisibles(int idUtilisateurSource, int idUtilisateurCible) {
+        List<Album> listeAlbumsVisibles = new ArrayList();
+
+        List<Album> tousLesAlbums = getListeAlbumsByIdUser(idUtilisateurCible);
+
+        Utilisateur utilisateurSource = getUtilisateurById(idUtilisateurSource);
+
+        for (Album a : tousLesAlbums) {
+            if (a.getTypePartage() == Album.ALBUM_PUBLIC || a.getUtilisateursPartages().contains(utilisateurSource)) {
+                listeAlbumsVisibles.add(a);
+            }
+        }
+
+        return listeAlbumsVisibles;
     }
 
     public void setPhotoCouverture(int idAlbum, int idPhoto) {
