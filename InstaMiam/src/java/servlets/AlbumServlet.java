@@ -114,28 +114,38 @@ public class AlbumServlet extends HttpServlet {
                     }
                 }
             } //Partage de l'album
-            else if (action.equals("partagerAlbum")) {
+            else if (action.equals("partagerAlbum") || action.equals("supprimerPartage")) {
 
                 int idUtilisateurPartage;
+                Album a;
                 try {
                     idUtilisateurPartage = Integer.parseInt(request.getParameter("idUtilisateur"));
                 } catch (NumberFormatException e) {
                     response.setStatus(500);
                     return;
                 }
-                if (gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage)) {
-                    Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+                if (action.equals("partagerAlbum")) {
+                    if (!gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage)) {
+                        response.setStatus(500);
+                        return;
+                    }
+                } else if (action.equals("supprimerPartage")) {
+                    System.out.println("MDR OMG LOL");
 
-                    request.setAttribute("listeUtilisateursPartages", a.getUtilisateursPartages());
-
-                    forwardTo = "/listeUtilisateursPartages.jsp";
-                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
-                    dp.forward(request, response);
-                    return;
-                } else {
-                    response.setStatus(500);
-                    return;
+                    if (!gestionnaireUtilisateurs.supprimerPartage(idAlbum, idUtilisateurPartage)) {
+                        response.setStatus(500);
+                        return;
+                    }
                 }
+
+                a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+
+                request.setAttribute("listeUtilisateursPartages", a.getUtilisateursPartages());
+
+                forwardTo = "/listeUtilisateursPartages.jsp";
+                RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                dp.forward(request, response);
+                return;
 
             }
         }

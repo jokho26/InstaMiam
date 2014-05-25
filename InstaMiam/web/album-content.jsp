@@ -1,6 +1,30 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <script src="ressources/js/Albumjs.js"></script>
+
 <script>
+    function supprimerPartage(elm) {
+        alert(elm.id);
+        $.ajax({
+            type: 'POST',
+            url: "${pageContext.servletContext.contextPath}/Album",
+            data: {action: "supprimerPartage", idAlbum: "${album.id}", idUtilisateur: elm.id},
+            dataType: "html",
+            success: function(data, textStatus, jqXHR) {
+                $("#badgesUtilisateurs").html(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Something really bad happened " + textStatus);
+                console.log("Something really bad happened again " + jqXHR.responseText);
+            },
+            beforeSend: function(jqXHR, settings) {
+                $('#tags').attr("disabled", true);
+            },
+            complete: function(jqXHR, textStatus) {
+                $('#tags').attr("disabled", false);
+            }
+
+        });
+    }
     $(function() {
         var availableTags = [
     <c:forEach var="u" items="${listeUtilisateur}">
@@ -42,37 +66,17 @@
                         });
                     }
 
-                    function supprimerPartage(id) {
-                        $.ajax({
-                            type: 'POST',
-                            url: "${pageContext.servletContext.contextPath}/Album",
-                            data: {action: "supprimerPartage", idAlbum: "${album.id}", idUtilisateur: id},
-                            dataType: "html",
-                            success: function(data, textStatus, jqXHR) {
-                                $("#badgesUtilisateurs").html(data);
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                console.log("Something really bad happened " + textStatus);
-                                console.log("Something really bad happened again " + jqXHR.responseText);
-                            },
-                            beforeSend: function(jqXHR, settings) {
-                                //disable the button until we get the response
-                                $('#tags').attr("disabled", true);
-                            },
-                            complete: function(jqXHR, textStatus) {
-                                $('#tags').attr("disabled", false);
-                            }
 
-                        });
-                    }
 
     <c:if test="${!empty album.utilisateursPartages}">
         <c:forEach var="p" items="${album.utilisateursPartages}">
-                    $("#badgesUtilisateurs").append('<span class="badge pull-left badgeUtilisateur" id="${p.id}">${p.prenom}&nbsp;${p.nom}&nbsp;<span class="glyphicon glyphicon-remove supprimerPartage" onclick="supprimerPartage(this.id)"></span></span>');
+                    $("#badgesUtilisateurs").append('<span class="badge pull-left badgeUtilisateur" id="${p.id}">${p.prenom}&nbsp;${p.nom}&nbsp;<span class="glyphicon glyphicon-remove supprimerPartage" onclick="supprimerPartage(this)"></span></span>');
         </c:forEach>
     </c:if>
 
                 });
+
+
 </script>
 
 <div class="top_div"></div>

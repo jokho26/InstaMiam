@@ -255,9 +255,25 @@ public class GestionnaireUtilisateurs {
         if (a == null || u == null || a.getUtilisateursPartages().contains(u) || u.getAlbumsPartages().contains(a)) {
             return false;
         }
-        
+
         u.getAlbumsPartages().add(a);
         a.getUtilisateursPartages().add(u);
+
+        em.flush();
+
+        return true;
+    }
+
+    public boolean supprimerPartage(int idAlbum, int idUtilisateurPartage) {
+        Utilisateur u = getUtilisateurById(idUtilisateurPartage);
+        Album a = getAlbumById(idAlbum);
+
+        if (a == null || u == null || !a.getUtilisateursPartages().contains(u) || !u.getAlbumsPartages().contains(a)) {
+            return false;
+        }
+
+        u.getAlbumsPartages().remove(a);
+        a.getUtilisateursPartages().remove(u);
 
         em.flush();
 
