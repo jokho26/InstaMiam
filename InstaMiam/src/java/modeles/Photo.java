@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modeles;
 
 import java.io.File;
@@ -17,39 +16,44 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
- * 
+ *
  */
 @Entity
 public class Photo implements Serializable {
-    
+
     @ManyToOne
     @JoinColumn(name = "album", referencedColumnName = "id")
     private Album album;
-    
+
     private String nom;
 
+    @OneToOne
+    @JoinColumn(name = "photoDeCouverture", referencedColumnName = "id")
+    private Album albumCouvert;
+
     private String nomFichier;
-    
+
     private String description;
-    
+
     @OneToMany(mappedBy = "photo")
     private List<Commentaire> commentaires;
-    
-     private String idUnique;
-    
+
+    private String idUnique;
+
     public Photo() {
         nom = "";
         nomFichier = "";
     }
-    
+
     public Photo(String nom) {
         this.nom = nom;
         idUnique = UUID.randomUUID().toString();
-        nomFichier = idUnique+nom.substring(nom.indexOf("."));
+        nomFichier = idUnique + nom.substring(nom.indexOf("."));
     }
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,7 +66,7 @@ public class Photo implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public Album getAlbum() {
         return album;
     }
@@ -119,8 +123,8 @@ public class Photo implements Serializable {
     public void setCommentaires(List<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
-    
-        public void ajouterCommentaire(Commentaire c) {
+
+    public void ajouterCommentaire(Commentaire c) {
         this.commentaires.add(c);
     }
 
@@ -139,5 +143,19 @@ public class Photo implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+    /**
+     * @return the albumCouvert
+     */
+    public Album getAlbumCouvert() {
+        return albumCouvert;
+    }
+
+    /**
+     * @param albumCouvert the albumCouvert to set
+     */
+    public void setAlbumCouvert(Album albumCouvert) {
+        this.albumCouvert = albumCouvert;
+    }
+
 }

@@ -131,7 +131,7 @@
     <br><br>
 
     <!-- Formulaire de test pour l'autocomplétion -->
-    <div class="row" id="autoCompletion">
+    <div class="row decale">
         <div class="col-md-3">
             <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
             <form class="ui-widget" action="">
@@ -139,7 +139,7 @@
             </form>
         </div>
     </div>
-    <div class="row" id="autoCompletion">
+    <div class="row decale">
         <h2 class="ruge" id="titreBadge">{{tab_lang.album.badges_partage}}</h2>
         <div class="col-md-6" id="badgesUtilisateurs"></div>
     </div>

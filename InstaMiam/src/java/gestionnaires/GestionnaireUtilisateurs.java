@@ -286,4 +286,13 @@ public class GestionnaireUtilisateurs {
         return true;
     }
 
+    public void setPhotoCouverture(int idAlbum, int idPhoto) {
+        Album a = getAlbumById(idAlbum);
+        Photo p = getPhotoById(idPhoto);
+
+        a.setPhotoDeCouverture(p);
+        p.setAlbumCouvert(a);
+        em.flush();
+    }
+
 }

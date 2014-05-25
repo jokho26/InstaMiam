@@ -155,6 +155,10 @@ footer #content{
 /*****************************
   Div
  *****************************/
+.decale {
+    padding-left: 20px;
+}
+
 .top_div {
     background: url('img/box-gallery-top.png') repeat-x center left;
     height: 6px;
@@ -246,7 +250,7 @@ button{
     color:white;
 }
 
-/* Permet de faire passer l'autocomplétion d'un input dans une fenetre modale*/
+/* Permet de faire passer l'autocomplÃƒÂ©tion d'un input dans une fenetre modale*/
 .ui-autocomplete.ui-front
 {
     z-index: 1051;
@@ -269,13 +273,12 @@ button{
 .widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
 .widget .mic-info { color: #666666;font-size: 11px; }
 .widget .comment-text { font-size: 12px; }
+#posterCommentaire{margin-top: 5px;}
 
 /*****************************
  Form autocompletion et partage
  *****************************/
-#autoCompletion {
-    padding-left: 20px;
-}
+
 
 #titreBadge {
     padding-left: 20px;
@@ -286,7 +289,7 @@ button{
     margin-right: 5px;
     color: #8ECDAE;
     background-color: #6E5367;
-    
+
 }
 
 #badgesUtilisateurs{
@@ -296,4 +299,19 @@ button{
 .supprimerPartage:hover{
     color: #D64F4B;
     cursor:pointer;
+}
+
+
+/*****************************
+Photo
+ *****************************/
+
+#modifierPhoto {
+    margin-top: 5px;
+}
+
+.imageMiam {
+    width: 100%;
+    height: auto;
+    box-shadow: 1px 1px 12px #555;
 }

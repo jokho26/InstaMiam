@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -33,6 +34,10 @@ public class Album implements Serializable {
 
     @OneToMany(mappedBy = "album")
     private List<Photo> photos;
+
+    @OneToOne
+    @JoinColumn(name = "albumCouvert", referencedColumnName = "id")
+    private Photo photoDeCouverture;
 
     @ManyToMany
     @JoinColumn(name = "utilisateur", referencedColumnName = "albumsPartages")
@@ -149,6 +154,20 @@ public class Album implements Serializable {
      */
     public void setUtilisateursPartages(List<Utilisateur> utilisateursPartages) {
         this.utilisateursPartages = utilisateursPartages;
+    }
+
+    /**
+     * @return the photoDeCouverture
+     */
+    public Photo getPhotoDeCouverture() {
+        return photoDeCouverture;
+    }
+
+    /**
+     * @param photoDeCouverture the photoDeCouverture to set
+     */
+    public void setPhotoDeCouverture(Photo photoDeCouverture) {
+        this.photoDeCouverture = photoDeCouverture;
     }
 
 }

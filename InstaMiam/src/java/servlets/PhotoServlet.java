@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
@@ -28,8 +27,7 @@ public class PhotoServlet extends HttpServlet {
 
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
-    
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,43 +39,41 @@ public class PhotoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         // On récupere la session
         HttpSession session = request.getSession();
-        
-        int idUtilisateur = (int)(session.getAttribute("utilisateurConnecte"));
-        
+
+        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
+
         Object idPhotoObject = request.getParameter("idPhoto");
-        
+
         int idPhoto = -1;
-        
+
         if (idPhotoObject != null) {
             idPhoto = Integer.parseInt(idPhotoObject.toString());
             request.setAttribute("idPhoto", idPhoto);
         }
-        
+
         String action = request.getParameter("action");
-         if (action != null) {
+        if (action != null) {
             if (action.equals("ajouterCommentaire")) {
                 // Recupération des paramètres du formulaire
                 String text = request.getParameter("commentaire");
                 System.out.println("Ajout de commentaire : " + idPhoto + " - " + text);
                 if (idPhoto > 0 && text != null) {
                     gestionnaireUtilisateurs.ajouterCommentairePhoto(idPhoto, idUtilisateur, text);
-             }
-            }
-            else if (action.equals("modifierPhoto")) {
-                
+                }
+            } else if (action.equals("modifierPhoto")) {
+
                 Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
-                if (p != null && request.getParameter("nomPhoto") != null && request.getParameter("description") != null){
+                if (p != null && request.getParameter("nomPhoto") != null && request.getParameter("description") != null) {
                     gestionnaireUtilisateurs.modifierPhoto(idPhoto, request.getParameter("nomPhoto"), request.getParameter("description"));
                 }
-            }
-            else if (action.equals("supprimerPhoto")) {
+            } else if (action.equals("supprimerPhoto")) {
                 Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
                 if (p != null) {
-                    String forwardTo = "/Album?idAlbum="+p.getAlbum().getId();
-                    
+                    String forwardTo = "/Album?idAlbum=" + p.getAlbum().getId();
+
                     deleteFilePhoto(p.getAlbum().getIdUnique(), p.getNomFichier());
                     gestionnaireUtilisateurs.supprimerPhoto(idPhoto);
 
@@ -86,18 +82,22 @@ public class PhotoServlet extends HttpServlet {
                     dp.forward(request, response);
                     return;
                 }
+            } else if (action.equals("definirCouverture")) {
+                Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
+                if (p != null) {
+                    gestionnaireUtilisateurs.setPhotoCouverture(p.getAlbum().getId(), p.getId());
+                }
             }
         }
-        
+
         Photo photo = gestionnaireUtilisateurs.getPhotoById(idPhoto);
         request.setAttribute("photo", photo);
-        
+
         String forwardTo = "photo.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -139,11 +139,10 @@ public class PhotoServlet extends HttpServlet {
     }// </editor-fold>
 
     private void deleteFilePhoto(String idUniqueAlbum, String nomFichier) {
-        String cheminFichier = getServletConfig().getServletContext().getRealPath("/")+ "albums"+File.separator+idUniqueAlbum+File.separator+nomFichier;
+        String cheminFichier = getServletConfig().getServletContext().getRealPath("/") + "albums" + File.separator + idUniqueAlbum + File.separator + nomFichier;
         System.out.println(cheminFichier);
         File file = new File(cheminFichier);
         file.delete();
     }
-    
 
 }

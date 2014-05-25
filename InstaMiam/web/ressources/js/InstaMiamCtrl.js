@@ -49,7 +49,8 @@
                 photo: {
                     modifierPhoto: "Modifier",
                     valider_modification: "Valider les modifications",
-                    supprimer: "Supprimer"
+                    supprimer: "Supprimer",
+                    definirPhotoCouverture: "Définir comme photo de couverture"
                 },
                 profil: {
                     nom: "Nom",
