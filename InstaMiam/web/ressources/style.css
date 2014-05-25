@@ -284,6 +284,13 @@ button{
 
 .badgeUtilisateur {
     margin-right: 5px;
+    color: #8ECDAE;
+    background-color: #6E5367;
+    
+}
+
+#badgesUtilisateurs{
+    margin-left: 10px;
 }
 
 .supprimerPartage:hover{
