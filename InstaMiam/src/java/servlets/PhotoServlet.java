@@ -91,7 +91,16 @@ public class PhotoServlet extends HttpServlet {
         }
 
         Photo photo = gestionnaireUtilisateurs.getPhotoById(idPhoto);
-
+        
+        // On verifie que l'utilisateur a bien le droit d'afficher cette photo
+        if (photo!= null) {
+            if (photo.getAlbum().getUtilisateur().getId() != idUtilisateur 
+                    && !photo.getAlbum().getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
+                photo = null;
+                request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cette photo !"); 
+            }
+        }
+        
         request.setAttribute("photo", photo);
 
         String forwardTo = "photo.jsp";

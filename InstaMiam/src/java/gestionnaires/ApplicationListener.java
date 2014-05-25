@@ -54,6 +54,7 @@ public class ApplicationListener implements ServletContextListener {
         Album prive = gestionnaireUtilisateurs.creerAlbum("Album Prive test", u2.getId(), Album.ALBUM_PRIVE);
         gestionnaireUtilisateurs.creerAlbum("Album Public 1", u2.getId(), Album.ALBUM_PUBLIC);
         gestionnaireUtilisateurs.creerAlbum("Album Public 2", u2.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerPhoto("Photoprive1.png", prive.getId());
         
         // Test de partage d'album
         gestionnaireUtilisateurs.partagerAlbum(prive.getId(), u.getId());

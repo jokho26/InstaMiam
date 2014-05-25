@@ -29,14 +29,7 @@ public class GestionnaireUtilisateurs {
     // à partir du contenu de persistence.xml  
     @PersistenceContext(unitName = "InstaMiamPU")
     private EntityManager em;
-
-    public void creerUtilisateursDeTest() {
-        creeUtilisateur("John", "Lennon", "jlennon", "@gmail.com", "");
-        creeUtilisateur("Paul", "Mac Cartney", "pmc", "@gmail.com", "");
-        creeUtilisateur("Ringo", "Starr", "rstarr", "@gmail.com", "");
-        creeUtilisateur("Georges", "Harisson", "georgesH", "@gmail.com", "");
-    }
-
+    
     public Utilisateur creeUtilisateur(String nom, String prenom, String login, String email, String motDePasse) {
         // Si le login est déjà utilisé dans la base de données on ne créer pas le comptes
         if (isLoginUsef(login)) {
