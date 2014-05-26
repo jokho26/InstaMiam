@@ -73,7 +73,7 @@ public class PhotoServlet extends HttpServlet {
                 Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
                 if (p != null) {
                     String forwardTo = "/Album?idAlbum=" + p.getAlbum().getId();
-
+            
                     deleteFilePhoto(p.getAlbum().getIdUnique(), p.getNomFichier());
                     gestionnaireUtilisateurs.supprimerPhoto(idPhoto);
 

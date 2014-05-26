@@ -23,8 +23,8 @@
                 <c:when test="${idUtilisateurAAfficher == null || sessionScope.utilisateurConnecte == idUtilisateurAAfficher}">
                     <!-- Bouton pour faire apparaitre le form modal de création d'album -->
                     <div id="btn_nouvel_album">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+                        <span class="glyphicon glyphicon-plus violet"></span>
+                        <button class="btn boutonVert" data-toggle="modal" data-target="#myModal" >
                             {{tab_lang.mes_albums.nouvel_album}}
                         </button>
                     </div>

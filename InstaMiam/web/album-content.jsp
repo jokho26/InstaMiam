@@ -2,83 +2,83 @@
 
 <c:choose>
     <c:when test="${sessionScope.utilisateurConnecte == album.utilisateur.id}">
-<script src="ressources/js/Albumjs.js"></script>
+        <script src="ressources/js/Albumjs.js"></script>
 
-<script>
-    function supprimerPartage(elm) {
-        $.ajax({
-            type: 'POST',
-            url: "${pageContext.servletContext.contextPath}/Album",
-            data: {action: "supprimerPartage", idAlbum: "${album.id}", idUtilisateur: elm.parentNode.id},
-            dataType: "html",
-            success: function(data, textStatus, jqXHR) {
-                $("#badgesUtilisateurs").html(data);
-            },
-            beforeSend: function(jqXHR, settings) {
-                $('#tags').attr("disabled", true);
-            },
-            complete: function(jqXHR, textStatus) {
-                $('#tags').attr("disabled", false);
-            }
-
-        });
-    }
-    $(function() {
-        var availableTags = [
-    <c:forEach var="u" items="${listeUtilisateur}">
-            {label: "${u.prenom} ${u.nom}", id: "${u.id}"},
-    </c:forEach>
-                        ""
-                    ];
-                    $("#tags").autocomplete({
-                        source: availableTags,
-                        select: function(event, ui) {
-
-                            $.ajax({
-                                type: 'POST',
-                                url: "${pageContext.servletContext.contextPath}/Album",
-                                data: {action: "partagerAlbum", idAlbum: "${album.id}", idUtilisateur: ui.item.id},
-                                dataType: "html",
-                                success: function(data, textStatus, jqXHR) {
-                                    $("#badgesUtilisateurs").html(data);
-                                    $("#tags").val("");
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-                                    //console.log("Something really bad happened " + textStatus);
-                                    //console.log("Something really bad happened again " + jqXHR.responseText);
-                                    $("#tags").val("");
-                                    //$('.popOverMiam').popover('show')
-
-                                },
-                                beforeSend: function(jqXHR, settings) {
-                                    //disable the button until we get the response
-                                    $('#tags').attr("disabled", true);
-                                },
-                                complete: function(jqXHR, textStatus) {
-                                    $('#tags').attr("disabled", false);
-                                }
-
-                            });
-                        }
-                    });
-                    function removeFile(file) {
-                        $.ajax({
-                            url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&nameFile=" + file.name
-                        });
+        <script>
+            function supprimerPartage(elm) {
+                $.ajax({
+                    type: 'POST',
+                    url: "${pageContext.servletContext.contextPath}/Album",
+                    data: {action: "supprimerPartage", idAlbum: "${album.id}", idUtilisateur: elm.parentNode.id},
+                    dataType: "html",
+                    success: function(data, textStatus, jqXHR) {
+                        $("#badgesUtilisateurs").html(data);
+                    },
+                    beforeSend: function(jqXHR, settings) {
+                        $('#tags').attr("disabled", true);
+                    },
+                    complete: function(jqXHR, textStatus) {
+                        $('#tags').attr("disabled", false);
                     }
 
-
-
-    <c:if test="${!empty album.utilisateursPartages}">
-        <c:forEach var="p" items="${album.utilisateursPartages}">
-                    $("#badgesUtilisateurs").append('<span class="badge pull-left badgeUtilisateur" id="${p.id}">${p.prenom}&nbsp;${p.nom}&nbsp;<span class="glyphicon glyphicon-remove supprimerPartage" onclick="supprimerPartage(this)"></span></span>');
-        </c:forEach>
-    </c:if>
-
                 });
+            }
+            $(function() {
+                var availableTags = [
+            <c:forEach var="u" items="${listeUtilisateur}">
+                    {label: "${u.prenom} ${u.nom}", id: "${u.id}"},
+            </c:forEach>
+                                ""
+                            ];
+                            $("#tags").autocomplete({
+                                source: availableTags,
+                                select: function(event, ui) {
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "${pageContext.servletContext.contextPath}/Album",
+                                        data: {action: "partagerAlbum", idAlbum: "${album.id}", idUtilisateur: ui.item.id},
+                                        dataType: "html",
+                                        success: function(data, textStatus, jqXHR) {
+                                            $("#badgesUtilisateurs").html(data);
+                                            $("#tags").val("");
+                                        },
+                                        error: function(jqXHR, textStatus, errorThrown) {
+                                            //console.log("Something really bad happened " + textStatus);
+                                            //console.log("Something really bad happened again " + jqXHR.responseText);
+                                            $("#tags").val("");
+                                            //$('.popOverMiam').popover('show')
+
+                                        },
+                                        beforeSend: function(jqXHR, settings) {
+                                            //disable the button until we get the response
+                                            $('#tags').attr("disabled", true);
+                                        },
+                                        complete: function(jqXHR, textStatus) {
+                                            $('#tags').attr("disabled", false);
+                                        }
+
+                                    });
+                                }
+                            });
+                            function removeFile(file) {
+                                $.ajax({
+                                    url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&nameFile=" + file.name
+                                });
+                            }
 
 
-</script>
+
+            <c:if test="${!empty album.utilisateursPartages}">
+                <c:forEach var="p" items="${album.utilisateursPartages}">
+                            $("#badgesUtilisateurs").append('<span class="badge pull-left badgeUtilisateur" id="${p.id}">${p.prenom}&nbsp;${p.nom}&nbsp;<span class="glyphicon glyphicon-remove supprimerPartage" onclick="supprimerPartage(this)"></span></span>');
+                </c:forEach>
+            </c:if>
+
+                        });
+
+
+        </script>
 
     </c:when>
 </c:choose>
@@ -87,77 +87,71 @@
 
 <div class="content_div">
     <div class="row">
-        <center><h1 class="ruge">${album.nomAlbum}</h1></center>
+        <div class="col-md-2 col-md-offset-5">
+            <center><h1 class="ruge">${album.nomAlbum}</h1></center>
+        </div>
+        <div class="col-md-3 col-md-offset-9">
+            <div class="btn-group groupeBouton">
+                <button type="button" data-toggle="modal" data-target="#myModalModification" class="btn btn-sm boutonVert">{{tab_lang.album.modifierAlbum}}</button>
+                <a type="button" href="${pageContext.servletContext.contextPath}/Album?action=supprimerAlbum&idAlbum=${album.id}" class="btn btn-sm boutonViolet">{{tab_lang.album.supprimer}}</a>
+            </div>
+        </div>
     </div>
 
 
     <c:choose>
         <c:when test="${sessionScope.utilisateurConnecte == album.utilisateur.id}">
-    
-        <!-- Modal de modification d'information de l'album -->
-        <div class="modal fade" id="myModalModification" tabindex="-1" role="dialog" aria-labelledby="myModalModification" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">{{tab_lang.album.modifierAlbum}}</h4>
-                    </div>
-                    <div class="modal-body">
 
-                        <!-- formulaire de test pour ajouter un album-->
-                        <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
-                            <input type="text" name="nomAlbum" id="nomAlbum" class="form-control" value="${album.nomAlbum}" required/>
-                            <br>
-                            <input type="hidden" name="idAlbum" value="${album.id}"/>
-                            <input type="hidden" name="action" value="modifierAlbum"/>
-                    </div>
+            <!-- Modal de modification d'information de l'album -->
+            <div class="modal fade" id="myModalModification" tabindex="-1" role="dialog" aria-labelledby="myModalModification" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">{{tab_lang.album.modifierAlbum}}</h4>
+                        </div>
+                        <div class="modal-body">
 
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.album.valider_modification}}</button>
-                        </form>
+                            <!-- formulaire de test pour ajouter un album-->
+                            <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+                                <input type="text" name="nomAlbum" id="nomAlbum" class="form-control" value="${album.nomAlbum}" required/>
+                                <br>
+                                <input type="hidden" name="idAlbum" value="${album.id}"/>
+                                <input type="hidden" name="action" value="modifierAlbum"/>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.album.valider_modification}}</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <br><br>
-        <!-- Bouton pour faire apparaitre le form modal de modification de photo -->
-        <div class="row">
-            <div id="modifierPhoto">
-                <div class="col-md-3 col-md-offset-9">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModalModification" >
-                        {{tab_lang.album.modifierAlbum}}
-                    </button>
+            <br><br>
 
-                    <form id="modifierAlbum" action="${pageContext.servletContext.contextPath}/Album">
-                        <button type="submit" name="ajouterAlbum" class="btn btn-danger">{{tab_lang.album.supprimer}}</button>
-                        <input type="hidden" name="idAlbum" value="${album.id}"/>
-                        <input type="hidden" name="action" value="supprimerAlbum"/>
+
+
+            <br><br>
+
+            <!-- Formulaire de test pour l'autocomplétion -->
+            <div class="row decale">
+                <div class="col-md-3">
+                    <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
+                    <form class="ui-widget" action="">
+                        <input id="tags" class="popOverMiam">
                     </form>
                 </div>
             </div>
-        </div>
-        <br><br>
-
-        <!-- Formulaire de test pour l'autocomplétion -->
-        <div class="row decale">
-            <div class="col-md-3">
-                <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
-                <form class="ui-widget" action="">
-                    <input id="tags" class="popOverMiam">
-                </form>
+            <div class="row decale">
+                <h2 class="ruge" id="titreBadge">{{tab_lang.album.badges_partage}}</h2>
+                <div class="col-md-6" id="badgesUtilisateurs"></div>
             </div>
-        </div>
-        <div class="row decale">
-            <h2 class="ruge" id="titreBadge">{{tab_lang.album.badges_partage}}</h2>
-            <div class="col-md-6" id="badgesUtilisateurs"></div>
-        </div>
-        <br><br>
-    
+            <br><br>
+
         </c:when>
     </c:choose>
-    
-    <hr>
+
     <!-- Mosaique de photos de l'album -->
     <c:set var="count" value="0"/>
     <div id="zoneGallerie">
@@ -190,20 +184,16 @@
     <c:when test="${sessionScope.utilisateurConnecte == album.utilisateur.id}">
         <!-- formulaire d'upload -->
         <form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}" 
-          enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
+              enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
         </form>
 
         <!-- Formulaire de validation -->
-        <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
-            <input type="submit" value="Upload" name="btnUpload" id="upload" />
-            <input type="hidden" value="${idAlbum}" name="idAlbum" id="upload" />
-            <input type="hidden" name="action" value="validUpload"/>
-            <input type="hidden" name="idTransaction" value="${idTransaction}"/>
-        </form>
+        <a type="button" class="btn btn-default" href="${pageContext.servletContext.contextPath}/Album?action=validUpload&idAlbum=${idAlbum}&idTransaction=${idTransaction}" name="btnUpload" id="upload">Upload</a>
+
         <br>
     </c:when>
 </c:choose>
-    
+
 <!-- Partie des commentaires -->
 <ul>
     <c:forEach var="c" items="${album.commentaires}">  

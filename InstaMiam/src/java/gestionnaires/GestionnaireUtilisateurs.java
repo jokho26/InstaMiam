@@ -29,7 +29,7 @@ public class GestionnaireUtilisateurs {
     // à partir du contenu de persistence.xml  
     @PersistenceContext(unitName = "InstaMiamPU")
     private EntityManager em;
-    
+
     public Utilisateur creeUtilisateur(String nom, String prenom, String login, String email, String motDePasse) {
         // Si le login est déjà utilisé dans la base de données on ne créer pas le comptes
         if (isLoginUsef(login)) {
@@ -193,6 +193,10 @@ public class GestionnaireUtilisateurs {
             em.remove(c);
         }
 
+        // Si il couvre un album remettre la couverture par défaut
+        if(p.getAlbumCouvert() != null)
+            p.getAlbum().setPhotoDeCouverture(null);
+        
         // Finalement, on supprime la photo
         em.remove(p);
         em.flush();

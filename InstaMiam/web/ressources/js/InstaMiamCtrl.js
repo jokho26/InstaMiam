@@ -41,7 +41,7 @@
                     modifierAlbum: "Modifier",
                     supprimer: "Supprimer",
                     valider_modification: "Valider les modifications",
-                    partager_album: "Partager l'album",
+                    partager_album: "Partager l'album :",
                     badges_partage : "Utilisateurs partagés :"
 
 

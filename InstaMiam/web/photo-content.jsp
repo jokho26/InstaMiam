@@ -7,66 +7,64 @@
 <div class="content_div">
 
     <div class="row decale">
-        <center><h1 class="ruge">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1>
-            <br><h3>${photo.description}</h3></center><br>
+        <div class="col-md-4 col-md-offset-4">
+            <center><h1 class="ruge">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1></center>
+            </div>
+        <c:choose>
+            <c:when test="${sessionScope.utilisateurConnecte == photo.album.utilisateur.id}">
+                <div class="col-md-5 col-md-offset-7">
+                    <div class="btn-group groupeBouton">
+                        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-sm boutonVert">{{tab_lang.photo.modifierPhoto}}</button>
+                        <a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}" class="btn btn-sm boutonViolet">{{tab_lang.photo.definirPhotoCouverture}}</a>
+                        <a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=supprimerPhoto&idPhoto=${photo.id}" class="btn btn-sm boutonVert">{{tab_lang.photo.supprimer}}</a>
+                    </div> 
+                </div>
+            </c:when>
+        </c:choose>
+
     </div>
-            
-<c:choose>
-    <c:when test="${sessionScope.utilisateurConnecte == photo.album.utilisateur.id}">
-        <!-- Modal de modification d'information de la photo -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">{{tab_lang.photo.modifierPhoto}}</h4>
-                    </div>
-                    <div class="modal-body">
 
-                        <!-- formulaire de test pour ajouter un album-->
-                        <form method="POST" action="${pageContext.servletContext.contextPath}/Photo">
-                            <input type="text" name="nomPhoto" id="nomPhoto" class="form-control" value="${photo.nom}" required/>
-                            <br>
-                            <textarea class="form-control" name="description">${photo.description}</textarea>
-                            <input type="hidden" name="idPhoto" value="${photo.id}"/>
-                            <input type="hidden" name="action" value="modifierPhoto"/>
-                    </div>
+    <div class="row decale">
+        <div class="col-md-12">
+            <center><h3>${photo.description}</h3></center>
+        </div>
+    </div>
 
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.photo.valider_modification}}</button>
-                        </form>
+    <c:choose>
+        <c:when test="${sessionScope.utilisateurConnecte == photo.album.utilisateur.id}">
+            <!-- Modal de modification d'information de la photo -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">{{tab_lang.photo.modifierPhoto}}</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <!-- formulaire de test pour ajouter un album-->
+                            <form method="POST" action="${pageContext.servletContext.contextPath}/Photo">
+                                <input type="text" name="nomPhoto" id="nomPhoto" class="form-control" value="${photo.nom}" required/>
+                                <br>
+                                <textarea class="form-control" name="description">${photo.description}</textarea>
+                                <input type="hidden" name="idPhoto" value="${photo.id}"/>
+                                <input type="hidden" name="action" value="modifierPhoto"/>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.photo.valider_modification}}</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row decale">
-            <div class="col-md-6 col-md-offset-3">
-                <!-- Bouton pour faire apparaitre le form modal de modification de photo -->
-                <div id="modifierPhoto">
-                    <center>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
-                            {{tab_lang.photo.modifierPhoto}}
-                        </button>
 
-                        <a class="btn btn-default" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}">
-                            {{tab_lang.photo.definirPhotoCouverture}}
-                        </a>
+        </c:when>
+    </c:choose>
 
-                        <form id="modifierPhoto" action="${pageContext.servletContext.contextPath}/Photo">
-                            <button type="submit" name="ajouterAlbum" class="btn btn-danger">{{tab_lang.photo.supprimer}}</button>
-                            <input type="hidden" name="idPhoto" value="${photo.id}"/>
-                            <input type="hidden" name="action" value="supprimerPhoto"/>
-                        </form>
-                    </center>
-                </div>
-            </div>
-        </div>
-    </c:when>
-</c:choose>
-                            
-                            
+            <br><br><br>
     <div class="row">
         <div class="col-md-12">
             <center><img src="${pageContext.servletContext.contextPath}/albums/${photo.album.idUnique}/${photo.nomFichier}" class="imageMiam img-rounded"></center>
