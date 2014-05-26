@@ -40,6 +40,8 @@ public class PhotoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setContentType("text/html;charset=UTF-8");
+
         // On récupere la session
         HttpSession session = request.getSession();
 
@@ -73,7 +75,7 @@ public class PhotoServlet extends HttpServlet {
                 Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
                 if (p != null) {
                     String forwardTo = "/Album?idAlbum=" + p.getAlbum().getId();
-            
+
                     deleteFilePhoto(p.getAlbum().getIdUnique(), p.getNomFichier());
                     gestionnaireUtilisateurs.supprimerPhoto(idPhoto);
 
@@ -91,16 +93,16 @@ public class PhotoServlet extends HttpServlet {
         }
 
         Photo photo = gestionnaireUtilisateurs.getPhotoById(idPhoto);
-        
+
         // On verifie que l'utilisateur a bien le droit d'afficher cette photo
-        if (photo!= null) {
-            if (photo.getAlbum().getUtilisateur().getId() != idUtilisateur 
+        if (photo != null) {
+            if (photo.getAlbum().getUtilisateur().getId() != idUtilisateur
                     && !photo.getAlbum().getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
                 photo = null;
-                request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cette photo !"); 
+                request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cette photo !");
             }
         }
-        
+
         request.setAttribute("photo", photo);
 
         String forwardTo = "photo.jsp";

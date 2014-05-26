@@ -55,8 +55,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.photo.valider_modification}}</button>
+                            <button class="btn boutonViolet" data-dismiss="modal">Close</button>
+                            <button type="submit" name="ajouterAlbum" class="btn boutonVert">{{tab_lang.photo.valider_modification}}</button>
                             </form>
                         </div>
                     </div>

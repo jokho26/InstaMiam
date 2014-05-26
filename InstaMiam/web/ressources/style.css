@@ -317,7 +317,7 @@ Photo
 }
 
 .imageMiam {
-    width: 100%;
+    max-width: 100%;
     height: auto;
     box-shadow: 1px 1px 12px #555;
 }

@@ -5,6 +5,7 @@
         <script src="ressources/js/Albumjs.js"></script>
 
         <script>
+
             function supprimerPartage(elm) {
                 $.ajax({
                     type: 'POST',
@@ -150,7 +151,6 @@
 
         </c:when>
     </c:choose>
-
     <!-- Mosaique de photos de l'album -->
     <c:set var="count" value="0"/>
     <div id="zoneGallerie">
@@ -167,7 +167,7 @@
             <div class="col-md-3 col-sm-4 col-xs-6">
                 <center><h2 class="ruge">${p.nom}</h2></center>
                 <a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">
-                    <img class="img-responsive" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}" />
+                    <img class="img-responsive" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}"  />
                 </a>
                 <h3 class="ruge" id="commentaire">${p.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>
             </div>
@@ -186,8 +186,14 @@
               enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
         </form>
 
+        <form method='post' action="${pageContext.servletContext.contextPath}/Album?idAlbum=${idAlbum}" id='dummyForm'>
+            <input type='hidden' value='${idTransaction}' name="idTransaction">
+            <input type="hidden" value="validUpload" name="action">
+            <input type="submit" class="btn boutonViolet" name="btnUpload" id="upload" value="{{tab_lang.album.upload}}">
+        </form>
+
         <!-- Formulaire de validation -->
-        <a type="button" class="btn boutonViolet" href="${pageContext.servletContext.contextPath}/Album?action=validUpload&idAlbum=${idAlbum}&idTransaction=${idTransaction}" name="btnUpload" id="upload">Upload</a>
+
 
         <br><br><br>
     </c:when>

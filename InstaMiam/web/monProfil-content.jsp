@@ -12,7 +12,8 @@
                 <br><br>
                 <form class="form-inline" method="POST" action="${pageContext.servletContext.contextPath}/Profil?action=changerImage" enctype="multipart/form-data">
                     <input type="file" name="file" required/>
-                    <input class="btn btn-default" type="submit" value="{{tab_lang.profil.changerImage}}">
+                    <br>
+                    <input class="btn boutonViolet" type="submit" value="{{tab_lang.profil.changerImage}}">
                 </form>
             </center>
             <br><br>
@@ -27,7 +28,7 @@
 
                 <input type="hidden" name="action" value="modifierProfil"/> 
                 <div class="btn_valider">
-                    <input class="btn btn-default" type="submit" value="{{tab_lang.profil.modifier}}" />
+                    <input class="btn boutonVert" type="submit" value="{{tab_lang.profil.modifier}}" />
                 </div>
                
             </form>

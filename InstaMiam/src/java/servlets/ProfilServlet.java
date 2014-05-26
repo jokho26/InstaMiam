@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
@@ -30,9 +29,9 @@ import modeles.Utilisateur;
 @WebServlet(name = "ProfilServlet", urlPatterns = {"/Profil"})
 public class ProfilServlet extends HttpServlet {
 
-     @EJB
+    @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,45 +43,43 @@ public class ProfilServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        
+
         if (action != null) {
             if (action.equals("modifierProfil")) {
                 String nom = request.getParameter("nom");
                 String prenom = request.getParameter("prenom");
                 String email = request.getParameter("email");
                 String mdp = request.getParameter("mdp");
-                
+
                 if (nom != null && prenom != null && email != null && mdp != null) {
                     gestionnaireUtilisateurs.modifierUtilisateur(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()),
-                        nom, prenom, email, mdp);
-                    
+                            nom, prenom, email, mdp);
+
                     // Message de validation
                     request.setAttribute("message", "{{tab_lang.profil.messageModification}}");
-                }
-                else {
+                } else {
                     request.setAttribute("messageErreur", "{{tab_lang.profil.messageErreur}}");
                 }
-            }
-            else if (action.equals("changerImage")) {
+            } else if (action.equals("changerImage")) {
                 enregistrerPhotoProfil(request, gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString())));
             }
         }
-        
+
         // On récupere l'utilisateur loggé
         Utilisateur u = gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()));
         request.setAttribute("profil", u);
-        
+
         String forwardTo = "monProfil.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
-        
+
     }
-    
-    
+
     /**
      * Méthode permettant d'enregistrer un fichier uploadé lors d'une
      * transaction avec la dropzone.
@@ -93,28 +90,27 @@ public class ProfilServlet extends HttpServlet {
      */
     private void enregistrerPhotoProfil(HttpServletRequest request, Utilisateur u) throws ServletException, IOException {
         // On créer le repertoire temporaire de stockage
-        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator + "profil" ;
+        final String path = getServletConfig().getServletContext().getRealPath("/") + File.separator + "profil";
         File dir = new File(path);
         dir.mkdirs();
 
         final Part filePart = request.getPart("file");
-        
+
         // On récupere l'id de l'image
         String id;
         // Si l'utilisateur n'a pas encore d'ID attitré, on va en créer un
         if (u.getImageProfil().contains("default")) {
             UUID uuid = UUID.randomUUID();
             id = uuid.toString();
-        }
-        else {
+        } else {
             // Sinon on récupere l'id déjà utilisé
             id = u.getImageProfil().substring(0, u.getImageProfil().lastIndexOf("."));
         }
-        
+
         // On créée le nom du fichier final
         final String fileName = id + getExtentionFile(filePart);
         gestionnaireUtilisateurs.setPhotoProfil(u.getId(), fileName);
-        
+
         OutputStream out = null;
         InputStream filecontent = null;
 
@@ -144,8 +140,7 @@ public class ProfilServlet extends HttpServlet {
             }
         }
     }
-    
-    
+
     /**
      * Méthode permettant de récuperer le nom du fichier qu'on upload
      *

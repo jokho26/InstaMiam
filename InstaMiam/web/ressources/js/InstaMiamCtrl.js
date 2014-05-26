@@ -46,7 +46,8 @@ app.controller('InstaMiamCtrl', function($scope) {
             partager_album: "Partager l'album :",
             badges_partage: "Utilisateurs partagés :",
             nomAlbum: "Nom de l'album :",
-            fermerModale: "Fermer"
+            fermerModale: "Fermer",
+            upload: "Envoyer"
 
 
         },

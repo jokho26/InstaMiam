@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
@@ -19,11 +18,11 @@ import javax.servlet.http.HttpSession;
 import modeles.Utilisateur;
 
 /**
- *  Servlet de l'accueil de l'application InstaMiam
+ * Servlet de l'accueil de l'application InstaMiam
  */
 @WebServlet(name = "AccueilServlet", urlPatterns = {""})
 public class AccueilServlet extends HttpServlet {
-    
+
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
 
@@ -38,14 +37,14 @@ public class AccueilServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //String forwardTo = "accueil.jsp";
-                
+
+        response.setContentType("text/html;charset=UTF-8");
+
         // On se connecte directement comme l'utilisateur test
         Utilisateur u = gestionnaireUtilisateurs.getUserByConnexion("test", "test");
         HttpSession session = request.getSession();
         session.setAttribute("utilisateurConnecte", u.getId());
-        
+
         String forwardTo = "/Album?idAlbum=2";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
