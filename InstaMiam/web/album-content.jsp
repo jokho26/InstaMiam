@@ -88,7 +88,7 @@
 <div class="content_div">
     <div class="row">
         <div class="col-md-2 col-md-offset-5">
-            <center><h1 class="ruge">${album.nomAlbum}</h1></center>
+            <center><h1 class="ruge MOAR">${album.nomAlbum}</h1></center>
         </div>
         <div class="col-md-3 col-md-offset-9">
             <div class="btn-group groupeBouton">
@@ -108,22 +108,35 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">{{tab_lang.album.modifierAlbum}}</h4>
+                            <h2 class="modal-title ruge" id="myModalLabel">{{tab_lang.album.modifierAlbum}}</h2>
                         </div>
                         <div class="modal-body">
 
                             <!-- formulaire de test pour ajouter un album-->
                             <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
+                                <h2 class="ruge">{{tab_lang.album.nomAlbum}}</h2>
                                 <input type="text" name="nomAlbum" id="nomAlbum" class="form-control" value="${album.nomAlbum}" required/>
-                                <br>
                                 <input type="hidden" name="idAlbum" value="${album.id}"/>
                                 <input type="hidden" name="action" value="modifierAlbum"/>
                         </div>
+                        <!-- Formulaire de test pour l'autocomplétion -->
+                        <div class="row decale">
+                            <div class="col-md-12">
+                                <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
+                                <input id="tags" class="popOverMiam">
+                            </div>
+                        </div>
+                        <div class="row decale">
+                            <h2 class="ruge" id="titreBadge">{{tab_lang.album.badges_partage}}</h2>
+                            <div class="col-md-12" id="badgesUtilisateurs"></div>
+                            <br><br>
+                        </div>
 
                         <div class="modal-footer">
-                            <button class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" name="ajouterAlbum" class="btn btn-default">{{tab_lang.album.valider_modification}}</button>
+                            <button class="btn boutonViolet" data-dismiss="modal">{{tab_lang.album.fermerModale}}</button>
+                            <button type="submit" name="ajouterAlbum" class="btn boutonVert">{{tab_lang.album.valider_modification}}</button>
                             </form>
+
                         </div>
                     </div>
                 </div>
@@ -134,20 +147,6 @@
 
             <br><br>
 
-            <!-- Formulaire de test pour l'autocomplétion -->
-            <div class="row decale">
-                <div class="col-md-3">
-                    <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
-                    <form class="ui-widget" action="">
-                        <input id="tags" class="popOverMiam">
-                    </form>
-                </div>
-            </div>
-            <div class="row decale">
-                <h2 class="ruge" id="titreBadge">{{tab_lang.album.badges_partage}}</h2>
-                <div class="col-md-6" id="badgesUtilisateurs"></div>
-            </div>
-            <br><br>
 
         </c:when>
     </c:choose>
@@ -188,9 +187,9 @@
         </form>
 
         <!-- Formulaire de validation -->
-        <a type="button" class="btn btn-default" href="${pageContext.servletContext.contextPath}/Album?action=validUpload&idAlbum=${idAlbum}&idTransaction=${idTransaction}" name="btnUpload" id="upload">Upload</a>
+        <a type="button" class="btn boutonViolet" href="${pageContext.servletContext.contextPath}/Album?action=validUpload&idAlbum=${idAlbum}&idTransaction=${idTransaction}" name="btnUpload" id="upload">Upload</a>
 
-        <br>
+        <br><br><br>
     </c:when>
 </c:choose>
 
@@ -233,7 +232,7 @@
             <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
             <input type="hidden" name="action" value="ajouterCommentaire"/>
             <input type="hidden" value="${idAlbum}" name="idAlbum"/>
-            <input type="submit" name="submit" value="Poster" id="posterCommentaire"/>
+            <input type="submit" class="btn boutonVert" name="submit" value="Poster" id="posterCommentaire"/>
         </form>
     </div>
 </div>

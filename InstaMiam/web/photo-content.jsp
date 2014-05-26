@@ -8,15 +8,15 @@
 
     <div class="row decale">
         <div class="col-md-4 col-md-offset-4">
-            <center><h1 class="ruge">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1></center>
+            <center><h1 class="ruge MOAR">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1></center>
             </div>
         <c:choose>
             <c:when test="${sessionScope.utilisateurConnecte == photo.album.utilisateur.id}">
                 <div class="col-md-5 col-md-offset-7">
                     <div class="btn-group groupeBouton">
                         <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-sm boutonVert">{{tab_lang.photo.modifierPhoto}}</button>
-                        <a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}" class="btn btn-sm boutonViolet">{{tab_lang.photo.definirPhotoCouverture}}</a>
-                        <a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=supprimerPhoto&idPhoto=${photo.id}" class="btn btn-sm boutonVert">{{tab_lang.photo.supprimer}}</a>
+                        <c:if test="${empty photo.albumCouvert}"><a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}" class="btn btn-sm boutonVert">{{tab_lang.photo.definirPhotoCouverture}}</a></c:if>
+                        <a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=supprimerPhoto&idPhoto=${photo.id}" class="btn btn-sm boutonViolet">{{tab_lang.photo.supprimer}}</a>
                     </div> 
                 </div>
             </c:when>
@@ -37,15 +37,18 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
+                            
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">{{tab_lang.photo.modifierPhoto}}</h4>
+                            <h2 class="modal-title ruge" id="myModalLabel">{{tab_lang.photo.modifierPhoto}}</h2>
                         </div>
                         <div class="modal-body">
 
                             <!-- formulaire de test pour ajouter un album-->
                             <form method="POST" action="${pageContext.servletContext.contextPath}/Photo">
+                                <h2 class="ruge">{{tab_lang.photo.nomPhoto}}</h2>
                                 <input type="text" name="nomPhoto" id="nomPhoto" class="form-control" value="${photo.nom}" required/>
                                 <br>
+                                <h2 class="ruge">{{tab_lang.photo.descriptionPhoto}}</h2>
                                 <textarea class="form-control" name="description">${photo.description}</textarea>
                                 <input type="hidden" name="idPhoto" value="${photo.id}"/>
                                 <input type="hidden" name="action" value="modifierPhoto"/>
@@ -64,7 +67,7 @@
         </c:when>
     </c:choose>
 
-            <br><br><br>
+    <br><br><br>
     <div class="row">
         <div class="col-md-12">
             <center><img src="${pageContext.servletContext.contextPath}/albums/${photo.album.idUnique}/${photo.nomFichier}" class="imageMiam img-rounded"></center>

@@ -15,7 +15,7 @@
         </div>
 
         <div class="content_div">
-            <center><h1 class="ruge">{{tab_lang.mes_albums.titre}}</h1></center> 
+            <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.titre}}</h1></center> 
 
 
 

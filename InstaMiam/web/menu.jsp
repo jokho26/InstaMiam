@@ -1,16 +1,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
-
 <ul class="menu">
-    <li><a class="active" href="${pageContext.servletContext.contextPath}">{{tab_lang.nav_bar.actu}}</a></li>
     <c:choose>
         <c:when test="${sessionScope.utilisateurConnecte == null}">
-            <li><a href="${pageContext.servletContext.contextPath}/Inscription">{{tab_lang.nav_bar.inscription}}</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/Connexion">{{tab_lang.nav_bar.connexion}}</a></li>
-        </c:when>
-        <c:otherwise>
-            <li><a href="${pageContext.servletContext.contextPath}/ListeAlbums">{{tab_lang.nav_bar.albums}}</a></li>
-            <li><a href="${pageContext.servletContext.contextPath}/Profil">{{tab_lang.nav_bar.profil}}</a></li>
+            <li><a <c:if test="${requestScope['javax.servlet.forward.request_uri'] == pageContext.servletContext.contextPath.concat('/Inscription')}">class="active"</c:if> href="${pageContext.servletContext.contextPath}/Inscription">{{tab_lang.nav_bar.inscription}}</a></li>
+            <li><a <c:if test="${requestScope['javax.servlet.forward.request_uri'] == pageContext.servletContext.contextPath.concat('/Connexion')}">class="active"</c:if> href="${pageContext.servletContext.contextPath}/Connexion">{{tab_lang.nav_bar.connexion}}</a></li>
+            </c:when>
+            <c:otherwise>
+            <li><a <c:if test="${requestScope['javax.servlet.forward.request_uri'] == pageContext.servletContext.contextPath.concat('/')}">class="active"</c:if> href="${pageContext.servletContext.contextPath}">{{tab_lang.nav_bar.actu}}</a></li>
+            <li><a <c:if test="${requestScope['javax.servlet.forward.request_uri'] == pageContext.servletContext.contextPath.concat('/ListeAlbums')}">class="active"</c:if> href="${pageContext.servletContext.contextPath}/ListeAlbums">{{tab_lang.nav_bar.albums}}</a></li>
+            <li><a <c:if test="${requestScope['javax.servlet.forward.request_uri'] == pageContext.servletContext.contextPath.concat('/Profil')}">class="active"</c:if> href="${pageContext.servletContext.contextPath}/Profil">{{tab_lang.nav_bar.profil}}</a></li>
             <li><a href="${pageContext.servletContext.contextPath}/Connexion?action=deconnexion">{{tab_lang.nav_bar.deconnexion}}</a></li>
-        </c:otherwise>
-    </c:choose>
-  </ul>
+            </c:otherwise>
+        </c:choose>
+</ul>

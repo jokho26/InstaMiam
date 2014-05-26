@@ -5,6 +5,7 @@
  2) FONTS
 --------------------------------*/
 .ruge { font-family: 'Ruge Boogie', cursive; font-weight: 400; word-wrap: break-word;}
+.MOAR {font-size: 50px !important;}
 @font-face {
     font-family: 'Museo300Regular';
     src: url('fonts/museo/museo300-regular-webfont.eot');
@@ -328,7 +329,7 @@ Boutons
 
 .groupeBouton {
     right:20px;
-    top:-50px;
+    top:-60px;
     position:absolute;
 }
 
