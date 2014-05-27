@@ -73,6 +73,9 @@ public class ProfilServlet extends HttpServlet {
         Utilisateur u = gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()));
         request.setAttribute("profil", u);
 
+        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
+        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+        
         String forwardTo = "monProfil.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 

@@ -103,6 +103,8 @@ public class PhotoServlet extends HttpServlet {
             }
         }
 
+        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+        
         request.setAttribute("photo", photo);
 
         String forwardTo = "photo.jsp";

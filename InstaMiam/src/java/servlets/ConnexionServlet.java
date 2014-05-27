@@ -70,6 +70,10 @@ public class ConnexionServlet extends HttpServlet {
             }
         }
                 
+        // On ajoute la liste des utilisateurs
+        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
+        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);

@@ -36,7 +36,8 @@ app.controller('InstaMiamCtrl', function($scope) {
             commentaires: "commentaire(s)",
             nomAlbum: "Nom de l'album",
             albumPrive: "Album privé",
-            albumPublique: "Album publique"
+            albumPublique: "Album publique",
+            albumsDe : "Albums de"
         },
         album: {
             posterCommentaire: "Votre commentaire ...",

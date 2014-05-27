@@ -15,12 +15,13 @@
         </div>
 
         <div class="content_div">
-            <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.titre}}</h1></center> 
+            
 
 
 
             <c:choose>
                 <c:when test="${idUtilisateurAAfficher == null || sessionScope.utilisateurConnecte == idUtilisateurAAfficher}">
+                    <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.titre}}</h1></center> 
                     <!-- Bouton pour faire apparaitre le form modal de création d'album -->
                     <div id="btn_nouvel_album" class="groupeBouton">
                         <span class="glyphicon glyphicon-plus violet"></span>
@@ -71,6 +72,9 @@
                     </div>
 
                 </c:when>
+                    <c:otherwise>
+                         <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.albumsDe}} : ${nomUtilisateurAAfficher}</h1></center>
+                    </c:otherwise>
             </c:choose>
 
 

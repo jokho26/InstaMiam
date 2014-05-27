@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Album;
 import modeles.Commentaire;
+import modeles.Utilisateur;
 
 /**
  *
@@ -75,6 +76,10 @@ public class ListeAlbumsServlet extends HttpServlet {
             
             request.setAttribute("listeAlbums", listeAlbumsVisibles);
             request.setAttribute("idUtilisateurAAfficher", idUtilisateurCible);
+            
+            // On ajoute la liste des utilisateurs
+            Utilisateur utilisateurAAfficher = gestionnaireUtilisateurs.getUtilisateurById(idUtilisateurCible);
+            request.setAttribute("nomUtilisateurAAfficher", utilisateurAAfficher.getPrenom() + " " + utilisateurAAfficher.getNom());
         }
         // Sinon on affiche les albums de l'utilisateur connecté
         else {

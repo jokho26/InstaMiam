@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modeles.Utilisateur;
 
 /**
@@ -74,6 +75,10 @@ public class InscriptionServlet extends HttpServlet {
             }
         }
         
+        // On ajoute la liste des utilisateurs
+        HttpSession session = request.getSession();
+        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
+        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
