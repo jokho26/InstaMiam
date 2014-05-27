@@ -153,7 +153,8 @@ public class AlbumServlet extends HttpServlet {
 
         // On verifie que l'utilisateur a bien le droit d'afficher cet album
         if (albumAAfficher != null) {
-            if (albumAAfficher.getUtilisateur().getId() != idUtilisateur 
+            if (albumAAfficher.getTypePartage() == Album.ALBUM_PRIVE &&
+                    albumAAfficher.getUtilisateur().getId() != idUtilisateur 
                     && !albumAAfficher.getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
                 albumAAfficher = null;
                 request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cet album !"); 
