@@ -20,7 +20,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Notification implements Serializable {
 
-    
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -40,6 +39,8 @@ public class Notification implements Serializable {
     
     private int typeNotification;
     
+    private boolean isLue;
+    
     public final static int NOTIFICATION_PARTAGE_ALBUM = 1;
     public final static int NOTIFICATION_AJOUT_PHOTO_ALBUM = 2;
 
@@ -53,7 +54,7 @@ public class Notification implements Serializable {
         this.utilisateurNotifieur=utilisateurNotifieur;
         this.utilisateurNotifie=utilisateurNotifie;
         this.typeNotification=typeNotification;
-                
+        this.isLue=false;    
     }
 
     public int getId() {
@@ -82,6 +83,14 @@ public class Notification implements Serializable {
 
     public int getTypeNotification() {
         return typeNotification;
+    }
+
+    public boolean isIsLue() {
+        return isLue;
+    }
+
+    public void setIsLue(boolean isLue) {
+        this.isLue = isLue;
     }
 
     public void setTypeNotification(int typeNotification) {

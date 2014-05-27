@@ -49,6 +49,8 @@ public class AccueilServlet extends HttpServlet {
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
         request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
         
+        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(u.getId()).size());
+        
         String forwardTo = "/Album?idAlbum=2";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 

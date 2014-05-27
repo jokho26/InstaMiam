@@ -321,4 +321,19 @@ public class GestionnaireUtilisateurs {
         return n;
     }
     
+    public List<Notification> getListeNotificationNonLues(int idUser) {
+        Utilisateur u = em.find(Utilisateur.class, idUser);
+
+        Query q = em.createQuery("select n from Notification n where n.utilisateurNotifie=:param and n.isLue=:false");
+        q.setParameter("param", u);
+        q.setParameter("false", false);
+
+        if (q.getResultList().isEmpty()) {
+            return new ArrayList<Notification>();
+        } else {
+            return q.getResultList();
+        }
+
+    }
+    
 }

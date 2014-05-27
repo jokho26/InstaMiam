@@ -80,6 +80,7 @@ public class InscriptionServlet extends HttpServlet {
         if (session.getAttribute("utilisateurConnecte") != null) {
             int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
             request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+            request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
         }
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);

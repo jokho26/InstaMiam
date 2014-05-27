@@ -75,6 +75,7 @@ public class ProfilServlet extends HttpServlet {
 
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
         request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
         
         String forwardTo = "monProfil.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
