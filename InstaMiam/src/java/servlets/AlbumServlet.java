@@ -262,6 +262,8 @@ public class AlbumServlet extends HttpServlet {
         File transacRep = new File(path);
 
         File[] listeImage = transacRep.listFiles();
+        if (listeImage == null)
+            return;
         for (File image : listeImage) {
             // On crée la photo en base de données et on l'ajoute à l'album
             Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
