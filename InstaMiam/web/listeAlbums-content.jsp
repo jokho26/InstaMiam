@@ -88,10 +88,10 @@
                 <a href="${pageContext.servletContext.contextPath}/Album?idAlbum=${a.id}">
                     <c:choose>
                         <c:when test="${!empty a.photoDeCouverture}">
-                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${a.idUnique}/${a.photoDeCouverture.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>" data-trigger="hover" data-original-title="${a.nomAlbum}"/>
+                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${a.idUnique}/${a.photoDeCouverture.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>" data-trigger="hover" data-original-title="<h2 class='ruge'>${a.nomAlbum}</h2>"/>
                         </c:when>
                         <c:otherwise>
-                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/profil/default.jpg" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>" data-trigger="hover" data-original-title="${a.nomAlbum}"/>
+                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/profil/default.jpg" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>" data-trigger="hover" data-original-title="<h2 class='ruge'>${a.nomAlbum}</h2>"/>
                         </c:otherwise>
                     </c:choose>
                 </a>
