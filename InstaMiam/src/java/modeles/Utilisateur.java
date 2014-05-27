@@ -40,6 +40,9 @@ public class Utilisateur implements Serializable {
     private List<Album> albumsPartages;
     
     private String imageProfil;
+   
+    @OneToMany(mappedBy = "utilisateurNotifie")
+    private List<Notification> listeNotification;
 
     public Utilisateur() {
     }
@@ -140,6 +143,14 @@ public class Utilisateur implements Serializable {
     @Override
     public String toString() {
         return "modeles.Utilisateur[ id=" + id + " ]";
+    }
+
+    public List<Notification> getListeNotification() {
+        return listeNotification;
+    }
+
+    public void setListeNotification(List<Notification> listeNotification) {
+        this.listeNotification = listeNotification;
     }
 
     /**

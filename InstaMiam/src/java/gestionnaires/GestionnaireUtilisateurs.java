@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import modeles.Album;
 import modeles.Commentaire;
+import modeles.Notification;
 import modeles.Photo;
 import modeles.Utilisateur;
 
@@ -308,4 +309,16 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    public Notification creerNotification(int idUtilisateurNotifie, int idAlbumCible, int idUtilisateurNotifieur, int typeNotification) {
+        Utilisateur utilisateurNotifie = getUtilisateurById(idUtilisateurNotifie);
+        Utilisateur utilisateurNotifieur = getUtilisateurById(idUtilisateurNotifieur);
+        Album albumCible = getAlbumById(idAlbumCible);    
+        
+        Notification n = new Notification(utilisateurNotifie, albumCible, utilisateurNotifieur, typeNotification);
+        em.persist(n);
+        em.flush();
+        
+        return n;
+    }
+    
 }

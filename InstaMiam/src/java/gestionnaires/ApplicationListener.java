@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import modeles.Album;
+import modeles.Notification;
 import modeles.Utilisateur;
 
 /**
@@ -60,6 +61,9 @@ public class ApplicationListener implements ServletContextListener {
         
         // Test de partage d'album
         gestionnaireUtilisateurs.partagerAlbum(prive.getId(), u.getId());
+        
+        // Test des notifications
+        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
     }
 
     @Override
