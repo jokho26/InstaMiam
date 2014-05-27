@@ -31,11 +31,11 @@
         <script src="ressources/js/InstaMiamCtrl.js" type="text/javascript"></script>
         <script src="ressources/js/angular-sanitize.min.js"></script>
         <script src="ressources/js/dropzone.js"></script>
-        
+
         <!-- Jquery -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     </head>
@@ -59,8 +59,9 @@
         <jsp:include page="footer.jsp"/>  
 
 
-        
+
         <!-- Latest compiled and minified JavaScript -->
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="ressources/js/jquery.blockUI.js"></script>
     </body>
 </html>
