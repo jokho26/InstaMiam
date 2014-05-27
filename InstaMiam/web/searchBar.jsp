@@ -19,5 +19,6 @@
         });
     });
 </script>
-
-<input id="tagsRecherche">
+<form>
+<input id="tagsRecherche" class="form-control barreRecherche" placeholder="{{tab_lang.recherche.recherche}}">
+</form>
