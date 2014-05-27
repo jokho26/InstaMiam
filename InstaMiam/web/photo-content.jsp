@@ -7,15 +7,17 @@
 <div class="content_div">
 
     <div class="row decale">
-        <div class="col-md-4 col-md-offset-4">
-            <center><h1 class="ruge MOAR">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1></center>
+        <div class="col-md-4">
+            <c:if test="${empty photo.albumCouvert}"><a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}" class="btn btn-sm boutonVert">{{tab_lang.photo.definirPhotoCouverture}}</a></c:if>
+            </div>
+            <div class="col-md-4">
+                <center><h1 class="ruge MOAR">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1></center>
             </div>
         <c:choose>
             <c:when test="${sessionScope.utilisateurConnecte == photo.album.utilisateur.id}">
-                <div class="col-md-5 col-md-offset-7">
+                <div class="col-md-4">
                     <div class="btn-group groupeBouton">
                         <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-sm boutonVert">{{tab_lang.photo.modifierPhoto}}</button>
-                        <c:if test="${empty photo.albumCouvert}"><a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}" class="btn btn-sm boutonVert">{{tab_lang.photo.definirPhotoCouverture}}</a></c:if>
                         <a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=supprimerPhoto&idPhoto=${photo.id}" class="btn btn-sm boutonViolet">{{tab_lang.photo.supprimer}}</a>
                     </div> 
                 </div>
@@ -37,7 +39,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            
+
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h2 class="modal-title ruge" id="myModalLabel">{{tab_lang.photo.modifierPhoto}}</h2>
                         </div>
@@ -55,8 +57,10 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button class="btn boutonViolet" data-dismiss="modal">Close</button>
-                            <button type="submit" name="ajouterAlbum" class="btn boutonVert">{{tab_lang.photo.valider_modification}}</button>
+                            <div class="btn-group">
+                                <button class="btn boutonVert" data-dismiss="modal">Close</button>
+                                <button type="submit" name="ajouterAlbum" class="btn boutonViolet">{{tab_lang.photo.valider_modification}}</button>
+                            </div>
                             </form>
                         </div>
                     </div>
