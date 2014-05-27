@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 
 import java.util.UUID;
 import javax.ejb.EJB;
@@ -153,11 +154,11 @@ public class AlbumServlet extends HttpServlet {
 
         // On verifie que l'utilisateur a bien le droit d'afficher cet album
         if (albumAAfficher != null) {
-            if (albumAAfficher.getTypePartage() == Album.ALBUM_PRIVE &&
-                    albumAAfficher.getUtilisateur().getId() != idUtilisateur 
+            if (albumAAfficher.getTypePartage() == Album.ALBUM_PRIVE
+                    && albumAAfficher.getUtilisateur().getId() != idUtilisateur
                     && !albumAAfficher.getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
                 albumAAfficher = null;
-                request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cet album !"); 
+                request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cet album !");
             }
         }
 
@@ -171,7 +172,10 @@ public class AlbumServlet extends HttpServlet {
         request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
 
         request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
-        
+
+        // On nettoie le fichier tmp
+        nettoyerTMP();
+
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
         dp.forward(request, response);
     }
@@ -265,8 +269,9 @@ public class AlbumServlet extends HttpServlet {
         File transacRep = new File(path);
 
         File[] listeImage = transacRep.listFiles();
-        if (listeImage == null)
+        if (listeImage == null) {
             return;
+        }
         for (File image : listeImage) {
             // On crée la photo en base de données et on l'ajoute à l'album
             Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
@@ -324,5 +329,39 @@ public class AlbumServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    /**
+     * méthode permettant de nettoyer les fichiers temporaires de plus de 10
+     * minutes
+     */
+    private void nettoyerTMP() {
+        // Si la dernière modification a été faite il y a plus de 1h
+        
+        // On va parcourir les photos présentes dans le fichier tmp de la transaction
+        String path = getServletConfig().getServletContext().getRealPath("/") + File.separator + "tmp";
+        File transacRep = new File(path);
+
+        File[] listeImage = transacRep.listFiles();
+
+        if (listeImage == null) {
+            return;
+        }
+
+        Calendar heureActuelleMoins1Heures = Calendar.getInstance();
+        heureActuelleMoins1Heures.set(Calendar.HOUR_OF_DAY, heureActuelleMoins1Heures.get(Calendar.HOUR_OF_DAY) - 1);
+
+        Calendar lastModification = Calendar.getInstance();
+
+        for (File folderTransaction : listeImage) {
+            System.out.println("PASSAGE");
+            lastModification.setTimeInMillis(folderTransaction.lastModified());
+
+            // Si la derniere modification est
+            if (lastModification.before(heureActuelleMoins1Heures)) {
+                System.out.println("====> SUPRESSION");
+            }
+            
+        }
+    }
 
 }
