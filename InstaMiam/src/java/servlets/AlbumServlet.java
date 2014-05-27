@@ -38,7 +38,9 @@ public class AlbumServlet extends HttpServlet {
 
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
-
+    
+    private static long lastCheck = System.currentTimeMillis();
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -336,31 +338,40 @@ public class AlbumServlet extends HttpServlet {
      */
     private void nettoyerTMP() {
         // Si la dernière modification a été faite il y a plus de 1h
+        if (System.currentTimeMillis() - lastCheck >= 3600000) {
+            // On vide le TMP et on remet la date de derniere verification à maintenant
+            lastCheck = System.currentTimeMillis();
+        }
+        else {
+            // Sinon on ne fait rien
+            return;
+        }
         
         // On va parcourir les photos présentes dans le fichier tmp de la transaction
         String path = getServletConfig().getServletContext().getRealPath("/") + File.separator + "tmp";
         File transacRep = new File(path);
 
         File[] listeImage = transacRep.listFiles();
-
         if (listeImage == null) {
             return;
         }
 
+        // On va comparer la date de dernière modification des répertoires avec l'heure actuelle moins une heure
         Calendar heureActuelleMoins1Heures = Calendar.getInstance();
         heureActuelleMoins1Heures.set(Calendar.HOUR_OF_DAY, heureActuelleMoins1Heures.get(Calendar.HOUR_OF_DAY) - 1);
-
+        
         Calendar lastModification = Calendar.getInstance();
 
         for (File folderTransaction : listeImage) {
-            System.out.println("PASSAGE");
             lastModification.setTimeInMillis(folderTransaction.lastModified());
 
-            // Si la derniere modification est
+            // Si la derniere modification est supérieur à 1h, on delete le repertoire et son contenue
             if (lastModification.before(heureActuelleMoins1Heures)) {
-                System.out.println("====> SUPRESSION");
+                for (File image : folderTransaction.listFiles())
+                    image.delete();
+
+                folderTransaction.delete();
             }
-            
         }
     }
 
