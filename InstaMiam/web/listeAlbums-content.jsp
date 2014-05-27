@@ -15,21 +15,26 @@
         </div>
 
         <div class="content_div">
-            
+
 
 
 
             <c:choose>
                 <c:when test="${idUtilisateurAAfficher == null || sessionScope.utilisateurConnecte == idUtilisateurAAfficher}">
-                    <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.titre}}</h1></center> 
-                    <!-- Bouton pour faire apparaitre le form modal de création d'album -->
-                    <div id="btn_nouvel_album" class="groupeBouton">
-                        <span class="glyphicon glyphicon-plus violet"></span>
-                        <button class="btn boutonVert" data-toggle="modal" data-target="#myModal" >
-                            {{tab_lang.mes_albums.nouvel_album}}
-                        </button>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.titre}}</h1></center> 
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Bouton pour faire apparaitre le form modal de création d'album -->
+                            <div id="btn_nouvel_album" class="groupeBouton">
+                                <span class="glyphicon glyphicon-plus violet"></span>
+                                <button class="btn boutonVert" data-toggle="modal" data-target="#myModal" >
+                                    {{tab_lang.mes_albums.nouvel_album}}
+                                </button>
+                            </div>
+                        </div>
                     </div>
-
                     <br><br><br>
 
                     <!-- Modal de création d'album -->
@@ -62,9 +67,9 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    <button type="submit" name="ajouterAlbum" id="ajouterAlbum" class="btn btn-default">{{tab_lang.mes_albums.creer_album}}</button>
+                                    <button class="btn boutonVert" data-dismiss="modal">Close</button>
+                                    <span class="glyphicon glyphicon-plus vert"></span>
+                                    <button type="submit" name="ajouterAlbum" id="ajouterAlbum" class="btn boutonViolet">{{tab_lang.mes_albums.creer_album}}</button>
                                     </form>
                                 </div>
                             </div>
@@ -72,10 +77,10 @@
                     </div>
 
                 </c:when>
-                    <c:otherwise>
-                         <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.albumsDe}} : ${nomUtilisateurAAfficher}</h1></center>
+                <c:otherwise>
+                    <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.albumsDe}} : ${nomUtilisateurAAfficher}</h1></center>
                     </c:otherwise>
-            </c:choose>
+                </c:choose>
 
 
             <!-- Mosaique des albums -->
