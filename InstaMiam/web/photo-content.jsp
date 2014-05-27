@@ -99,7 +99,7 @@
                                             </div>
                                             <div>
                                                 <div class="mic-info">
-                                                    By: <a href="#">${c.auteur.prenom} ${c.auteur.nom}</a>
+                                                    By: <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.auteur.id}">${c.auteur.prenom} ${c.auteur.nom}</a>
                                                 </div>
                                             </div>
                                         </div>

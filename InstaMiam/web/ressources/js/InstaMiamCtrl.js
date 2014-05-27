@@ -10,7 +10,7 @@ app.controller('InstaMiamCtrl', function($scope) {
             title: "Langue"
         },
         recherche:{
-            recherche : "Recherche ..."
+            recherche : "Chercher un utilisateur ..."
         },
         nav_bar: {
             actu: "Actualités",
