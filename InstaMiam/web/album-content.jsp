@@ -128,7 +128,7 @@
                         <div class="row decale">
                             <div class="col-md-12">
                                 <h2 class="ruge">{{tab_lang.album.partager_album}}</h2>
-                                <input id="tags" class="popOverMiam">
+                                <input id="tags">
                             </div>
                         </div>
                         <div class="row decale">
@@ -171,11 +171,10 @@
             </c:choose>
 
             <div class="col-md-3 col-sm-4 col-xs-6">
-                <center><h2 class="ruge">${p.nom}</h2></center>
+                <center><h2 class="ruge"></h2></center>
                 <a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">
-                    <img class="img-responsive" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}"  />
+                    <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>Description :</h3>${p.description}<br><h4 class='ruge'>${p.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h4>" data-trigger="hover" data-original-title="<h2 class='ruge'>${p.nom}</h2>"/>
                 </a>
-                <h3 class="ruge" id="commentaire">${p.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>
             </div>
 
             <c:set var="count" value="${count+1}"/>  
@@ -192,9 +191,8 @@
               enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
         </form>
 
-        <form method='post' action="${pageContext.servletContext.contextPath}/Album?idAlbum=${idAlbum}" id='dummyForm'>
+        <form method='post' action="${pageContext.servletContext.contextPath}/Album?idAlbum=${idAlbum}&action=validUpload" id='dummyForm'>
             <input type='hidden' value='${idTransaction}' name="idTransaction">
-            <input type="hidden" value="validUpload" name="action">
             <input type="submit" class="btn boutonViolet" name="btnUpload" id="upload" value="{{tab_lang.album.upload}}">
         </form>
 
@@ -253,3 +251,6 @@
 
 <div class="bottom_div"></div>
 <br>
+
+
+<img id="displayBox" src="ressources/img/default.png" width="200" height="200" style="display:none" />

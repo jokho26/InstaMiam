@@ -85,18 +85,16 @@
             </c:choose>
 
             <div class="col-md-3 col-sm-4 col-xs-6">
-                <center><h2 class="ruge">${a.nomAlbum}</h2></center>
                 <a href="${pageContext.servletContext.contextPath}/Album?idAlbum=${a.id}">
                     <c:choose>
                         <c:when test="${!empty a.photoDeCouverture}">
-                            <img class="img-responsive" src="${pageContext.servletContext.contextPath}/albums/${a.idUnique}/${a.photoDeCouverture.nomFichier}" />
+                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${a.idUnique}/${a.photoDeCouverture.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>" data-trigger="hover" data-original-title="${a.nomAlbum}"/>
                         </c:when>
                         <c:otherwise>
-                            <img class="img-responsive" src="${pageContext.servletContext.contextPath}/profil/default.jpg"/>
+                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/profil/default.jpg" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>" data-trigger="hover" data-original-title="${a.nomAlbum}"/>
                         </c:otherwise>
                     </c:choose>
                 </a>
-                <h3 class="ruge" id="commentaire">${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h3>
             </div>
 
             <c:set var="count" value="${count+1}"/>  

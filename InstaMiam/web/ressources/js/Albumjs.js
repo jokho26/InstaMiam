@@ -13,10 +13,22 @@ Dropzone.options.myAwesomeDropzone = {
     addRemoveLinks: true
 };
 
+
 // Disabling autoDiscover, otherwise Dropzone will try to attach twice.
 Dropzone.autoDiscover = false;
-
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
 $(function() {
+
+    
 
     var myDropzone = new Dropzone("#my-awesome-dropzone");
 
@@ -27,5 +39,28 @@ $(function() {
 });
 
 $(document).ready(function() {
+    if (GetURLParameter('action') == "validUpload") {
+        $.blockUI({
+            message: $('#displayBox'),
+            css: {
+                top: '40%',
+                left: ($(window).width() - 200) / 2 + 'px',
+                width: '200px'
+            }
+        });
+
+        var angle = 0;
+        var interval = setInterval(function() {
+            angle += 2;
+            $("#displayBox").rotate(angle);
+        }, 10);
+    }
+
 });
+
+window.onload = function() {
+    $.unblockUI();
+    //setTimeout(clearTimeout(interval), 2000);
+
+}
 //$(".popOverMiam").popover({animation: "true", placement: "auto top", content: "Vous avez déjà partagé cet album à cette personne."});  

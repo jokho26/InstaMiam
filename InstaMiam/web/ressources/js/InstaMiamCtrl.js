@@ -9,8 +9,8 @@ app.controller('InstaMiamCtrl', function($scope) {
             en: "Anglais",
             title: "Langue"
         },
-        recherche:{
-            recherche : "Chercher un utilisateur ..."
+        recherche: {
+            recherche: "Chercher un utilisateur ..."
         },
         nav_bar: {
             actu: "Actualités",
@@ -40,7 +40,7 @@ app.controller('InstaMiamCtrl', function($scope) {
             nomAlbum: "Nom de l'album",
             albumPrive: "Album privé",
             albumPublique: "Album publique",
-            albumsDe : "Albums de"
+            albumsDe: "Albums de"
         },
         album: {
             posterCommentaire: "Votre commentaire ...",
@@ -104,5 +104,9 @@ app.controller('InstaMiamCtrl', function($scope) {
     }
 
     $scope.tab_lang = $scope.tab_fr;
+
+    $(".imageMosaique").each(function(index) {
+        $(this).popover();
+    });
 });
 
