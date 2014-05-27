@@ -7,7 +7,9 @@
                 <a href="${pageContext.servletContext.contextPath}"><img src="ressources/img/instamiam.png" alt="instamiam" id="logo"/></a>
             </div>
             <div class="col-md-7">
-                <jsp:include page="searchBar.jsp"/> 
+                <c:if test="${sessionScope.utilisateurConnecte != null}"> 
+                    <jsp:include page="searchBar.jsp"/>
+                </c:if>
                 <jsp:include page="menu.jsp"/>  
             </div>
         </div><!--//container-->
