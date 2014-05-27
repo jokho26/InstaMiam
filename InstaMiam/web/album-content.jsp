@@ -173,7 +173,7 @@
             <div class="col-md-3 col-sm-4 col-xs-6">
                 <center><h2 class="ruge"></h2></center>
                 <a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">
-                    <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>Description :</h3>${p.description}<br><h4 class='ruge'>${p.commentaires.size()} {{tab_lang.mes_albums.commentaires}}</h4>" data-trigger="hover" data-original-title="<h2 class='ruge'>${p.nom}</h2>"/>
+                    <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>Description :</h3>${p.description}<br><h4 class='ruge'>${p.commentaires.size()} {{tab_lang.mes_albums.commentaires}}<c:if test="${p.commentaires.size() != 1}">s</c:if></h4>" data-trigger="hover" data-original-title="<h2 class='ruge'>${p.nom}</h2>"/>
                 </a>
             </div>
 
