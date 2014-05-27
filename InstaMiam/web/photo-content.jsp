@@ -123,7 +123,7 @@
                 <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
                 <input type="hidden" name="action" value="ajouterCommentaire"/>
                 <input type="hidden" value="${idPhoto}" name="idPhoto"/>
-                <input type="submit" name="submit" value="Poster" id="posterCommentaire"/>
+                <input type="submit" class="btn boutonVert" name="submit" value="Poster" id="posterCommentaire"/>
             </form>
         </div>
     </div>
