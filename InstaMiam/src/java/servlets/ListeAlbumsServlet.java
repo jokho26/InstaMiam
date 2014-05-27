@@ -89,6 +89,8 @@ public class ListeAlbumsServlet extends HttpServlet {
         // On ajoute la liste des utilisateurs
         request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
 
+        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
+        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
