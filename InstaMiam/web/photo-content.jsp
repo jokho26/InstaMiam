@@ -8,10 +8,14 @@
 
     <div class="row decale">
         <div class="col-md-4">
-            <c:if test="${empty photo.albumCouvert}"><a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}" class="btn btn-sm boutonVert">{{tab_lang.photo.definirPhotoCouverture}}</a></c:if>
-            </div>
-            <div class="col-md-4">
-                <center><h1 class="ruge MOAR">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1></center>
+            <c:choose>
+                <c:when test="${sessionScope.utilisateurConnecte == photo.album.utilisateur.id}">
+                    <c:if test="${empty photo.albumCouvert}"><a type="button" href="${pageContext.servletContext.contextPath}/Photo?action=definirCouverture&idPhoto=${photo.id}" class="btn btn-sm boutonVert">{{tab_lang.photo.definirPhotoCouverture}}</a></c:if>
+                </c:when>
+            </c:choose>
+        </div>
+        <div class="col-md-4">
+            <center><h1 class="ruge MOAR">${photo.nom}&nbsp;<c:if test="${!empty photo.albumCouvert}">{{tab_lang.photo.couverture}}</c:if></h1></center>
             </div>
         <c:choose>
             <c:when test="${sessionScope.utilisateurConnecte == photo.album.utilisateur.id}">

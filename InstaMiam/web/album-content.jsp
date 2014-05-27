@@ -91,12 +91,16 @@
         <div class="col-md-4 col-md-offset-4">
             <center><h1 class="ruge MOAR">${album.nomAlbum}</h1></center>
         </div>
-        <div class="col-md-4">
-            <div class="btn-group groupeBouton">
-                <button type="button" data-toggle="modal" data-target="#myModalModification" class="btn btn-sm boutonVert">{{tab_lang.album.modifierAlbum}}</button>
-                <a type="button" href="${pageContext.servletContext.contextPath}/Album?action=supprimerAlbum&idAlbum=${album.id}" class="btn btn-sm boutonViolet">{{tab_lang.album.supprimer}}</a>
-            </div>
-        </div>
+        <c:choose>
+            <c:when test="${sessionScope.utilisateurConnecte == album.utilisateur.id}">
+                <div class="col-md-4">
+                    <div class="btn-group groupeBouton">
+                        <button type="button" data-toggle="modal" data-target="#myModalModification" class="btn btn-sm boutonVert">{{tab_lang.album.modifierAlbum}}</button>
+                        <a type="button" href="${pageContext.servletContext.contextPath}/Album?action=supprimerAlbum&idAlbum=${album.id}" class="btn btn-sm boutonViolet">{{tab_lang.album.supprimer}}</a>
+                    </div>
+                </div>
+            </c:when>
+        </c:choose>
     </div>
 
 
