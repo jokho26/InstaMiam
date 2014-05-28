@@ -1,7 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <script>
 
-    var offset = 3;
+    var offset = 0;
 
     function chargerNotifications() {
         $.ajax({
@@ -15,8 +15,6 @@
                 offset += 3;
             }
         });
-
-
     }
 
 
@@ -48,7 +46,7 @@
         <div class="col-md-6 col-md-offset-3">
             <ul id="listeNotifications">
                 <c:forEach var="c" items="${listeNotificationsNonLues}">  
-
+                    <script>offset += 1;</script>
                     <div class="panel panel-default widget nouvelleNotif">
                         <div class="panel-body">
                             <ul class="list-group">
@@ -84,7 +82,7 @@
                     </div>
                 </c:forEach>
                 <c:forEach var="c" items="${listeNotificationsLues}">  
-
+                    <script>offset += 1;</script>
                     <div class="panel panel-default widget">
                         <div class="panel-body">
                             <ul class="list-group">
