@@ -5,14 +5,11 @@
  */
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
 import java.io.File;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,10 +20,7 @@ import modeles.Photo;
  * @author Jokho
  */
 @WebServlet(name = "PhotoServlet", urlPatterns = {"/Photo"})
-public class PhotoServlet extends HttpServlet {
-
-    @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+public class PhotoServlet extends SuperServletVerification {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,23 +31,36 @@ public class PhotoServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        response.setContentType("text/html;charset=UTF-8");
-
+        super.processRequest(request, response);
+        
+        if (isAlreadyForwarded)
+            return;
+        
         // On récupere la session
         HttpSession session = request.getSession();
-
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
 
         Object idPhotoObject = request.getParameter("idPhoto");
 
-        int idPhoto = -1;
-
+        int idPhoto;
+        Photo p;
         if (idPhotoObject != null) {
             idPhoto = Integer.parseInt(idPhotoObject.toString());
+            
+            p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
+            if (p == null) {
+                dispatch404Error(request, response);
+                return;
+            }
+             
             request.setAttribute("idPhoto", idPhoto);
+        }
+        else {
+            dispatch404Error(request, response);
+            return;
         }
 
         String action = request.getParameter("action");
@@ -61,54 +68,40 @@ public class PhotoServlet extends HttpServlet {
             if (action.equals("ajouterCommentaire")) {
                 // Recupération des paramètres du formulaire
                 String text = request.getParameter("commentaire");
-                System.out.println("Ajout de commentaire : " + idPhoto + " - " + text);
-                if (idPhoto > 0 && text != null) {
+                if (text != null) {
                     gestionnaireUtilisateurs.ajouterCommentairePhoto(idPhoto, idUtilisateur, text);
                 }
             } else if (action.equals("modifierPhoto")) {
-
-                Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
-                if (p != null && request.getParameter("nomPhoto") != null && request.getParameter("description") != null) {
+                if (request.getParameter("nomPhoto") != null && request.getParameter("description") != null) {
                     gestionnaireUtilisateurs.modifierPhoto(idPhoto, request.getParameter("nomPhoto"), request.getParameter("description"));
                 }
             } else if (action.equals("supprimerPhoto")) {
-                Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
-                if (p != null) {
-                    String forwardTo = "/Album?idAlbum=" + p.getAlbum().getId();
+                String forwardTo = "/Album?idAlbum=" + p.getAlbum().getId();
 
-                    deleteFilePhoto(p.getAlbum().getIdUnique(), p.getNomFichier());
-                    gestionnaireUtilisateurs.supprimerPhoto(idPhoto);
+                deleteFilePhoto(p.getAlbum().getIdUnique(), p.getNomFichier());
+                gestionnaireUtilisateurs.supprimerPhoto(idPhoto);
 
-                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
-                    dp.forward(request, response);
-                    return;
-                }
+                dp.forward(request, response);
+                return;
             } else if (action.equals("definirCouverture")) {
-                Photo p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
-                if (p != null) {
-                    gestionnaireUtilisateurs.setPhotoCouverture(p.getAlbum().getId(), p.getId());
-                }
+                gestionnaireUtilisateurs.setPhotoCouverture(p.getAlbum().getId(), p.getId());
             }
         }
 
-        Photo photo = gestionnaireUtilisateurs.getPhotoById(idPhoto);
+        p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
 
         // On verifie que l'utilisateur a bien le droit d'afficher cette photo
-        if (photo != null) {
-            if (photo.getAlbum().getUtilisateur().getId() != idUtilisateur
-                    && !photo.getAlbum().getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
-                photo = null;
+        if (p != null) {
+            if (p.getAlbum().getUtilisateur().getId() != idUtilisateur
+                    && !p.getAlbum().getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
+                p = null;
                 request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cette photo !");
             }
         }
-
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
         
-        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
-        
-        request.setAttribute("photo", photo);
-
+        request.setAttribute("photo", p);
         String forwardTo = "photo.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 

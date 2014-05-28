@@ -5,20 +5,16 @@
  */
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Album;
-import modeles.Commentaire;
 import modeles.Utilisateur;
 
 /**
@@ -26,10 +22,7 @@ import modeles.Utilisateur;
  */
 @WebServlet(name = "ListeAlbumsServlet", urlPatterns = {"/ListeAlbums"})
 @MultipartConfig
-public class ListeAlbumsServlet extends HttpServlet {
-
-    @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+public class ListeAlbumsServlet extends SuperServletVerification {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,14 +35,18 @@ public class ListeAlbumsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
+        super.processRequest(request, response);
+        
+        if (isAlreadyForwarded)
+            return;
+        
         String forwardTo = "listeAlbums.jsp";
 
         String action = request.getParameter("action");
 
         // On récupere la session
         HttpSession session = request.getSession();
-
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
         
 
@@ -70,15 +67,26 @@ public class ListeAlbumsServlet extends HttpServlet {
         
         // Si un id précis est défini, on affiche la liste des albums de cette utilisateurs
         if (request.getParameter("idUtilisateurAAfficher") != null) {
-            int idUtilisateurCible = Integer.parseInt(request.getParameter("idUtilisateurAAfficher"));
+            String strIdUtilisateurCible = request.getParameter("idUtilisateurAAfficher");
+            if (strIdUtilisateurCible == null) {
+                dispatch404Error(request, response);
+                return;
+            }
             
+            int idUtilisateurCible = Integer.parseInt(strIdUtilisateurCible);
+            
+            Utilisateur utilisateurAAfficher = gestionnaireUtilisateurs.getUtilisateurById(idUtilisateurCible);
+            if (utilisateurAAfficher == null) {
+                dispatch404Error(request, response);
+                return;
+            }
+                
             List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getAlbumsVisibles(idUtilisateur, idUtilisateurCible);
             
             request.setAttribute("listeAlbums", listeAlbumsVisibles);
             request.setAttribute("idUtilisateurAAfficher", idUtilisateurCible);
             
             // On ajoute la liste des utilisateurs
-            Utilisateur utilisateurAAfficher = gestionnaireUtilisateurs.getUtilisateurById(idUtilisateurCible);
             request.setAttribute("nomUtilisateurAAfficher", utilisateurAAfficher.getPrenom() + " " + utilisateurAAfficher.getNom());
         }
         // Sinon on affiche les albums de l'utilisateur connecté
@@ -86,13 +94,7 @@ public class ListeAlbumsServlet extends HttpServlet {
             request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
         }
         
-        // On ajoute la liste des utilisateurs
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
-
-        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
-        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
-
         dp.forward(request, response);
     }
 
