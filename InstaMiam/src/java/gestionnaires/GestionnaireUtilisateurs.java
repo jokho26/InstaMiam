@@ -366,6 +366,8 @@ public class GestionnaireUtilisateurs {
                 n.setIsLue(true);
             }
         }
+        
+        em.flush();
     }
 
 }

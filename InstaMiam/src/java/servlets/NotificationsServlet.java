@@ -23,7 +23,7 @@ import modeles.Photo;
  * @author Christian
  */
 @WebServlet(name = "NotificationsServlet", urlPatterns = {"/Notifications"})
-public class NotificationsServlet extends HttpServlet {
+public class NotificationsServlet extends SuperServletVerification {
 
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
@@ -39,6 +39,12 @@ public class NotificationsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        super.processRequest(request, response);
+        if (isAlreadyForwarded) {
+            return;
+        }
+
         response.setContentType("text/html;charset=UTF-8");
 
         // On récupere la session
@@ -51,12 +57,10 @@ public class NotificationsServlet extends HttpServlet {
 
         }
 
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
         request.setAttribute("utilisateur", gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur));
-        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
         request.setAttribute("listeNotificationsNonLues", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur));
         request.setAttribute("listeNotificationsLues", gestionnaireUtilisateurs.getListeNotificationLues(idUtilisateur, 3, 0));
-        
+
         gestionnaireUtilisateurs.setNotificationsLues(idUtilisateur);
 
         String forwardTo = "notifications.jsp";

@@ -381,3 +381,7 @@ Notifications
     position: relative;
     top: -15px;
 }
+
+.nouvelleNotif{
+    border: 2px solid #6F5468;
+}

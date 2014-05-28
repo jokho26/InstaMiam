@@ -64,6 +64,9 @@ public class ApplicationListener implements ServletContextListener {
         
         // Test des notifications
         gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
+        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_PARTAGE_ALBUM);
+        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
+        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_PARTAGE_ALBUM);
     
         System.out.println("Nombre de notifications : " +gestionnaireUtilisateurs.getListeNotificationNonLues(u.getId()).size());
     }
