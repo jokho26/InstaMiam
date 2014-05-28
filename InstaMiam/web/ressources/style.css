@@ -385,3 +385,7 @@ Notifications
 .nouvelleNotif{
     border: 2px solid #6F5468;
 }
+
+.pull{
+    margin-top: -5px;
+}

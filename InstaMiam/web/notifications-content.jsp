@@ -15,85 +15,80 @@
     <br>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <center>
-                <!-- Partie des notifications non lues -->
-                <ul>
-                    <c:forEach var="c" items="${listeNotificationsNonLues}">  
+            <ul>
+                <c:forEach var="c" items="${listeNotificationsNonLues}">  
 
-                        <div class="panel panel-default widget nouvelleNotif">
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " />
-                                            </div>
-                                            <div class="col-md-9">
-                                                <div class="comment-text">
+                    <div class="panel panel-default widget nouvelleNotif">
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " />
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="comment-text">
+                                                <h3 class="ruge pull"><a target="album" href="${pageContext.servletContext.contextPath}/Album?idAlbum=${c.albumCible.id}">${c.albumCible.nomAlbum}</a></h3>
                                                     <c:choose>
                                                         <c:when test="${c.typeNotification == 1}">
-                                                            {{tab_lang.notifications.albumPartage}}
-                                                        </c:when>
-                                                        <c:when test="${c.typeNotification == 2}">
-                                                            {{tab_lang.notifications.photoAjoute}}
-                                                        </c:when>
+                                                        {{tab_lang.notifications.albumPartage}}
+                                                    </c:when>
+                                                    <c:when test="${c.typeNotification == 2}">
+                                                        {{tab_lang.notifications.photoAjoute}}
+                                                    </c:when>
 
-                                                    </c:choose>
-                                                    <br>
-                                                    <a target="album" href="${pageContext.servletContext.contextPath}/Album?idAlbum=${c.albumCible.id}">${c.albumCible.nomAlbum}</a>
-                                                </div>
-                                                <div>
-                                                    <div class="mic-info">
-                                                        By: <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.utilisateurNotifieur.id}">${c.utilisateurNotifieur.prenom} ${c.utilisateurNotifieur.nom}</a>
-                                                    </div>
+                                                </c:choose>
+                                            </div>
+                                            <div>
+                                                <div class="mic-info">
+                                                    By: <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.utilisateurNotifieur.id}">${c.utilisateurNotifieur.prenom} ${c.utilisateurNotifieur.nom}</a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
+                                    </div>
+                                </li>
 
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
-                    </c:forEach>
-                    <c:forEach var="c" items="${listeNotificationsLues}">  
+                    </div>
+                </c:forEach>
+                <c:forEach var="c" items="${listeNotificationsLues}">  
 
-                        <div class="panel panel-default widget">
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " />
-                                            </div>
-                                            <div class="col-md-9">
-                                                <div class="comment-text">
+                    <div class="panel panel-default widget">
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " />
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="comment-text">
+                                                <h3 class="ruge pull"><a target="album" href="${pageContext.servletContext.contextPath}/Album?idAlbum=${c.albumCible.id}">${c.albumCible.nomAlbum}</a></h3>
                                                     <c:choose>
                                                         <c:when test="${c.typeNotification == 1}">
-                                                            {{tab_lang.notifications.albumPartage}}
-                                                        </c:when>
-                                                        <c:when test="${c.typeNotification == 2}">
-                                                            {{tab_lang.notifications.photoAjoute}}
-                                                        </c:when>
+                                                        {{tab_lang.notifications.albumPartage}}
+                                                    </c:when>
+                                                    <c:when test="${c.typeNotification == 2}">
+                                                        {{tab_lang.notifications.photoAjoute}}
+                                                    </c:when>
 
-                                                    </c:choose>
-                                                    <br>
-                                                    <a target="album" href="${pageContext.servletContext.contextPath}/Album?idAlbum=${c.albumCible.id}">${c.albumCible.nomAlbum}</a>
-                                                </div>
-                                                <div>
-                                                    <div class="mic-info">
-                                                        By: <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.utilisateurNotifieur.id}">${c.utilisateurNotifieur.prenom} ${c.utilisateurNotifieur.nom}</a>
-                                                    </div>
+                                                </c:choose>
+                                            </div>
+                                            <div>
+                                                <div class="mic-info">
+                                                    By: <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.utilisateurNotifieur.id}">${c.utilisateurNotifieur.prenom} ${c.utilisateurNotifieur.nom}</a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
+                                    </div>
+                                </li>
 
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
-                    </c:forEach>
-                </ul> 
-            </center>
+                    </div>
+                </c:forEach>
+            </ul> 
         </div>
     </div> 
     <br>
