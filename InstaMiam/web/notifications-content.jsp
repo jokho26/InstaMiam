@@ -1,4 +1,35 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<script>
+
+    var offset = 3;
+
+    function chargerNotifications() {
+        $.ajax({
+            type: 'POST',
+            url: "${pageContext.servletContext.contextPath}/Notifications",
+            data: {action: "chargerPlus", offset: offset},
+            dataType: "html",
+            success: function(data, textStatus, jqXHR) {
+                $("#listeNotifications").append(data);
+                majTitres();
+                offset += 3;
+            }
+        });
+
+
+    }
+
+
+    function majTitres() {
+        $(".titrePartageAlbum").each(function(index) {
+            $(this).html($(".titrePartageAlbumSource").text());
+        });
+        $(".titrePhotoAjout").each(function(index) {
+            $(this).html($(".titrePhotoAjoutSource").text());
+        });
+    }
+
+</script> 
 
 <div class="top_div"></div>
 
@@ -15,7 +46,7 @@
     <br>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <ul>
+            <ul id="listeNotifications">
                 <c:forEach var="c" items="${listeNotificationsNonLues}">  
 
                     <div class="panel panel-default widget nouvelleNotif">
@@ -24,7 +55,7 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " />
+                                            <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.utilisateurNotifieur.id}"><img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " /></a>
                                         </div>
                                         <div class="col-md-9">
                                             <div class="comment-text">
@@ -60,7 +91,9 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " />
+                                            <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.utilisateurNotifieur.id}">
+                                                <img src="${pageContext.servletContext.contextPath}/profil/${c.utilisateurNotifieur.imageProfil}" class="img-rounded img-responsive " />
+                                            </a>
                                         </div>
                                         <div class="col-md-9">
                                             <div class="comment-text">
@@ -91,8 +124,21 @@
             </ul> 
         </div>
     </div> 
+
+    <hr>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <center>
+                <button class="btn boutonVert" onClick="chargerNotifications()">{{tab_lang.notifications.chargerPlus}}</button>
+            </center>
+        </div>
+    </div>
     <br>
 
 </div>
 
 <div class="bottom_div"></div>
+
+<div class="titrePartageAlbumSource" style="display: none;">{{tab_lang.notifications.albumPartage}}</div>
+<div class="titrePhotoAjoutSource" style="display: none;">{{tab_lang.notifications.photoAjoute}}</div>
+

@@ -79,6 +79,7 @@ app.controller('InstaMiamCtrl', function($scope) {
             albumPartage: "Cet utilisateur vous a partagé un album ! GET DA COOKIES",
             photoAjoute: "Cet utilisateur a ajouté une photo à un album qu'il vous a partagé !",
             titre: "Vos notifications",
+            chargerPlus: "Charger plus de notifications"
         }
         
 

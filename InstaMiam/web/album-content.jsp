@@ -62,7 +62,7 @@
                                     });
                                 }
                             });
-                            
+
 
 
 
@@ -72,13 +72,13 @@
                 </c:forEach>
             </c:if>
 
-});
+                        });
 
-function removeFile(file) {
-    $.ajax({
-        url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&idAlbum=${idAlbum}&nameFile=" + file.name
-    });
-}
+                        function removeFile(file) {
+                            $.ajax({
+                                url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&idAlbum=${idAlbum}&nameFile=" + file.name
+                            });
+                        }
 
 
         </script>
@@ -176,8 +176,8 @@ function removeFile(file) {
                 <center><h2 class="ruge"></h2></center>
                 <a href="${pageContext.servletContext.contextPath}/Photo?idPhoto=${p.id}">
                     <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${album.idUnique}/${p.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="<h3 class='ruge'>Description :</h3>${p.description}<br><h4 class='ruge'>${p.commentaires.size()} {{tab_lang.mes_albums.commentaires}}<c:if test="${p.commentaires.size() != 1}">s</c:if></h4>" data-trigger="hover" data-original-title="<h2 class='ruge'>${p.nom}</h2>"/>
-                </a>
-            </div>
+                    </a>
+                </div>
 
             <c:set var="count" value="${count+1}"/>  
         </c:forEach> 
@@ -216,7 +216,9 @@ function removeFile(file) {
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive " alt="" />
+                                        <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.auteur.id}">
+                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive " alt="" />
+                                        </a>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="comment-text">

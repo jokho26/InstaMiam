@@ -8,6 +8,7 @@ package servlets;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modeles.Notification;
 import modeles.Photo;
 
 /**
@@ -54,7 +56,25 @@ public class NotificationsServlet extends SuperServletVerification {
 
         String action = request.getParameter("action");
         if (action != null) {
+            if (action.equals("chargerPlus")) {
+                String offsetStr = request.getParameter("offset");
+                int offset;
 
+                if (offsetStr != null) {
+                    offset = Integer.parseInt(offsetStr);
+                } else {
+                    return;
+                }
+
+                List<Notification> liste = gestionnaireUtilisateurs.getListeNotificationLues(idUtilisateur, 3, offset);
+
+                request.setAttribute("listeNotificationsLues", liste);
+
+                String forwardTo = "/notificationsSupplementaires.jsp";
+                RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                dp.forward(request, response);
+                return;
+            }
         }
 
         request.setAttribute("utilisateur", gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur));

@@ -283,7 +283,7 @@ public class AlbumServlet extends SuperServletVerification {
         for (File image : listeImage) {
             // On crée la photo en base de données et on l'ajoute à l'album
             Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
-            Photo photo = gestionnaireUtilisateurs.creerPhoto(image.getName().substring(13), idAlbum);
+            Photo photo = gestionnaireUtilisateurs.creerPhoto(image.getName(), idAlbum);
 
             // On va déplacer les images dans le dossier de l'album
             String nouveauRepertoire = getServletConfig().getServletContext().getRealPath("/")

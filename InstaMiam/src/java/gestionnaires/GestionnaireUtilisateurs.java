@@ -321,7 +321,6 @@ public class GestionnaireUtilisateurs {
 
         return n;
     }
-    
 
     public List<Notification> getListeNotificationNonLues(int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
@@ -338,17 +337,21 @@ public class GestionnaireUtilisateurs {
 
     }
 
-    public Object getListeNotificationLues(int idUtilisateur, int nb, int offset) {
+    public List<Notification> getListeNotificationLues(int idUtilisateur, int nb, int offset) {
         Utilisateur u = em.find(Utilisateur.class, idUtilisateur);
 
         Query q = em.createQuery("select n from Notification n where n.utilisateurNotifie=:param and n.isLue=:false");
         q.setParameter("param", u);
         q.setParameter("false", true);
 
-        if (q.getResultList().isEmpty()) {
+        if (q.getResultList().isEmpty() || offset >= q.getResultList().size()) {
             return new ArrayList<Notification>();
         } else {
-            return q.getResultList().subList(offset, offset + nb);
+            if (offset + nb >= q.getResultList().size()) {
+                return q.getResultList().subList(offset, q.getResultList().size());
+            } else {
+                return q.getResultList().subList(offset, offset + nb);
+            }
         }
     }
 
@@ -362,11 +365,11 @@ public class GestionnaireUtilisateurs {
         if (q.getResultList().isEmpty()) {
             return;
         } else {
-            for(Notification n : (List<Notification>)q.getResultList()){
+            for (Notification n : (List<Notification>) q.getResultList()) {
                 n.setIsLue(true);
             }
         }
-        
+
         em.flush();
     }
 

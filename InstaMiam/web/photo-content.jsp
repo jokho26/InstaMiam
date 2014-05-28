@@ -95,7 +95,9 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive " />
+                                            <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.auteur.id}">
+                                                <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive " />
+                                            </a>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="comment-text">

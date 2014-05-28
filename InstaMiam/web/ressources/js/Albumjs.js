@@ -14,6 +14,7 @@ Dropzone.options.myAwesomeDropzone = {
 };
 
 
+
 // Disabling autoDiscover, otherwise Dropzone will try to attach twice.
 Dropzone.autoDiscover = false;
 function GetURLParameter(sParam) {
