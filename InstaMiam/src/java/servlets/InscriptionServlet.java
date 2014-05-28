@@ -60,7 +60,7 @@ public class InscriptionServlet extends HttpServlet {
                         request.setAttribute("messageErreur", "Information incomplètes !");
                     }
                     else { // Sinon, tous les champss sont remplis
-                        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, login, email, email);
+                        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, login, email, mdp);
                         if (u == null) 
                             request.setAttribute("messageErreur", "Login déjà utilisé. Veuillez en choisir un autre.");
                         else  {

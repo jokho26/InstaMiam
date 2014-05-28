@@ -52,7 +52,6 @@ public class AlbumServlet extends SuperServletVerification {
             return;
         
         String forwardTo = "album.jsp";
-        System.out.println("WUT WUT WUT WUT1");
         // Si l'id de l'album n'est pas passé en paramètre, on redirige vers 404
         int idAlbum;
         if (request.getParameter("idAlbum") != null) {
@@ -70,7 +69,7 @@ public class AlbumServlet extends SuperServletVerification {
             dispatch404Error(request, response);
             return;
         }
-                System.out.println("WUT WUT WUT WUT2");
+        
         // On récupere l'id de l'utilisateur connecté
         HttpSession session = request.getSession();
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
@@ -86,7 +85,7 @@ public class AlbumServlet extends SuperServletVerification {
             dispatch404Error(request, response);
             return;
         }
-                        System.out.println("WUT WUT WUT WUT3");
+        
         String action = request.getParameter("action");
         if (action != null) {
             // Action l'ors de l'ajout d'un fichier dans la dropzone
