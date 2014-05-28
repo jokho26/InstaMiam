@@ -55,16 +55,6 @@
                             </div>
                         </div>
                     </c:forEach>
-                </ul> 
-            </center>
-        </div>
-    </div> 
-    <br>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <center>
-                <!-- Partie des notifications non lues -->
-                <ul>
                     <c:forEach var="c" items="${listeNotificationsLues}">  
 
                         <div class="panel panel-default widget">
@@ -105,7 +95,8 @@
                 </ul> 
             </center>
         </div>
-    </div>
+    </div> 
+    <br>
 
 </div>
 
