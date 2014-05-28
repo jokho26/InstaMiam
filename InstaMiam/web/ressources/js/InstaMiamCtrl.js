@@ -74,7 +74,12 @@ app.controller('InstaMiamCtrl', function($scope) {
             messageModification: "Votre profil a bien été modifié.",
             messageErreur: "Erreur lors de la modification de votre profil.",
             changerImage: "Changer d'image"
+        },
+        notifications: {
+            albumPartage: "Cet utilisateur vous a partagé un album ! GET DA COOKIES",
+            photoAjoute: "Cet utilisateur a ajouté une photo à un album qu'il vous a partagé !"
         }
+        
 
     };
 

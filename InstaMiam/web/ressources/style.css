@@ -369,3 +369,15 @@ Boutons
 .barreRecherche {
     margin-top: 25px;
 }
+
+/******************************
+Notifications
+******************************/
+
+.notification{
+    background:#6F5468;
+    color:#8BCCAE;
+    font-size: 10px;
+    position: relative;
+    top: -15px;
+}

@@ -195,9 +195,10 @@ public class GestionnaireUtilisateurs {
         }
 
         // Si il couvre un album remettre la couverture par défaut
-        if(p.getAlbumCouvert() != null)
+        if (p.getAlbumCouvert() != null) {
             p.getAlbum().setPhotoDeCouverture(null);
-        
+        }
+
         // Finalement, on supprime la photo
         em.remove(p);
         em.flush();
@@ -312,15 +313,16 @@ public class GestionnaireUtilisateurs {
     public Notification creerNotification(int idUtilisateurNotifie, int idAlbumCible, int idUtilisateurNotifieur, int typeNotification) {
         Utilisateur utilisateurNotifie = getUtilisateurById(idUtilisateurNotifie);
         Utilisateur utilisateurNotifieur = getUtilisateurById(idUtilisateurNotifieur);
-        Album albumCible = getAlbumById(idAlbumCible);    
-        
+        Album albumCible = getAlbumById(idAlbumCible);
+
         Notification n = new Notification(utilisateurNotifie, albumCible, utilisateurNotifieur, typeNotification);
         em.persist(n);
         em.flush();
-        
+
         return n;
     }
     
+
     public List<Notification> getListeNotificationNonLues(int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
 
@@ -335,5 +337,35 @@ public class GestionnaireUtilisateurs {
         }
 
     }
-    
+
+    public Object getListeNotificationLues(int idUtilisateur, int nb, int offset) {
+        Utilisateur u = em.find(Utilisateur.class, idUtilisateur);
+
+        Query q = em.createQuery("select n from Notification n where n.utilisateurNotifie=:param and n.isLue=:false");
+        q.setParameter("param", u);
+        q.setParameter("false", true);
+
+        if (q.getResultList().isEmpty()) {
+            return new ArrayList<Notification>();
+        } else {
+            return q.getResultList().subList(offset, offset + nb);
+        }
+    }
+
+    public void setNotificationsLues(int idUtilisateur) {
+        Utilisateur u = em.find(Utilisateur.class, idUtilisateur);
+
+        Query q = em.createQuery("select n from Notification n where n.utilisateurNotifie=:param and n.isLue=:false");
+        q.setParameter("param", u);
+        q.setParameter("false", false);
+
+        if (q.getResultList().isEmpty()) {
+            return;
+        } else {
+            for(Notification n : (List<Notification>)q.getResultList()){
+                n.setIsLue(true);
+            }
+        }
+    }
+
 }
