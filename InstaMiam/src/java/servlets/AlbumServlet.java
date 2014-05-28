@@ -48,14 +48,13 @@ public class AlbumServlet extends SuperServletVerification {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         super.processRequest(request, response);
-        
         if (isAlreadyForwarded)
             return;
         
         String forwardTo = "album.jsp";
-
+        System.out.println("WUT WUT WUT WUT1");
         // Si l'id de l'album n'est pas passé en paramètre, on redirige vers 404
-        int idAlbum = -1;
+        int idAlbum;
         if (request.getParameter("idAlbum") != null) {
             idAlbum = Integer.parseInt(request.getParameter("idAlbum"));
             
@@ -71,11 +70,23 @@ public class AlbumServlet extends SuperServletVerification {
             dispatch404Error(request, response);
             return;
         }
-
+                System.out.println("WUT WUT WUT WUT2");
         // On récupere l'id de l'utilisateur connecté
         HttpSession session = request.getSession();
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
 
+         // On recupère l'album à afficher
+        Album albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+
+        // On verifie que l'utilisateur a bien le droit d'afficher cet album
+        if (albumAAfficher.getTypePartage() == Album.ALBUM_PRIVE
+                && albumAAfficher.getUtilisateur().getId() != idUtilisateur
+                && !albumAAfficher.getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
+            request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cet album !");
+            dispatch404Error(request, response);
+            return;
+        }
+                        System.out.println("WUT WUT WUT WUT3");
         String action = request.getParameter("action");
         if (action != null) {
             // Action l'ors de l'ajout d'un fichier dans la dropzone
@@ -97,7 +108,9 @@ public class AlbumServlet extends SuperServletVerification {
                 Object idTransaction = request.getParameter("idTransaction");
 
                 if (idTransaction != null) {
-                    confirmerUploadPhotos(idAlbum, idTransaction.toString());
+                    // Si l'utilisateur peut modifier l'album
+                    if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum))
+                        confirmerUploadPhotos(idAlbum, idTransaction.toString());
                 }
             } // Action lors d'un ajout de commentaire
             else if (action.equals("ajouterCommentaire")) {
@@ -107,64 +120,61 @@ public class AlbumServlet extends SuperServletVerification {
                 }
             } // Action lors d'un ajout de commentaire
             else if (action.equals("supprimerAlbum")) {
-                gestionnaireUtilisateurs.supprimerAlbum(idAlbum);
+                // Si l'utilisateur peut modifier l'album
+                if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)) {
+                    gestionnaireUtilisateurs.supprimerAlbum(idAlbum);
 
-                forwardTo = "/ListeAlbums";
-                RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
-                dp.forward(request, response);
+                    forwardTo = "/ListeAlbums";
+                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                    dp.forward(request, response);
+                }
             } // Action lors d'un ajout de commentaire
             else if (action.equals("modifierAlbum")) {
                 String nomAlbum = request.getParameter("nomAlbum");
-                if (nomAlbum != null) {
+                if (nomAlbum != null && isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)) {
                     gestionnaireUtilisateurs.modifierAlbum(idAlbum, nomAlbum);
                 }
                 
             } //Partage de l'album
             else if (action.equals("partagerAlbum") || action.equals("supprimerPartage")) {
 
-                int idUtilisateurPartage;
-                Album a;
+                // Si l'utilisateur peut modifier l'album
+                if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)) {
+                    int idUtilisateurPartage;
+                    Album a;
 
-                try {
-                    idUtilisateurPartage = Integer.parseInt(request.getParameter("idUtilisateur"));
-                } catch (NumberFormatException e) {
-                    response.setStatus(500);
+                    try {
+                        idUtilisateurPartage = Integer.parseInt(request.getParameter("idUtilisateur"));
+                    } catch (NumberFormatException e) {
+                        response.setStatus(500);
+                        return;
+                    }
+                    switch (action) {
+                        case "partagerAlbum":
+                            if (!gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage)) {
+                                response.setStatus(500);
+                                return;
+                            }   break;
+                        case "supprimerPartage":
+                            if (!gestionnaireUtilisateurs.supprimerPartage(idAlbum, idUtilisateurPartage)) {
+                                response.setStatus(500);
+                                return;
+                            }   break;
+                    }
+
+                    a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+                    request.setAttribute("listeUtilisateursPartages", a.getUtilisateursPartages());
+
+                    forwardTo = "/listeUtilisateursPartages.jsp";
+                    RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                    dp.forward(request, response);
                     return;
                 }
-                switch (action) {
-                    case "partagerAlbum":
-                        if (!gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage)) {
-                            response.setStatus(500);
-                            return;
-                        }   break;
-                    case "supprimerPartage":
-                        if (!gestionnaireUtilisateurs.supprimerPartage(idAlbum, idUtilisateurPartage)) {
-                            response.setStatus(500);
-                            return;
-                        }   break;
-                }
-
-                a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
-                request.setAttribute("listeUtilisateursPartages", a.getUtilisateursPartages());
-
-                forwardTo = "/listeUtilisateursPartages.jsp";
-                RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
-                dp.forward(request, response);
-                return;
-
             }
         }
 
         // On recupère l'album à afficher mis à jour
-        Album albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
-
-        // On verifie que l'utilisateur a bien le droit d'afficher cet album
-        if (albumAAfficher.getTypePartage() == Album.ALBUM_PRIVE
-                && albumAAfficher.getUtilisateur().getId() != idUtilisateur
-                && !albumAAfficher.getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
-            albumAAfficher = null;
-            request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cet album !");
-        }
+        albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
         
         request.setAttribute("album", albumAAfficher);
 
@@ -202,8 +212,7 @@ public class AlbumServlet extends SuperServletVerification {
 
         // On récupere le contenu du fichier et on le sauvegarde sur le serveur
         try {
-            out = new FileOutputStream(new File(path + File.separator + System.currentTimeMillis()
-                    + fileName));
+            out = new FileOutputStream(new File(path + File.separator +  fileName));
             filecontent = filePart.getInputStream();
 
             int read = 0;
@@ -250,9 +259,10 @@ public class AlbumServlet extends SuperServletVerification {
      * @param idTransaction
      */
     private void removeFileTransaction(String nom, String idTransaction) {
+        System.out.println("File : " + getServletConfig().getServletContext().getRealPath("/") + "tmp" + File.separator + idTransaction + File.separator + nom);
         String cheminFichier = getServletConfig().getServletContext().getRealPath("/") + "tmp" + File.separator + idTransaction + File.separator + nom;
         File file = new File(cheminFichier);
-        file.delete();
+        System.out.println("DELETE : " + file.delete());
     }
 
     /**
@@ -370,6 +380,16 @@ public class AlbumServlet extends SuperServletVerification {
                 folderTransaction.delete();
             }
         }
+    }
+
+    /**
+     * Verification si l'utilisateur a les droits de modification de l'album (si il le possède)
+     * @param idUtilisateur
+     * @param idAlbum
+     * @return 
+     */
+    private boolean isUtilisateurAbleToModifyAlbum(int idUtilisateur, int idAlbum) {
+         return gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur).getAlbums().contains(gestionnaireUtilisateurs.getAlbumById(idAlbum));
     }
 
 }

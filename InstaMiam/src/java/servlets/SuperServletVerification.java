@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  */
 public abstract class SuperServletVerification extends HttpServlet {
     
-    protected boolean isAlreadyForwarded = false;
+    protected boolean isAlreadyForwarded;
     
     @EJB
     protected GestionnaireUtilisateurs gestionnaireUtilisateurs;
@@ -30,6 +30,7 @@ public abstract class SuperServletVerification extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        isAlreadyForwarded = false;
         
         // On récupere l'id de l'utilisateur connecté
         HttpSession session = request.getSession();
@@ -37,6 +38,8 @@ public abstract class SuperServletVerification extends HttpServlet {
         
         if (objIdUtilisateur == null) {
             dispatch404Error(request, response);
+            isAlreadyForwarded = true;
+            return;
         }
         
         int idUtilisateur = (int) (objIdUtilisateur);
@@ -45,7 +48,6 @@ public abstract class SuperServletVerification extends HttpServlet {
         request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
 
         request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
-        
     }
     
     protected void dispatch404Error(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

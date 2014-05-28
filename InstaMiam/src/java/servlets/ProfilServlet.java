@@ -41,6 +41,8 @@ public class ProfilServlet extends SuperServletVerification {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        super.processRequest(request, response);
+        
         if (isAlreadyForwarded)
             return;
         

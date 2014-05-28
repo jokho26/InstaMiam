@@ -62,11 +62,7 @@
                                     });
                                 }
                             });
-                            function removeFile(file) {
-                                $.ajax({
-                                    url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&nameFile=" + file.name
-                                });
-                            }
+                            
 
 
 
@@ -76,7 +72,13 @@
                 </c:forEach>
             </c:if>
 
-                        });
+});
+
+function removeFile(file) {
+    $.ajax({
+        url: "${pageContext.servletContext.contextPath}/Album?action=removeFile&idTransaction=${idTransaction}&idAlbum=${idAlbum}&nameFile=" + file.name
+    });
+}
 
 
         </script>
@@ -187,7 +189,7 @@
 <c:choose>
     <c:when test="${sessionScope.utilisateurConnecte == album.utilisateur.id}">
         <!-- formulaire d'upload -->
-        <form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}" 
+        <form method="POST" action="${pageContext.servletContext.contextPath}/Album?action=uploadFile&idTransaction=${idTransaction}&idAlbum=${idAlbum}" 
               enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
         </form>
 
