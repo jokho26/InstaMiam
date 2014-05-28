@@ -27,10 +27,7 @@ import modeles.Utilisateur;
 
 @MultipartConfig
 @WebServlet(name = "ProfilServlet", urlPatterns = {"/Profil"})
-public class ProfilServlet extends HttpServlet {
-
-    @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+public class ProfilServlet extends SuperServletVerification {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +38,12 @@ public class ProfilServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
+        if (isAlreadyForwarded)
+            return;
+        
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
 
@@ -73,10 +72,6 @@ public class ProfilServlet extends HttpServlet {
         Utilisateur u = gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()));
         request.setAttribute("profil", u);
 
-        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
-        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
-        
         String forwardTo = "monProfil.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
@@ -123,7 +118,7 @@ public class ProfilServlet extends HttpServlet {
             out = new FileOutputStream(new File(path + File.separator + fileName));
             filecontent = filePart.getInputStream();
 
-            int read = 0;
+            int read;
             final byte[] bytes = new byte[1024];
 
             while ((read = filecontent.read(bytes)) != -1) {
