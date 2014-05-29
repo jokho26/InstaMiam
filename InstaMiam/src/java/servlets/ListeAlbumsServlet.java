@@ -80,10 +80,17 @@ public class ListeAlbumsServlet extends SuperServletVerification {
                 dispatch404Error(request, response);
                 return;
             }
-                
-            List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getAlbumsVisibles(idUtilisateur, idUtilisateurCible);
             
-            request.setAttribute("listeAlbums", listeAlbumsVisibles);
+            if (idUtilisateur != idUtilisateurCible) {
+                List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getAlbumsVisibles(idUtilisateur, idUtilisateurCible);
+                request.setAttribute("listeAlbums", listeAlbumsVisibles);
+            }
+            else {
+                List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur);
+                request.setAttribute("listeAlbums", listeAlbumsVisibles);
+            }
+            
+            
             request.setAttribute("idUtilisateurAAfficher", idUtilisateurCible);
             
             // On ajoute la liste des utilisateurs
