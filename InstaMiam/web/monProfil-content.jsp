@@ -5,7 +5,7 @@
         <div class="top_div"></div>
         
         <div class="content_div">
-            <center><h1 class="ruge">Mon profil</h1></center>
+            <center><h1 class="ruge">{{tab_lang.profil.titre}}</h1></center>
             <br>
             <center>
                 <img src="${pageContext.servletContext.contextPath}/profil/${profil.imageProfil}" class="img-rounded img-responsive imageProfil">

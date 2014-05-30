@@ -28,7 +28,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">{{tab_lang.mes_albums.ajouter_nouvel_album}}</h4>
+                            <h2 class="modal-title ruge" id="myModalLabel">{{tab_lang.mes_albums.ajouter_nouvel_album}}</h2>
                         </div>
                         <div class="modal-body">
 
