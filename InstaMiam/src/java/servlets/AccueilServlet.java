@@ -51,7 +51,7 @@ public class AccueilServlet extends HttpServlet {
         
         request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(u.getId()).size());
         
-        String forwardTo = "/Album?idAlbum=2";
+        String forwardTo = "/ListeAlbums";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);

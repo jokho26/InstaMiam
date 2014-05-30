@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Album;
+import modeles.Notification;
 import modeles.Photo;
 
 /**
@@ -108,8 +109,10 @@ public class AlbumServlet extends SuperServletVerification {
 
                 if (idTransaction != null) {
                     // Si l'utilisateur peut modifier l'album
-                    if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum))
+                    if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)){
                         confirmerUploadPhotos(idAlbum, idTransaction.toString());
+                        gestionnaireUtilisateurs.notifierUtilisateursPartages(idAlbum, idUtilisateur, Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
+                    }
                 }
             } // Action lors d'un ajout de commentaire
             else if (action.equals("ajouterCommentaire")) {
@@ -150,7 +153,7 @@ public class AlbumServlet extends SuperServletVerification {
                     }
                     switch (action) {
                         case "partagerAlbum":
-                            if (!gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage)) {
+                            if (!gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage, idUtilisateur)) {
                                 response.setStatus(500);
                                 return;
                             }   break;

@@ -44,6 +44,7 @@ public class Notification implements Serializable {
     public final static int NOTIFICATION_PARTAGE_ALBUM = 1;
     public final static int NOTIFICATION_AJOUT_PHOTO_ALBUM = 2;
 
+
     public Notification() {
         
     }

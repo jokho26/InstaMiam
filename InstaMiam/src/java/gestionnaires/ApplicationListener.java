@@ -60,13 +60,13 @@ public class ApplicationListener implements ServletContextListener {
         gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), "Commentaire 3 !");
         
         // Test de partage d'album
-        gestionnaireUtilisateurs.partagerAlbum(prive.getId(), u.getId());
+        gestionnaireUtilisateurs.partagerAlbum(prive.getId(), u.getId(), u2.getId());
         
         // Test des notifications
-        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
+        /*gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
         gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_PARTAGE_ALBUM);
         gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
-        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_PARTAGE_ALBUM);
+        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_PARTAGE_ALBUM);*/
     
         System.out.println("Nombre de notifications : " +gestionnaireUtilisateurs.getListeNotificationNonLues(u.getId()).size());
     }

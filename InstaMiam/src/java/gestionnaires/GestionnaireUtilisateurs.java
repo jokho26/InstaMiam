@@ -247,7 +247,7 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
-    public boolean partagerAlbum(int idAlbum, int idUtilisateurPartage) {
+    public boolean partagerAlbum(int idAlbum, int idUtilisateurPartage, int idUtilisateurPartageur) {
         Utilisateur u = getUtilisateurById(idUtilisateurPartage);
         Album a = getAlbumById(idAlbum);
 
@@ -258,6 +258,7 @@ public class GestionnaireUtilisateurs {
         u.getAlbumsPartages().add(a);
         a.getUtilisateursPartages().add(u);
 
+        creerNotification(idUtilisateurPartage, idAlbum, idUtilisateurPartageur, Notification.NOTIFICATION_PARTAGE_ALBUM);
         em.flush();
 
         return true;
@@ -371,6 +372,18 @@ public class GestionnaireUtilisateurs {
         }
 
         em.flush();
+    }
+
+    public void notifierUtilisateursPartages(int idAlbum, int idUtilisateur, int typeNotif) {
+        Utilisateur u = getUtilisateurById(idUtilisateur);
+        Album a = getAlbumById(idAlbum);
+        
+        for(Utilisateur u2 : a.getUtilisateursPartages()){
+            creerNotification(u2.getId(), idAlbum, idUtilisateur, typeNotif);
+        }
+        
+        em.flush();
+
     }
 
 }

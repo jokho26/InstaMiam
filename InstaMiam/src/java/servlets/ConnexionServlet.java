@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
@@ -26,8 +25,7 @@ public class ConnexionServlet extends HttpServlet {
 
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
-    
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,46 +39,44 @@ public class ConnexionServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-         String action = request.getParameter("action");
-        
-         // On récupere la session
+        String action = request.getParameter("action");
+
+        // On récupere la session
         HttpSession session = request.getSession();
-         
-        String forwardTo="connexion.jsp";
-        
+
+        String forwardTo = "connexion.jsp";
+
         if (action != null) {
             if (action.equals("deconnexion")) {
                 session.setAttribute("utilisateurConnecte", null);
-                request.setAttribute("message", "Déconnexion réussie"); 
-            }
-            else if (action.equals("connexion")) {
+                request.setAttribute("message", "Déconnexion réussie");
+            } else if (action.equals("connexion")) {
                 String login = (String) request.getParameter("login");
                 String mdp = (String) request.getParameter("mdp");
-                
+
                 Utilisateur u = gestionnaireUtilisateurs.getUserByConnexion(login, mdp);
-                
-                if (u== null) {
+
+                if (u == null) {
                     request.setAttribute("messageErreur", "Login ou mot de passe incorrect. Try again.");
-                }
-                else {
+                } else {
                     session.setAttribute("utilisateurConnecte", u.getId());
-                    request.setAttribute("message", "Bienvenue chez vous " + login + " !"); 
-                    forwardTo="accueil.jsp";
+                    request.setAttribute("message", "Bienvenue chez vous " + login + " !");
+                    forwardTo = "/ListeAlbums";
                 }
             }
         }
-                
+
         // On ajoute la liste des utilisateurs
         if (session.getAttribute("utilisateurConnecte") != null) {
             int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
             request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
             request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
         }
-            
+
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
