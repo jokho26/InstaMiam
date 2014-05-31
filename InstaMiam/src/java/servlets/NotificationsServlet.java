@@ -5,30 +5,23 @@
  */
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
+import gestionnaires.Gestionnaire;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Notification;
-import modeles.Photo;
 
 /**
- *
- * @author Christian
+ * Servlet s'occupant d'afficher les notifications
  */
 @WebServlet(name = "NotificationsServlet", urlPatterns = {"/Notifications"})
 public class NotificationsServlet extends SuperServletVerification {
-
-    @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,6 +49,7 @@ public class NotificationsServlet extends SuperServletVerification {
 
         String action = request.getParameter("action");
         if (action != null) {
+            // Si on veut charger plus de notification
             if (action.equals("chargerPlus")) {
                 String offsetStr = request.getParameter("offset");
                 int offset;
@@ -66,7 +60,8 @@ public class NotificationsServlet extends SuperServletVerification {
                     return;
                 }
 
-                List<Notification> liste = gestionnaireUtilisateurs.getListeNotificationLues(idUtilisateur, 3, offset);
+                // On récupere les 3 prochaines notifications à partir de l'offset
+                List<Notification> liste = gestionnaire.getListeNotificationLues(idUtilisateur, 3, offset);
 
                 request.setAttribute("listeNotificationsLues", liste);
 
@@ -77,11 +72,11 @@ public class NotificationsServlet extends SuperServletVerification {
             }
         }
 
-        request.setAttribute("utilisateur", gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur));
-        request.setAttribute("listeNotificationsNonLues", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur));
-        request.setAttribute("listeNotificationsLues", gestionnaireUtilisateurs.getListeNotificationLues(idUtilisateur, 3, 0));
+        request.setAttribute("utilisateur", gestionnaire.getUtilisateurById(idUtilisateur));
+        request.setAttribute("listeNotificationsNonLues", gestionnaire.getListeNotificationNonLues(idUtilisateur));
+        request.setAttribute("listeNotificationsLues", gestionnaire.getListeNotificationLues(idUtilisateur, 3, 0));
 
-        gestionnaireUtilisateurs.setNotificationsLues(idUtilisateur);
+        gestionnaire.setNotificationsLues(idUtilisateur);
 
         String forwardTo = "notifications.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);

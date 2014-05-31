@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import java.io.File;
@@ -27,8 +22,7 @@ import modeles.Notification;
 import modeles.Photo;
 
 /**
- *
- * @author Siddi Steven
+ * Servlet s'occupant de l'affichage d'un album
  */
 @MultipartConfig
 @WebServlet(name = "AlbumServlet", urlPatterns = {"/Album"})
@@ -53,13 +47,14 @@ public class AlbumServlet extends SuperServletVerification {
             return;
         
         String forwardTo = "album.jsp";
+        
         // Si l'id de l'album n'est pas passé en paramètre, on redirige vers 404
         int idAlbum;
         if (request.getParameter("idAlbum") != null) {
             idAlbum = Integer.parseInt(request.getParameter("idAlbum"));
             
             // Si l'id est invalide, 404 error
-            if (gestionnaireUtilisateurs.getAlbumById(idAlbum) == null) {
+            if (gestionnaire.getAlbumById(idAlbum) == null) {
                 dispatch404Error(request, response);
                 return;   
             }
@@ -76,12 +71,12 @@ public class AlbumServlet extends SuperServletVerification {
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
 
          // On recupère l'album à afficher
-        Album albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+        Album albumAAfficher = gestionnaire.getAlbumById(idAlbum);
 
         // On verifie que l'utilisateur a bien le droit d'afficher cet album
         if (albumAAfficher.getTypePartage() == Album.ALBUM_PRIVE
                 && albumAAfficher.getUtilisateur().getId() != idUtilisateur
-                && !albumAAfficher.getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
+                && !albumAAfficher.getUtilisateursPartages().contains(gestionnaire.getUtilisateurById(idUtilisateur))) {
             request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cet album !");
             dispatch404Error(request, response);
             return;
@@ -111,20 +106,20 @@ public class AlbumServlet extends SuperServletVerification {
                     // Si l'utilisateur peut modifier l'album
                     if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)){
                         confirmerUploadPhotos(idAlbum, idTransaction.toString());
-                        gestionnaireUtilisateurs.notifierUtilisateursPartages(idAlbum, idUtilisateur, Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
+                        gestionnaire.notifierUtilisateursPartages(idAlbum, idUtilisateur, Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
                     }
                 }
             } // Action lors d'un ajout de commentaire
             else if (action.equals("ajouterCommentaire")) {
                 String text = request.getParameter("commentaire");
                 if (text != null) {
-                    gestionnaireUtilisateurs.ajouterCommentaireAlbum(idAlbum, idUtilisateur, text);
+                    gestionnaire.ajouterCommentaireAlbum(idAlbum, idUtilisateur, text);
                 }
             } // Action lors d'un ajout de commentaire
             else if (action.equals("supprimerAlbum")) {
                 // Si l'utilisateur peut modifier l'album
                 if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)) {
-                    gestionnaireUtilisateurs.supprimerAlbum(idAlbum);
+                    gestionnaire.supprimerAlbum(idAlbum);
 
                     forwardTo = "/ListeAlbums";
                     RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
@@ -134,7 +129,7 @@ public class AlbumServlet extends SuperServletVerification {
             else if (action.equals("modifierAlbum")) {
                 String nomAlbum = request.getParameter("nomAlbum");
                 if (nomAlbum != null && isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)) {
-                    gestionnaireUtilisateurs.modifierAlbum(idAlbum, nomAlbum);
+                    gestionnaire.modifierAlbum(idAlbum, nomAlbum);
                 }
                 
             } //Partage de l'album
@@ -153,18 +148,18 @@ public class AlbumServlet extends SuperServletVerification {
                     }
                     switch (action) {
                         case "partagerAlbum":
-                            if (!gestionnaireUtilisateurs.partagerAlbum(idAlbum, idUtilisateurPartage, idUtilisateur)) {
+                            if (!gestionnaire.partagerAlbum(idAlbum, idUtilisateurPartage, idUtilisateur)) {
                                 response.setStatus(500);
                                 return;
                             }   break;
                         case "supprimerPartage":
-                            if (!gestionnaireUtilisateurs.supprimerPartage(idAlbum, idUtilisateurPartage)) {
+                            if (!gestionnaire.supprimerPartage(idAlbum, idUtilisateurPartage)) {
                                 response.setStatus(500);
                                 return;
                             }   break;
                     }
 
-                    a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+                    a = gestionnaire.getAlbumById(idAlbum);
                     request.setAttribute("listeUtilisateursPartages", a.getUtilisateursPartages());
 
                     forwardTo = "/listeUtilisateursPartages.jsp";
@@ -176,7 +171,7 @@ public class AlbumServlet extends SuperServletVerification {
         }
 
         // On recupère l'album à afficher mis à jour
-        albumAAfficher = gestionnaireUtilisateurs.getAlbumById(idAlbum);
+        albumAAfficher = gestionnaire.getAlbumById(idAlbum);
         
         request.setAttribute("album", albumAAfficher);
 
@@ -223,10 +218,9 @@ public class AlbumServlet extends SuperServletVerification {
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            System.out.println(new File(path + File.separator + fileName).getAbsolutePath());
+            System.out.println("Nouveau fichier : " + new File(path + File.separator + fileName).getAbsolutePath());
 
         } catch (FileNotFoundException fne) {
-            // TODO
             System.out.println("Exception dans l'upload du fichier.\n" + fne.getMessage());
         } // On ferme les streams
         finally {
@@ -261,10 +255,9 @@ public class AlbumServlet extends SuperServletVerification {
      * @param idTransaction
      */
     private void removeFileTransaction(String nom, String idTransaction) {
-        System.out.println("File : " + getServletConfig().getServletContext().getRealPath("/") + "tmp" + File.separator + idTransaction + File.separator + nom);
         String cheminFichier = getServletConfig().getServletContext().getRealPath("/") + "tmp" + File.separator + idTransaction + File.separator + nom;
         File file = new File(cheminFichier);
-        System.out.println("DELETE : " + file.delete());
+        file.delete();
     }
 
     /**
@@ -285,8 +278,8 @@ public class AlbumServlet extends SuperServletVerification {
         }
         for (File image : listeImage) {
             // On crée la photo en base de données et on l'ajoute à l'album
-            Album a = gestionnaireUtilisateurs.getAlbumById(idAlbum);
-            Photo photo = gestionnaireUtilisateurs.creerPhoto(image.getName(), idAlbum);
+            Album a = gestionnaire.getAlbumById(idAlbum);
+            Photo photo = gestionnaire.creerPhoto(image.getName(), idAlbum);
 
             // On va déplacer les images dans le dossier de l'album
             String nouveauRepertoire = getServletConfig().getServletContext().getRealPath("/")
@@ -391,7 +384,7 @@ public class AlbumServlet extends SuperServletVerification {
      * @return 
      */
     private boolean isUtilisateurAbleToModifyAlbum(int idUtilisateur, int idAlbum) {
-         return gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur).getAlbums().contains(gestionnaireUtilisateurs.getAlbumById(idAlbum));
+         return gestionnaire.getUtilisateurById(idUtilisateur).getAlbums().contains(gestionnaire.getAlbumById(idAlbum));
     }
 
 }

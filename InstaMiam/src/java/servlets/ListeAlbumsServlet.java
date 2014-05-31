@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import java.io.IOException;
@@ -18,7 +13,7 @@ import modeles.Album;
 import modeles.Utilisateur;
 
 /**
- *
+ * Servlet s'occupant d'afficher la liste des albums d'un utilisateur
  */
 @WebServlet(name = "ListeAlbumsServlet", urlPatterns = {"/ListeAlbums"})
 @MultipartConfig
@@ -33,6 +28,7 @@ public class ListeAlbumsServlet extends SuperServletVerification {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -60,8 +56,8 @@ public class ListeAlbumsServlet extends SuperServletVerification {
                 else
                     type = Album.ALBUM_PRIVE;
                 
-                gestionnaireUtilisateurs.creerAlbum(nomAlbum, idUtilisateur, type);
-                request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
+                gestionnaire.creerAlbum(nomAlbum, idUtilisateur, type);
+                request.setAttribute("listeAlbums", gestionnaire.getListeAlbumsByIdUser(idUtilisateur));
             }
         }
         
@@ -75,21 +71,23 @@ public class ListeAlbumsServlet extends SuperServletVerification {
             
             int idUtilisateurCible = Integer.parseInt(strIdUtilisateurCible);
             
-            Utilisateur utilisateurAAfficher = gestionnaireUtilisateurs.getUtilisateurById(idUtilisateurCible);
+            Utilisateur utilisateurAAfficher = gestionnaire.getUtilisateurById(idUtilisateurCible);
             if (utilisateurAAfficher == null) {
                 dispatch404Error(request, response);
                 return;
             }
             
+            // Si on chercher la liste d'un utilisateur different de celui connecté
             if (idUtilisateur != idUtilisateurCible) {
-                List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getAlbumsVisibles(idUtilisateur, idUtilisateurCible);
+                // On va voir seulement les albums visibles pour l'utilisateur "demandant"
+                List<Album> listeAlbumsVisibles = gestionnaire.getAlbumsVisibles(idUtilisateur, idUtilisateurCible);
                 request.setAttribute("listeAlbums", listeAlbumsVisibles);
             }
             else {
-                List<Album> listeAlbumsVisibles = gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur);
+                // Sinon on affiche tous les albums
+                List<Album> listeAlbumsVisibles = gestionnaire.getListeAlbumsByIdUser(idUtilisateur);
                 request.setAttribute("listeAlbums", listeAlbumsVisibles);
             }
-            
             
             request.setAttribute("idUtilisateurAAfficher", idUtilisateurCible);
             
@@ -98,7 +96,7 @@ public class ListeAlbumsServlet extends SuperServletVerification {
         }
         // Sinon on affiche les albums de l'utilisateur connecté
         else {
-            request.setAttribute("listeAlbums", gestionnaireUtilisateurs.getListeAlbumsByIdUser(idUtilisateur));
+            request.setAttribute("listeAlbums", gestionnaire.getListeAlbumsByIdUser(idUtilisateur));
         }
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);

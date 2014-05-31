@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import java.io.File;
@@ -16,8 +11,7 @@ import javax.servlet.http.HttpSession;
 import modeles.Photo;
 
 /**
- *
- * @author Jokho
+ * Servlet en charge de l'affichage de la photo
  */
 @WebServlet(name = "PhotoServlet", urlPatterns = {"/Photo"})
 public class PhotoServlet extends SuperServletVerification {
@@ -35,10 +29,11 @@ public class PhotoServlet extends SuperServletVerification {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         super.processRequest(request, response);
-        
-        if (isAlreadyForwarded)
+
+        if (isAlreadyForwarded) {
             return;
-        
+        }
+
         // On récupere la session
         HttpSession session = request.getSession();
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
@@ -47,18 +42,18 @@ public class PhotoServlet extends SuperServletVerification {
 
         int idPhoto;
         Photo p;
+        // Si aucun ID n'est passé, on redirige vers un 404
         if (idPhotoObject != null) {
             idPhoto = Integer.parseInt(idPhotoObject.toString());
-            
-            p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
+
+            p = gestionnaire.getPhotoById(idPhoto);
             if (p == null) {
                 dispatch404Error(request, response);
                 return;
             }
-             
+
             request.setAttribute("idPhoto", idPhoto);
-        }
-        else {
+        } else {
             dispatch404Error(request, response);
             return;
         }
@@ -69,38 +64,38 @@ public class PhotoServlet extends SuperServletVerification {
                 // Recupération des paramètres du formulaire
                 String text = request.getParameter("commentaire");
                 if (text != null) {
-                    gestionnaireUtilisateurs.ajouterCommentairePhoto(idPhoto, idUtilisateur, text);
+                    gestionnaire.ajouterCommentairePhoto(idPhoto, idUtilisateur, text);
                 }
             } else if (action.equals("modifierPhoto")) {
                 if (request.getParameter("nomPhoto") != null && request.getParameter("description") != null) {
-                    gestionnaireUtilisateurs.modifierPhoto(idPhoto, request.getParameter("nomPhoto"), request.getParameter("description"));
+                    gestionnaire.modifierPhoto(idPhoto, request.getParameter("nomPhoto"), request.getParameter("description"));
                 }
             } else if (action.equals("supprimerPhoto")) {
                 String forwardTo = "/Album?idAlbum=" + p.getAlbum().getId();
 
                 deleteFilePhoto(p.getAlbum().getIdUnique(), p.getNomFichier());
-                gestionnaireUtilisateurs.supprimerPhoto(idPhoto);
+                gestionnaire.supprimerPhoto(idPhoto);
 
                 RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
                 dp.forward(request, response);
                 return;
             } else if (action.equals("definirCouverture")) {
-                gestionnaireUtilisateurs.setPhotoCouverture(p.getAlbum().getId(), p.getId());
+                gestionnaire.setPhotoCouverture(p.getAlbum().getId(), p.getId());
             }
         }
 
-        p = gestionnaireUtilisateurs.getPhotoById(idPhoto);
+        p = gestionnaire.getPhotoById(idPhoto);
 
         // On verifie que l'utilisateur a bien le droit d'afficher cette photo
         if (p != null) {
             if (p.getAlbum().getUtilisateur().getId() != idUtilisateur
-                    && !p.getAlbum().getUtilisateursPartages().contains(gestionnaireUtilisateurs.getUtilisateurById(idUtilisateur))) {
+                    && !p.getAlbum().getUtilisateursPartages().contains(gestionnaire.getUtilisateurById(idUtilisateur))) {
                 p = null;
                 request.setAttribute("messageErreur", "Vous n'avez pas les droits pour acceder à cette photo !");
             }
         }
-        
+
         request.setAttribute("photo", p);
         String forwardTo = "photo.jsp";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
@@ -147,9 +142,13 @@ public class PhotoServlet extends SuperServletVerification {
         return "Short description";
     }// </editor-fold>
 
+    /**
+     * Méthode pour supprimer la photogrpahie du disque
+     * @param idUniqueAlbum
+     * @param nomFichier 
+     */
     private void deleteFilePhoto(String idUniqueAlbum, String nomFichier) {
         String cheminFichier = getServletConfig().getServletContext().getRealPath("/") + "albums" + File.separator + idUniqueAlbum + File.separator + nomFichier;
-        System.out.println(cheminFichier);
         File file = new File(cheminFichier);
         file.delete();
     }

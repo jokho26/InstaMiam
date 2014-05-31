@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
+import gestionnaires.Gestionnaire;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -24,7 +19,7 @@ import modeles.Utilisateur;
 public class ConnexionServlet extends HttpServlet {
 
     @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    private Gestionnaire gestionnaire;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,7 +49,7 @@ public class ConnexionServlet extends HttpServlet {
                 String login = (String) request.getParameter("login");
                 String mdp = (String) request.getParameter("mdp");
 
-                Utilisateur u = gestionnaireUtilisateurs.getUserByConnexion(login, mdp);
+                Utilisateur u = gestionnaire.getUserByConnexion(login, mdp);
 
                 if (u == null) {
                     request.setAttribute("messageErreur", "Login ou mot de passe incorrect. Try again.");
@@ -69,8 +64,8 @@ public class ConnexionServlet extends HttpServlet {
         // On ajoute la liste des utilisateurs
         if (session.getAttribute("utilisateurConnecte") != null) {
             int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
-            request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
-            request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
+            request.setAttribute("listeUtilisateur", gestionnaire.getAllOtherUser(idUtilisateur));
+            request.setAttribute("listeNotificationsSize", gestionnaire.getListeNotificationNonLues(idUtilisateur).size());
         }
 
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);

@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
+import gestionnaires.Gestionnaire;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -24,7 +19,7 @@ import modeles.Utilisateur;
 public class AccueilServlet extends HttpServlet {
 
     @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    private Gestionnaire gestionnaire;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,15 +36,15 @@ public class AccueilServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // On se connecte directement comme l'utilisateur test
-        Utilisateur u = gestionnaireUtilisateurs.getUserByConnexion("test", "test");
+        Utilisateur u = gestionnaire.getUserByConnexion("test", "test");
         HttpSession session = request.getSession();
         session.setAttribute("utilisateurConnecte", u.getId());
 
         // On ajoute la liste des utilisateurs
         int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+        request.setAttribute("listeUtilisateur", gestionnaire.getAllOtherUser(idUtilisateur));
         
-        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(u.getId()).size());
+        request.setAttribute("listeNotificationsSize", gestionnaire.getListeNotificationNonLues(u.getId()).size());
         
         String forwardTo = "/ListeAlbums";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);

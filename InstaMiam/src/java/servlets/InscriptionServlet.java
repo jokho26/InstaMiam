@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
+import gestionnaires.Gestionnaire;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -25,7 +19,7 @@ import modeles.Utilisateur;
 public class InscriptionServlet extends HttpServlet {
 
     @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    private Gestionnaire gestionnaire;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,6 +39,7 @@ public class InscriptionServlet extends HttpServlet {
         String forwardTo = "inscription.jsp";
         
         if (action != null) {
+            // Création d'un utilisateur
             if (action.equals("creerUtilisateur")) {
                 String login = (String) request.getParameter("login");
                 String nom = (String) request.getParameter("nom");
@@ -60,7 +55,7 @@ public class InscriptionServlet extends HttpServlet {
                         request.setAttribute("messageErreur", "Information incomplètes !");
                     }
                     else { // Sinon, tous les champss sont remplis
-                        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, login, email, mdp);
+                        Utilisateur u = gestionnaire.creeUtilisateur(nom, prenom, login, email, mdp);
                         if (u == null) 
                             request.setAttribute("messageErreur", "Login déjà utilisé. Veuillez en choisir un autre.");
                         else  {
@@ -79,8 +74,8 @@ public class InscriptionServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if (session.getAttribute("utilisateurConnecte") != null) {
             int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
-            request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
-            request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
+            request.setAttribute("listeUtilisateur", gestionnaire.getAllOtherUser(idUtilisateur));
+            request.setAttribute("listeNotificationsSize", gestionnaire.getListeNotificationNonLues(idUtilisateur).size());
         }
         
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);

@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,18 +7,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Utilisateur;
 
+/**
+ * Servlet chargé de l'affichage du profil de l'utilisateur
+ */
 @MultipartConfig
 @WebServlet(name = "ProfilServlet", urlPatterns = {"/Profil"})
 public class ProfilServlet extends SuperServletVerification {
@@ -50,6 +45,7 @@ public class ProfilServlet extends SuperServletVerification {
         String action = request.getParameter("action");
 
         if (action != null) {
+            // Modification du profil
             if (action.equals("modifierProfil")) {
                 String nom = request.getParameter("nom");
                 String prenom = request.getParameter("prenom");
@@ -57,7 +53,7 @@ public class ProfilServlet extends SuperServletVerification {
                 String mdp = request.getParameter("mdp");
 
                 if (nom != null && prenom != null && email != null && mdp != null) {
-                    gestionnaireUtilisateurs.modifierUtilisateur(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()),
+                    gestionnaire.modifierUtilisateur(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()),
                             nom, prenom, email, mdp);
 
                     // Message de validation
@@ -65,13 +61,15 @@ public class ProfilServlet extends SuperServletVerification {
                 } else {
                     request.setAttribute("messageErreur", "{{tab_lang.profil.messageErreur}}");
                 }
-            } else if (action.equals("changerImage")) {
-                enregistrerPhotoProfil(request, gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString())));
+            } 
+            // Changement de l'image du profil
+            else if (action.equals("changerImage")) {
+                enregistrerPhotoProfil(request, gestionnaire.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString())));
             }
         }
 
         // On récupere l'utilisateur loggé
-        Utilisateur u = gestionnaireUtilisateurs.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()));
+        Utilisateur u = gestionnaire.getUtilisateurById(Integer.parseInt(session.getAttribute("utilisateurConnecte").toString()));
         request.setAttribute("profil", u);
 
         String forwardTo = "monProfil.jsp";
@@ -110,7 +108,7 @@ public class ProfilServlet extends SuperServletVerification {
 
         // On créée le nom du fichier final
         final String fileName = id + getExtentionFile(filePart);
-        gestionnaireUtilisateurs.setPhotoProfil(u.getId(), fileName);
+        gestionnaire.setPhotoProfil(u.getId(), fileName);
 
         OutputStream out = null;
         InputStream filecontent = null;

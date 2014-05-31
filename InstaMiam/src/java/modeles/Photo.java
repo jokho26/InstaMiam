@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modeles;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
- *
+ * Entité representant une photo de l'album
  */
 @Entity
 public class Photo implements Serializable {
@@ -30,17 +24,21 @@ public class Photo implements Serializable {
 
     private String nom;
 
+    // L'album dont la photo est la couverture (si elle l'est)
     @OneToOne
     @JoinColumn(name = "photoDeCouverture", referencedColumnName = "id")
     private Album albumCouvert;
 
+    // Le nom du fichier
     private String nomFichier;
-
+    
+    // La description de la photo
     private String description;
 
     @OneToMany(mappedBy = "photo")
     private List<Commentaire> commentaires;
 
+    // L'id unique et "compliqué", correspondant au nom de la photo sur disque
     private String idUnique;
 
     public Photo() {
@@ -100,7 +98,6 @@ public class Photo implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Photo)) {
             return false;
         }

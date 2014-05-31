@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gestionnaires;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,21 +13,30 @@ import modeles.Photo;
 import modeles.Utilisateur;
 
 /**
- * Classe GestionnaireUtilisateurs
- * </br></br>
- * Gestionnaire en charge des utilisateurs de la base de données.
+ * Classe Gestionnaire
+ </br></br>
+ * Gestionnaire en charge des données de la base de données.
  */
 @Stateless
-public class GestionnaireUtilisateurs {
+public class Gestionnaire {
 
     // Ici injection de code : on n'initialise pas. L'entity manager sera créé  
     // à partir du contenu de persistence.xml  
     @PersistenceContext(unitName = "InstaMiamPU")
     private EntityManager em;
 
+    /**
+     * Méthode pour créer un utilisateur
+     * @param nom Le nom
+     * @param prenom Le prénom
+     * @param login Le login
+     * @param email L'email
+     * @param motDePasse Le mot de passe
+     * @return L'utilisateur créé
+     */
     public Utilisateur creeUtilisateur(String nom, String prenom, String login, String email, String motDePasse) {
         // Si le login est déjà utilisé dans la base de données on ne créer pas le comptes
-        if (isLoginUsef(login)) {
+        if (isLoginUsed(login)) {
             return null;
         } else {
             Utilisateur u = new Utilisateur(nom, prenom, login, email, motDePasse);
@@ -43,35 +46,26 @@ public class GestionnaireUtilisateurs {
         }
     }
 
-    public boolean isLoginUsef(String login) {
+    /**
+     * Méthode permettant de savoir si un compte avec ce login existe déjà.
+     * 
+     * @param login Le login à tester
+     * @return Boolean indiquant si un compte avec ce login existe déjà
+     */
+    public boolean isLoginUsed(String login) {
         Query q = em.createQuery("select u from Utilisateur u where u.login=:param");
         q.setParameter("param", login);
 
-        if (q.getResultList().isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * TODO à virer ?
-     *
-     * @return
-     */
-    public Collection<Utilisateur> getAllUsers() {
-        // Exécution d'une requête équivalente à un select *  
-        Query q = em.createQuery("select u from Utilisateur u");
-        return q.getResultList();
+        return !q.getResultList().isEmpty();
     }
 
     /**
      * Méthode permettant de récuperer un utilisateur à partir de se
      * informations de connexion.
      *
-     * @param login
-     * @param password
-     * @return
+     * @param login Le login
+     * @param password Le mot de passe
+     * @return L'utilisateur
      */
     public Utilisateur getUserByConnexion(String login, String password) {
         Query q = em.createQuery("select u from Utilisateur u where u.login=:param");
@@ -90,6 +84,14 @@ public class GestionnaireUtilisateurs {
         }
     }
 
+    /**
+     * Méthode de création d'album
+     * 
+     * @param nom
+     * @param idUser
+     * @param typePartage
+     * @return 
+     */
     public Album creerAlbum(String nom, int idUser, int typePartage) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
 
@@ -102,10 +104,21 @@ public class GestionnaireUtilisateurs {
         return a;
     }
 
+    /**
+     * Méthode pour récuperer un utilisateur par son id
+     * @param id
+     * @return 
+     */
     public Utilisateur getUtilisateurById(int id) {
         return em.find(Utilisateur.class, id);
     }
 
+    /**
+     * Méthode pour créer une Photo
+     * @param nom
+     * @param idAlbum
+     * @return 
+     */
     public Photo creerPhoto(String nom, int idAlbum) {
         Album a = em.find(Album.class, idAlbum);
         Photo p = new Photo(nom);
@@ -119,6 +132,12 @@ public class GestionnaireUtilisateurs {
         return p;
     }
 
+    /**
+     * Méthode pour ajouter un commentaire à une photo
+     * @param idPhoto
+     * @param idAuteur
+     * @param text 
+     */
     public void ajouterCommentairePhoto(int idPhoto, int idAuteur, String text) {
         Commentaire c = new Commentaire(text);
         em.persist(c);
@@ -130,6 +149,12 @@ public class GestionnaireUtilisateurs {
         c.setPhoto(p);
     }
 
+    /**
+     * Méthode pour ajouter un commentaire à un album
+     * @param idAlbum
+     * @param idAuteur
+     * @param text 
+     */
     public void ajouterCommentaireAlbum(int idAlbum, int idAuteur, String text) {
         Commentaire c = new Commentaire(text);
 
@@ -142,29 +167,31 @@ public class GestionnaireUtilisateurs {
         c.setAuteur(em.find(Utilisateur.class, idAuteur));
     }
 
+    /**
+     * Méthode pour récuperer la liste des albums d'un utilisateur à partir de son id
+     * @param idUser
+     * @return 
+     */
     public List<Album> getListeAlbumsByIdUser(int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
         return u.getAlbums();
-        /*
-         Utilisateur u = em.find(Utilisateur.class, idUser);
-        
-         Query q = em.createQuery("select a from Album a where a.utilisateur=:param");
-         q.setParameter("param", u);
-       
-         if (q.getResultList().isEmpty()) {
-         return null;
-         }
-         else {
-         return q.getResultList();
-         }*/
+      
     }
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
+   
+    /**
+     * Méthode pour récuperer une photo par son id
+     * @param idPhoto
+     * @return 
+     */
     public Photo getPhotoById(int idPhoto) {
         return em.find(Photo.class, idPhoto);
     }
 
+    /**
+     * Méthode pour récuperer la liste de tous les utilisateurs moins celui passé en paramètre
+     * @param idUtilisateur
+     * @return 
+     */
     public List<Utilisateur> getAllOtherUser(int idUtilisateur) {
         Query q = em.createQuery("select u from Utilisateur u where u.id!=:param");
         q.setParameter("param", idUtilisateur);
@@ -172,10 +199,21 @@ public class GestionnaireUtilisateurs {
         return q.getResultList();
     }
 
+    /**
+     * Méthode pour récuperer un album par son id
+     * @param idAlbum
+     * @return 
+     */
     public Album getAlbumById(int idAlbum) {
         return em.find(Album.class, idAlbum);
     }
 
+    /**
+     * Méthode pour modifier les informations d'une photo
+     * @param idPhoto
+     * @param nom
+     * @param description 
+     */
     public void modifierPhoto(int idPhoto, String nom, String description) {
         Photo p = getPhotoById(idPhoto);
         p.setNom(nom);
@@ -183,6 +221,10 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    /**
+     * Méthode pour supprimer une photo
+     * @param idPhoto 
+     */
     public void supprimerPhoto(int idPhoto) {
         Photo p = getPhotoById(idPhoto);
 
@@ -204,6 +246,10 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    /**
+     * Méthode pour suppromer un album
+     * @param idAlbum 
+     */
     public void supprimerAlbum(int idAlbum) {
         Album a = getAlbumById(idAlbum);
 
@@ -229,6 +275,11 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    /**
+     * Méthode pour modifier un album
+     * @param idAlbum
+     * @param nomAlbum 
+     */
     public void modifierAlbum(int idAlbum, String nomAlbum) {
         Album a = getAlbumById(idAlbum);
 
@@ -236,6 +287,14 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    /**
+     * Méthode pour modifier les informations d'un utilisateur
+     * @param idUtilisateur
+     * @param nom
+     * @param prenom
+     * @param email
+     * @param mdp 
+     */
     public void modifierUtilisateur(int idUtilisateur, String nom, String prenom, String email, String mdp) {
         Utilisateur u = getUtilisateurById(idUtilisateur);
 
@@ -247,6 +306,13 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    /**
+     * Méthode pour partager un album
+     * @param idAlbum
+     * @param idUtilisateurPartage
+     * @param idUtilisateurPartageur
+     * @return 
+     */
     public boolean partagerAlbum(int idAlbum, int idUtilisateurPartage, int idUtilisateurPartageur) {
         Utilisateur u = getUtilisateurById(idUtilisateurPartage);
         Album a = getAlbumById(idAlbum);
@@ -264,12 +330,23 @@ public class GestionnaireUtilisateurs {
         return true;
     }
 
-    public void setPhotoProfil(int id, String fileName) {
-        Utilisateur u = getUtilisateurById(id);
+    /**
+     * Méthode pour modifier la photo de profil d'un utilisateur
+     * @param idUtilisateur
+     * @param fileName 
+     */
+    public void setPhotoProfil(int idUtilisateur, String fileName) {
+        Utilisateur u = getUtilisateurById(idUtilisateur);
         u.setImageProfil(fileName);
         em.flush();
     }
 
+    /**
+     * Méthode pour supprimer le partage d'un album
+     * @param idAlbum
+     * @param idUtilisateurPartage
+     * @return 
+     */
     public boolean supprimerPartage(int idAlbum, int idUtilisateurPartage) {
         Utilisateur u = getUtilisateurById(idUtilisateurPartage);
         Album a = getAlbumById(idAlbum);
@@ -286,6 +363,12 @@ public class GestionnaireUtilisateurs {
         return true;
     }
 
+    /**
+     * Méthode pour récuperer les albums visibles d'un utilisateur qu'un autre essaye de consulter
+     * @param idUtilisateurSource
+     * @param idUtilisateurCible
+     * @return 
+     */
     public List<Album> getAlbumsVisibles(int idUtilisateurSource, int idUtilisateurCible) {
         List<Album> listeAlbumsVisibles = new ArrayList();
 
@@ -302,6 +385,11 @@ public class GestionnaireUtilisateurs {
         return listeAlbumsVisibles;
     }
 
+    /**
+     * Méthode pour modifier la photo de couverture d'un album
+     * @param idAlbum
+     * @param idPhoto 
+     */
     public void setPhotoCouverture(int idAlbum, int idPhoto) {
         Album a = getAlbumById(idAlbum);
         Photo p = getPhotoById(idPhoto);
@@ -311,6 +399,14 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    /**
+     * Méthode pour créer une notification
+     * @param idUtilisateurNotifie
+     * @param idAlbumCible
+     * @param idUtilisateurNotifieur
+     * @param typeNotification
+     * @return 
+     */
     public Notification creerNotification(int idUtilisateurNotifie, int idAlbumCible, int idUtilisateurNotifieur, int typeNotification) {
         Utilisateur utilisateurNotifie = getUtilisateurById(idUtilisateurNotifie);
         Utilisateur utilisateurNotifieur = getUtilisateurById(idUtilisateurNotifieur);
@@ -323,6 +419,11 @@ public class GestionnaireUtilisateurs {
         return n;
     }
 
+    /**
+     * Méthode pour récuperer les notification non lues d'un utilisateur
+     * @param idUser
+     * @return 
+     */
     public List<Notification> getListeNotificationNonLues(int idUser) {
         Utilisateur u = em.find(Utilisateur.class, idUser);
 
@@ -331,13 +432,20 @@ public class GestionnaireUtilisateurs {
         q.setParameter("false", false);
 
         if (q.getResultList().isEmpty()) {
-            return new ArrayList<Notification>();
+            return new ArrayList<>();
         } else {
             return q.getResultList();
         }
 
     }
 
+    /**
+     * Méthode pour récuperer les notifications lues d'un utilisateur
+     * @param idUtilisateur
+     * @param nb
+     * @param offset
+     * @return 
+     */
     public List<Notification> getListeNotificationLues(int idUtilisateur, int nb, int offset) {
         Utilisateur u = em.find(Utilisateur.class, idUtilisateur);
 
@@ -346,7 +454,7 @@ public class GestionnaireUtilisateurs {
         q.setParameter("false", true);
 
         if (q.getResultList().isEmpty() || offset >= q.getResultList().size()) {
-            return new ArrayList<Notification>();
+            return new ArrayList<>();
         } else {
             if (offset + nb >= q.getResultList().size()) {
                 return q.getResultList().subList(offset, q.getResultList().size());
@@ -356,6 +464,10 @@ public class GestionnaireUtilisateurs {
         }
     }
 
+    /**
+     * Méthode pour indiquer que les notifications non lues sont lues
+     * @param idUtilisateur 
+     */
     public void setNotificationsLues(int idUtilisateur) {
         Utilisateur u = em.find(Utilisateur.class, idUtilisateur);
 
@@ -374,6 +486,12 @@ public class GestionnaireUtilisateurs {
         em.flush();
     }
 
+    /**
+     * Méthode pour notifier un utilisateur d'un partage
+     * @param idAlbum
+     * @param idUtilisateur
+     * @param typeNotif 
+     */
     public void notifierUtilisateursPartages(int idAlbum, int idUtilisateur, int typeNotif) {
         Utilisateur u = getUtilisateurById(idUtilisateur);
         Album a = getAlbumById(idAlbum);
@@ -383,7 +501,6 @@ public class GestionnaireUtilisateurs {
         }
         
         em.flush();
-
     }
 
 }

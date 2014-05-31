@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package servlets;
 
-import gestionnaires.GestionnaireUtilisateurs;
+import gestionnaires.Gestionnaire;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -17,15 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author Siddi Steven
+ * Servlet "mère" des autres servlet.
+ * Factorisation du gestionnaire, de l'erreur 404 et de la verification de la connexion.
  */
 public abstract class SuperServletVerification extends HttpServlet {
     
     protected boolean isAlreadyForwarded;
     
     @EJB
-    protected GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    protected Gestionnaire gestionnaire;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,9 +39,9 @@ public abstract class SuperServletVerification extends HttpServlet {
         int idUtilisateur = (int) (objIdUtilisateur);
         
          // On ajoute la liste des utilisateurs
-        request.setAttribute("listeUtilisateur", gestionnaireUtilisateurs.getAllOtherUser(idUtilisateur));
+        request.setAttribute("listeUtilisateur", gestionnaire.getAllOtherUser(idUtilisateur));
 
-        request.setAttribute("listeNotificationsSize", gestionnaireUtilisateurs.getListeNotificationNonLues(idUtilisateur).size());
+        request.setAttribute("listeNotificationsSize", gestionnaire.getListeNotificationNonLues(idUtilisateur).size());
     }
     
     protected void dispatch404Error(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

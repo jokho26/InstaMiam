@@ -1,27 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gestionnaires;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import modeles.Album;
-import modeles.Notification;
 import modeles.Utilisateur;
 
 /**
- * le listener de l'application web InstaMiam.
- *
- * @author Jokho
+ * Le listener de l'application web InstaMiam.
+ * Sert pour l'injection de données au déploiement.
  */
 public class ApplicationListener implements ServletContextListener {
 
      @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    private Gestionnaire gestionnaireUtilisateurs;
     
     
     @Override

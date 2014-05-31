@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modeles;
 
 import java.io.Serializable;
@@ -19,8 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
- *
- * @author Siddi Steven
+ * Entité representant un album.
  */
 @Entity
 public class Album implements Serializable {
@@ -32,26 +26,33 @@ public class Album implements Serializable {
 
     private String nomAlbum;
 
+    // La liste des photos de l'album
     @OneToMany(mappedBy = "album")
     private List<Photo> photos;
 
+    // La liste des utilisateur qui sont en partage sur l'album
     @ManyToMany
     @JoinColumn(name = "utilisateur", referencedColumnName = "albumsPartages")
     private List<Utilisateur> utilisateursPartages;
 
+    // La liste des commentaires de l'album
     @OneToMany(mappedBy = "album")
     private List<Commentaire> commentaires;
 
+    // L'utilisateur créateur de l'album
     @ManyToOne
     @JoinColumn(name = "utilisateur", referencedColumnName = "id")
     private Utilisateur utilisateur;
 
+    // La photo de couverture de l'album
     @OneToOne
     @JoinColumn(name = "albumCouvert", referencedColumnName = "id")
     private Photo photoDeCouverture;
 
+    // L'id unique et "compliqué" de l'album, correspondant au nom du repertoire
     private String idUnique;
 
+    // Le type de l'album (privé ou public)
     private int typePartage;
 
     public final static int ALBUM_PUBLIC = 1;
@@ -99,7 +100,6 @@ public class Album implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Album)) {
             return false;
         }

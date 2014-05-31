@@ -7,13 +7,9 @@
 
         <meta charset="utf-8">
 
-
         <title>${param.title}</title>
 
-        <!-- TODO favincon -->
-        <link rel="shortcut icon" href="ressources/Cupcakery/css/images/favicon.ico">
-
-        <!-- JS et css liés au theme Cupcakery -->
+        <!-- Font marrante -->
         <link href='http://fonts.googleapis.com/css?family=Ruge+Boogie' rel='stylesheet' type='text/css'>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">

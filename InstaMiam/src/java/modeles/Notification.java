@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modeles;
 
 import java.io.Serializable;
@@ -15,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
- * Une notification levée lors d'un partage d'album ou d'un ajout de photo dans un album
+ * Une notification levée lors d'une action pour prévenir un utilisateur
  */
 @Entity
 public class Notification implements Serializable {
@@ -26,6 +20,7 @@ public class Notification implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     
+    // L'utilisateur notifié
     @ManyToOne
     private Utilisateur utilisateurNotifie;
     
@@ -45,9 +40,7 @@ public class Notification implements Serializable {
     public final static int NOTIFICATION_AJOUT_PHOTO_ALBUM = 2;
 
 
-    public Notification() {
-        
-    }
+    public Notification() {}
     
     public Notification(Utilisateur utilisateurNotifie, Album albumCible, Utilisateur utilisateurNotifieur, int typeNotification ) {
         this.utilisateurNotifie=utilisateurNotifie;
