@@ -39,7 +39,10 @@ app.controller('InstaMiamCtrl', function($scope) {
             nomAlbum: "Name of the album",
             albumPrive: "Private album",
             albumPublique: "Public album",
-            albumsDe: "Albums of"
+            albumsDe: "Albums of",
+            titrePartage: "Albums shared with you",
+            de: "user :"
+
         },
         album: {
             posterCommentaire: "Your comment ...",
@@ -123,7 +126,10 @@ app.controller('InstaMiamCtrl', function($scope) {
             nomAlbum: "Nom de l'album",
             albumPrive: "Album privé",
             albumPublique: "Album publique",
-            albumsDe: "Albums de"
+            albumsDe: "Albums de",
+            titrePartage: "Les albums partagés avec vous",
+            de: "utilisateur :"
+
         },
         album: {
             posterCommentaire: "Votre commentaire ...",
@@ -188,10 +194,10 @@ app.controller('InstaMiamCtrl', function($scope) {
         document.cookie = "instaLangue=en";
 
     }
-    
-    if(getCookie("instaLangue") === "fr" || getCookie("instaLangue") === "")
+
+    if (getCookie("instaLangue") === "fr" || getCookie("instaLangue") === "")
         $scope.tab_lang = $scope.tab_fr;
-    else if(getCookie("instaLangue") === "en")
+    else if (getCookie("instaLangue") === "en")
         $scope.tab_lang = $scope.tab_en;
 
     $(".imageMosaique").each(function(index) {

@@ -101,8 +101,44 @@
         </c:forEach> 
         <c:if test="${count != 0}"></div></c:if>
 
-</div>
+    </div>
 
-</div>
+<c:if test="${!empty requestScope['listePartage']}">
+    <hr>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <center><h1 class="ruge MOAR">{{tab_lang.mes_albums.titrePartage}}</h1></center> 
+        </div>
+    </div>
+    <br><br><br>
+    <c:set var="count2" value="0"/>
+    <div id="zoneGallerie">
+        <c:forEach var="a" items="${requestScope['listePartage']}">
+            <c:choose>
+                <c:when test="${count2%4 == 0}">
+                    <c:if test="${count2 != 0}">
+                    </div>
+                </c:if>
+                <div class="row">
+                </c:when>
+            </c:choose>
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <a href="${pageContext.servletContext.contextPath}/Album?idAlbum=${a.id}">
+                    <c:choose>
+                        <c:when test="${!empty a.photoDeCouverture}">
+                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/albums/${a.idUnique}/${a.photoDeCouverture.nomFichier}" rel="popover" data-html="true" data-placement="top" data-content="{{tab_lang.mes_albums.de}} ${a.utilisateur.nom} ${a.utilisateur.prenom}<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}<c:if test="${a.commentaires.size() != 1}">s</c:if></h3>" data-trigger="hover" data-original-title="<h2 class='ruge'>${a.nomAlbum}</h2>"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img class="img-responsive imageMosaique" src="${pageContext.servletContext.contextPath}/profil/default.jpg" rel="popover" data-html="true" data-placement="top" data-content="{{tab_lang.mes_albums.de}} ${a.utilisateur.nom} ${a.utilisateur.prenom}<h3 class='ruge'>${a.commentaires.size()} {{tab_lang.mes_albums.commentaires}}<c:if test="${a.commentaires.size() != 1}">s</c:if></h3>" data-trigger="hover" data-original-title="<h2 class='ruge'>${a.nomAlbum}</h2>"/>
+                        </c:otherwise>
+                    </c:choose>
+                </a>
+            </div>
+
+            <c:set var="count2" value="${count2+1}"/>  
+        </c:forEach> 
+        <c:if test="${count2 != 0}"></div></c:if>
+</div></c:if></div>
 
 <div class="bottom_div"></div>
