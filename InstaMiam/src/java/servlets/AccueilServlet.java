@@ -16,7 +16,7 @@ import modeles.Utilisateur;
  * Servlet de l'accueil de l'application InstaMiam
  */
 @WebServlet(name = "AccueilServlet", urlPatterns = {""})
-public class AccueilServlet extends HttpServlet {
+public class AccueilServlet extends SuperServletVerification {
 
     @EJB
     private Gestionnaire gestionnaire;
@@ -33,19 +33,13 @@ public class AccueilServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        super.processRequest(request, response);
+        if (isAlreadyForwarded) {
+            return;
+        }
+
         response.setContentType("text/html;charset=UTF-8");
 
-        // On se connecte directement comme l'utilisateur test
-        Utilisateur u = gestionnaire.getUserByConnexion("test", "test");
-        HttpSession session = request.getSession();
-        session.setAttribute("utilisateurConnecte", u.getId());
-
-        // On ajoute la liste des utilisateurs
-        int idUtilisateur = (int) (session.getAttribute("utilisateurConnecte"));
-        request.setAttribute("listeUtilisateur", gestionnaire.getAllOtherUser(idUtilisateur));
-        
-        request.setAttribute("listeNotificationsSize", gestionnaire.getListeNotificationNonLues(u.getId()).size());
-        
         String forwardTo = "/ListeAlbums";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
