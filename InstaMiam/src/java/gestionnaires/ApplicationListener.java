@@ -8,7 +8,7 @@ import modeles.Utilisateur;
 
 /**
  * Le listener de l'application web InstaMiam.
- * Sert pour l'injection de données au déploiement.
+ * Sert pour l'injection de données au déploiement de l'application.
  */
 public class ApplicationListener implements ServletContextListener {
 
@@ -18,50 +18,36 @@ public class ApplicationListener implements ServletContextListener {
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur("Jean", "Bon", "test", "email@email.com", "test");
-        Album a = gestionnaireUtilisateurs.creerAlbum("Album 1", u.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album 2", u.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album 3", u.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album 4", u.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album 5", u.getId(), Album.ALBUM_PRIVE);
-        gestionnaireUtilisateurs.creerAlbum("Album 6", u.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album 7", u.getId(), Album.ALBUM_PRIVE);
-        gestionnaireUtilisateurs.creerAlbum("Album 8", u.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album 9", u.getId(), Album.ALBUM_PRIVE);
-        gestionnaireUtilisateurs.creerAlbum("Album 10", u.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album 11", u.getId(), Album.ALBUM_PRIVE);
-        
-      
-        
-        gestionnaireUtilisateurs.creerPhoto("Photo1.png", a.getId());
-        gestionnaireUtilisateurs.creerPhoto( "Photo2.png", a.getId());
-        gestionnaireUtilisateurs.creerPhoto("Photo3.png", a.getId());
-        
-        
-        
-        gestionnaireUtilisateurs.creeUtilisateur("Anne", "Orak", "Anne", "Anne@gmail.com", "Anne");
-        gestionnaireUtilisateurs.creeUtilisateur("John", "Doeuf", "John", "John@gmail.com", "John");
+        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur("Jean", "Bon", "test", "jeanB@email.com", "test");
         Utilisateur u2 = gestionnaireUtilisateurs.creeUtilisateur("Serge", "LeLama", "LeLama", "LeLama@gmail.com", "LeLama");
-        Album prive = gestionnaireUtilisateurs.creerAlbum("Album Prive test", u2.getId(), Album.ALBUM_PRIVE);
-        gestionnaireUtilisateurs.creerAlbum("Album Public 1", u2.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerAlbum("Album Public 2", u2.getId(), Album.ALBUM_PUBLIC);
-        gestionnaireUtilisateurs.creerPhoto("Photoprive1.png", prive.getId());
+        Utilisateur u3 = gestionnaireUtilisateurs.creeUtilisateur("Anne", "Orak", "Anne", "Anne@gmail.com", "Anne");
+        gestionnaireUtilisateurs.creeUtilisateur("John", "Doeuf", "John", "John@gmail.com", "John");
         
-        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), "Commentaire 1 !");
-        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u.getId(), "Commentaire 2 !");
-        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), "Commentaire 3 !");
+        // Album de Jean Bon
+        Album a = gestionnaireUtilisateurs.creerAlbum("Mon album publique", u.getId(), Album.ALBUM_PUBLIC);
+        gestionnaireUtilisateurs.creerAlbum("Mon album privé", u.getId(), Album.ALBUM_PRIVE);
+        
+        // Album de Serge LeLama
+        Album prive = gestionnaireUtilisateurs.creerAlbum("Album Super Secret de Serge", u2.getId(), Album.ALBUM_PRIVE);
+        gestionnaireUtilisateurs.creerAlbum("Album Public de Serge", u2.getId(), Album.ALBUM_PUBLIC);
+        
+        // Album de Anne
+        Album a2 = gestionnaireUtilisateurs.creerAlbum("Album super secret de Anne", u.getId(), Album.ALBUM_PRIVE);
+        Album a3 =gestionnaireUtilisateurs.creerAlbum("Nouvel Album super secret de Anne", u.getId(), Album.ALBUM_PRIVE);
         
         
-        // Test de partage d'album
+        // Partage des albums vers Jean
+        
+        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), "Pourquoi ton album est vide ?");
+        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u.getId(), "Pour faire parler les curieux !");
+        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), ":\'(");
+        
+        // Partage de l'album privé de Serge à Jean
         gestionnaireUtilisateurs.partagerAlbum(prive.getId(), u.getId(), u2.getId());
         
-        // Test des notifications
-        /*gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
-        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_PARTAGE_ALBUM);
-        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_AJOUT_PHOTO_ALBUM);
-        gestionnaireUtilisateurs.creerNotification(u.getId(), prive.getId(), u2.getId(), Notification.NOTIFICATION_PARTAGE_ALBUM);*/
-    
-        System.out.println("Nombre de notifications : " +gestionnaireUtilisateurs.getListeNotificationNonLues(u.getId()).size());
+        // Partage des albums de Anne
+        gestionnaireUtilisateurs.partagerAlbum(a2.getId(), u.getId(), u3.getId());
+        gestionnaireUtilisateurs.partagerAlbum(a3.getId(), u.getId(), u3.getId());
     }
 
     @Override
