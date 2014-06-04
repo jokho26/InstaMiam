@@ -25,6 +25,12 @@
         $(".titrePhotoAjout").each(function(index) {
             $(this).html($(".titrePhotoAjoutSource").text());
         });
+        $(".titreCommentaireAlbum").each(function(index) {
+            $(this).html($(".titrePhotoAjoutSource").text());
+        });
+        $(".titreCommentairePhoto").each(function(index) {
+            $(this).html($(".titrePhotoAjoutSource").text());
+        });
     }
 
 </script> 
@@ -65,6 +71,12 @@
                                                     <c:when test="${c.typeNotification == 2}">
                                                         {{tab_lang.notifications.photoAjoute}}
                                                     </c:when>
+                                                    <c:when test="${c.typeNotification == 3}">
+                                                        {{tab_lang.notifications.commentaireAlbum}}
+                                                    </c:when>
+                                                    <c:when test="${c.typeNotification == 4}">
+                                                        {{tab_lang.notifications.commentairePhoto}}
+                                                    </c:when>
 
                                                 </c:choose>
                                             </div>
@@ -103,6 +115,12 @@
                                                     <c:when test="${c.typeNotification == 2}">
                                                         {{tab_lang.notifications.photoAjoute}}
                                                     </c:when>
+                                                    <c:when test="${c.typeNotification == 3}">
+                                                        {{tab_lang.notifications.commentaireAlbum}}
+                                                    </c:when>
+                                                    <c:when test="${c.typeNotification == 4}">
+                                                        {{tab_lang.notifications.commentairePhoto}}
+                                                    </c:when>
 
                                                 </c:choose>
                                             </div>
@@ -139,4 +157,5 @@
 
 <div class="titrePartageAlbumSource" style="display: none;">{{tab_lang.notifications.albumPartage}}</div>
 <div class="titrePhotoAjoutSource" style="display: none;">{{tab_lang.notifications.photoAjoute}}</div>
-
+<div class="titreCommentaireAlbum" style="display: none;">{{tab_lang.notifications.commentaireAlbum}}</div>
+<div class="titreCommentairePhoto" style="display: none;">{{tab_lang.notifications.commentairePhoto}}</div>

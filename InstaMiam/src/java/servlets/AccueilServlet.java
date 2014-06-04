@@ -1,8 +1,6 @@
 package servlets;
 
-import gestionnaires.Gestionnaire;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,16 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modeles.Utilisateur;
 
 /**
  * Servlet de l'accueil de l'application InstaMiam
  */
 @WebServlet(name = "AccueilServlet", urlPatterns = {""})
-public class AccueilServlet extends SuperServletVerification {
+public class AccueilServlet  extends HttpServlet {
 
-    @EJB
-    private Gestionnaire gestionnaire;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +28,18 @@ public class AccueilServlet extends SuperServletVerification {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        super.processRequest(request, response);
-        if (isAlreadyForwarded) {
-            return;
-        }
-
         response.setContentType("text/html;charset=UTF-8");
-
+        
+        // On récupere l'id de l'utilisateur connecté
+        HttpSession session = request.getSession();
+        Object objIdUtilisateur = session.getAttribute("utilisateurConnecte");
+        
         String forwardTo = "/ListeAlbums";
+        
+        if (objIdUtilisateur == null) {
+            forwardTo = "/Connexion";
+        }
+        
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
 
         dp.forward(request, response);
