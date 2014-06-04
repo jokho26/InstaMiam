@@ -220,7 +220,7 @@
                                             <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive " alt="" />
                                         </a>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-10">
                                         <div class="comment-text">
                                             ${c.text}
                                         </div>
