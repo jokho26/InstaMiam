@@ -24,7 +24,7 @@ public class ApplicationListener implements ServletContextListener {
         gestionnaireUtilisateurs.creeUtilisateur("John", "Doeuf", "John", "John@gmail.com", "John");
         
         // Album de Jean Bon
-        Album a = gestionnaireUtilisateurs.creerAlbum("Mon album publique", u.getId(), Album.ALBUM_PUBLIC);
+        Album a = gestionnaireUtilisateurs.creerAlbum("Mon album public", u.getId(), Album.ALBUM_PUBLIC);
         gestionnaireUtilisateurs.creerAlbum("Mon album privé", u.getId(), Album.ALBUM_PRIVE);
         
         // Album de Serge LeLama
