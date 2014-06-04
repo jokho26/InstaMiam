@@ -43,8 +43,11 @@ public class ConnexionServlet extends HttpServlet {
 
         if (action != null) {
             if (action.equals("deconnexion")) {
-                session.setAttribute("utilisateurConnecte", null);
+                session.invalidate();
                 request.setAttribute("message", "Déconnexion réussie");
+                RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                dp.forward(request, response);
+                return;
             } else if (action.equals("connexion")) {
                 String login = (String) request.getParameter("login");
                 String mdp = (String) request.getParameter("mdp");
