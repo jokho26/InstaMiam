@@ -82,7 +82,9 @@ app.controller('InstaMiamCtrl', function($scope) {
             albumPartage: "This user shared an album with you !",
             photoAjoute: "This user added a photo to an album he shared with you !",
             titre: "Your notifications",
-            chargerPlus: "Load more notifications"
+            chargerPlus: "Load more notifications",
+            commentaireAlbum:"This user added a commentary to an album !",
+            commentairePhoto:"This user added a commentary to a photo !"
         }
 
 
@@ -169,7 +171,9 @@ app.controller('InstaMiamCtrl', function($scope) {
             albumPartage: "Cet utilisateur vous a partagé un album !",
             photoAjoute: "Cet utilisateur a ajouté une photo à un album qu'il vous a partagé !",
             titre: "Vos notifications",
-            chargerPlus: "Charger plus de notifications"
+            chargerPlus: "Charger plus de notifications",
+            commentaireAlbum:"Cet utilisateur a ajouté un commentaire à un album !",
+            commentairePhoto:"Cet utilisateur a ajouté un commentaire à une photo !"
         }
 
     };

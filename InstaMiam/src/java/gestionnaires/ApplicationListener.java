@@ -47,9 +47,10 @@ public class ApplicationListener implements ServletContextListener {
         gestionnaireUtilisateurs.creerAlbum("Album Public 2", u2.getId(), Album.ALBUM_PUBLIC);
         gestionnaireUtilisateurs.creerPhoto("Photoprive1.png", prive.getId());
         
-        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), "Commentaire 1 ! LLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
+        gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), "Commentaire 1 !");
         gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u.getId(), "Commentaire 2 !");
         gestionnaireUtilisateurs.ajouterCommentaireAlbum(a.getId(), u2.getId(), "Commentaire 3 !");
+        
         
         // Test de partage d'album
         gestionnaireUtilisateurs.partagerAlbum(prive.getId(), u.getId(), u2.getId());

@@ -147,6 +147,16 @@ public class Gestionnaire {
         p.ajouterCommentaire(c);
         c.setAuteur(em.find(Utilisateur.class, idAuteur));
         c.setPhoto(p);
+        
+        // Notification au proprietaire de la photo
+        if (idAuteur != p.getAlbum().getUtilisateur().getId())
+            creerNotification(p.getAlbum().getUtilisateur().getId(), p.getAlbum().getId(), p.getAlbum().getUtilisateur().getId(), Notification.NOTIFICATION_COMMENTAIRE_PHOTO);
+        
+        // Notifications aux personnes dont l'album est partagé
+        for (Utilisateur utilisateurPartage : p.getAlbum().getUtilisateursPartages()) {
+            if (idAuteur != utilisateurPartage.getId())
+                creerNotification(utilisateurPartage.getId(), p.getAlbum().getId(), p.getAlbum().getUtilisateur().getId(), Notification.NOTIFICATION_COMMENTAIRE_PHOTO);
+        }
     }
 
     /**
@@ -165,6 +175,15 @@ public class Gestionnaire {
         a.ajouterCommentaire(c);
         c.setAlbum(a);
         c.setAuteur(em.find(Utilisateur.class, idAuteur));
+        
+        // Notification au proprietaire de la photo
+        if (idAuteur != a.getUtilisateur().getId())
+            creerNotification(a.getUtilisateur().getId(), a.getId(), a.getUtilisateur().getId(), Notification.NOTIFICATION_COMMENTAIRE_ALBUM);
+        
+        for (Utilisateur utilisateurPartage : a.getUtilisateursPartages()) {
+            if (idAuteur != utilisateurPartage.getId())
+                creerNotification(utilisateurPartage.getId(), idAlbum, a.getUtilisateur().getId(), Notification.NOTIFICATION_COMMENTAIRE_ALBUM);
+        }
     }
 
     /**
