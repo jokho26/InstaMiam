@@ -243,7 +243,7 @@
 <div class="row decale">
     <div class="col-md-6">
         <form method="POST" action="${pageContext.servletContext.contextPath}/Album">
-            <input type="text" name="commentaire" id="commentaire" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
+            <input type="text" name="commentaire" id="commentaire"  maxlength="200" class="form-control" placeholder="{{tab_lang.album.posterCommentaire}}" required/>
             <input type="hidden" name="action" value="ajouterCommentaire"/>
             <input type="hidden" value="${idAlbum}" name="idAlbum"/>
             <input type="submit" class="btn boutonVert" name="submit" value="Poster" id="posterCommentaire"/>
