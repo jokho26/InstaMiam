@@ -32,8 +32,8 @@ public class ApplicationListener implements ServletContextListener {
         gestionnaireUtilisateurs.creerAlbum("Album Public de Serge", u2.getId(), Album.ALBUM_PUBLIC);
         
         // Album de Anne
-        Album a2 = gestionnaireUtilisateurs.creerAlbum("Album super secret de Anne", u.getId(), Album.ALBUM_PRIVE);
-        Album a3 =gestionnaireUtilisateurs.creerAlbum("Nouvel Album super secret de Anne", u.getId(), Album.ALBUM_PRIVE);
+        Album a2 = gestionnaireUtilisateurs.creerAlbum("Album super secret de Anne", u3.getId(), Album.ALBUM_PRIVE);
+        Album a3 =gestionnaireUtilisateurs.creerAlbum("Nouvel Album super secret de Anne", u3.getId(), Album.ALBUM_PRIVE);
         
         
         // Partage des albums vers Jean
