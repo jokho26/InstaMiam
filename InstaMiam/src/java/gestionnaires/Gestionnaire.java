@@ -150,7 +150,7 @@ public class Gestionnaire {
         
         // Notification au proprietaire de la photo
         if (idAuteur != p.getAlbum().getUtilisateur().getId())
-            creerNotification(p.getAlbum().getUtilisateur().getId(), p.getAlbum().getId(), p.getAlbum().getUtilisateur().getId(), Notification.NOTIFICATION_COMMENTAIRE_PHOTO);
+            creerNotification(p.getAlbum().getUtilisateur().getId(), p.getAlbum().getId(), idAuteur, Notification.NOTIFICATION_COMMENTAIRE_PHOTO);
         
         // Notifications aux personnes dont l'album est partagé
         for (Utilisateur utilisateurPartage : p.getAlbum().getUtilisateursPartages()) {
@@ -178,7 +178,7 @@ public class Gestionnaire {
         
         // Notification au proprietaire de la photo
         if (idAuteur != a.getUtilisateur().getId())
-            creerNotification(a.getUtilisateur().getId(), a.getId(), a.getUtilisateur().getId(), Notification.NOTIFICATION_COMMENTAIRE_ALBUM);
+            creerNotification(a.getUtilisateur().getId(), a.getId(), idAuteur, Notification.NOTIFICATION_COMMENTAIRE_ALBUM);
         
         for (Utilisateur utilisateurPartage : a.getUtilisateursPartages()) {
             if (idAuteur != utilisateurPartage.getId())
@@ -288,7 +288,21 @@ public class Gestionnaire {
 
         // On supprime l'album de la liste des albums des utilisateurs
         a.getUtilisateur().getAlbums().remove(a);
-
+        
+        // On supprime les notifications liées à cette albums
+        Query q = em.createQuery("Select n from Notification n where n.albumCible=:param");
+        q.setParameter("param", a);
+        List<Notification> liste = q.getResultList();
+        
+        for (Notification n : liste) {
+            em.remove(n);
+        }
+        
+        // On supprimer les utilisateurs en partage sur cette album
+        for (Utilisateur utilisateurPartage : a.getUtilisateursPartages())
+            utilisateurPartage.getAlbumsPartages().remove(a);
+        em.flush();
+        
         // Finalement, on supprime l'album
         em.remove(a);
         em.flush();

@@ -125,6 +125,7 @@ public class AlbumServlet extends SuperServletVerification {
                     forwardTo = "/ListeAlbums";
                     RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
                     dp.forward(request, response);
+                    return;
                 }
             } // Action lors d'un ajout de commentaire
             else if (action.equals("modifierAlbum")) {
