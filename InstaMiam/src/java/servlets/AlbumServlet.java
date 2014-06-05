@@ -120,8 +120,10 @@ public class AlbumServlet extends SuperServletVerification {
             else if (action.equals("supprimerAlbum")) {
                 // Si l'utilisateur peut modifier l'album
                 if (isUtilisateurAbleToModifyAlbum(idUtilisateur, idAlbum)) {
+                    supprimerAlbumDisque(gestionnaire.getAlbumById(idAlbum));
+                    
                     gestionnaire.supprimerAlbum(idAlbum);
-
+                    
                     forwardTo = "/ListeAlbums";
                     RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
                     dp.forward(request, response);
@@ -387,6 +389,23 @@ public class AlbumServlet extends SuperServletVerification {
      */
     private boolean isUtilisateurAbleToModifyAlbum(int idUtilisateur, int idAlbum) {
          return gestionnaire.getUtilisateurById(idUtilisateur).getAlbums().contains(gestionnaire.getAlbumById(idAlbum));
+    }
+    
+    /**
+     * Méthode pour supprimer les photos et le dossier d'un album du disque.
+     * @param a 
+     */
+    private void supprimerAlbumDisque(Album a) {
+        String repertoire = getServletConfig().getServletContext().getRealPath("/")
+                    + File.separator + "albums" + File.separator + a.getIdUnique() + File.separator;
+        File f = new File(repertoire);
+        
+        // On supprime les photos
+        for (File image : f.listFiles())
+            image.delete();
+        
+        // On supprime le repertoire
+        f.delete();
     }
 
 }
