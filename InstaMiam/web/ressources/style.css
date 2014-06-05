@@ -221,6 +221,10 @@ button{
     margin-top: -15px;
 }
 
+.imageProfilCommentaire{
+    max-width: 70px;
+}
+
 
 /*****************************
   Liste des albums

@@ -217,7 +217,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <a href="${pageContext.servletContext.contextPath}/ListeAlbums?idUtilisateurAAfficher=${c.auteur.id}">
-                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive " alt="" />
+                                            <img src="${pageContext.servletContext.contextPath}/profil/${c.auteur.imageProfil}" class="img-rounded img-responsive imageProfilCommentaire" alt="" />
                                         </a>
                                     </div>
                                     <div class="col-md-10">
